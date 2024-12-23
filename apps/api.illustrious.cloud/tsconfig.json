@@ -1,0 +1,13 @@
+{
+  "extends": "@repo/typescript-config/elysia.json",
+  "compilerOptions": {
+    "moduleResolution": "node"
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.json",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
