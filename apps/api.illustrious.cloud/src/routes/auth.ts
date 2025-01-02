@@ -3,8 +3,34 @@ import config from "../config";
 import * as authController from "../modules/auth";
 import authPlugin from "../plugins/auth";
 
+async function getSteamConfig() {
+  const steamClient = await client.discovery(
+    new URL('https://steamcommunity.com/openid'),
+    'STEAM_API_KEY'
+  );
+
+  return steamClient;
+}
+
 export default (app: Elysia) =>
   app
+    .get('/auth/steam', async ({ redirect }) => {
+      const config = await getSteamConfig();
+      const parameters: Record<string, string> = {
+        redirect_uri: 'http://localhost:3000/auth/steam/callback',
+        scope: 'openid'
+      }
+
+      const authUrl = client.buildAuthorizationUrl(
+        config,
+        parameters
+      );
+
+      return redirect(
+        authUrl.toString(),
+        302,
+      );
+    })
     .get(
       "/auth/success",
       async ({ redirect, query }) => {

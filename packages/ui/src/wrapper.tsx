@@ -1,6 +1,6 @@
 'use client';
 
-import { ColorModeButton } from "@/components/ui/color-mode"
+import { ColorModeButton } from "@/components/color-mode"
 import { Box, Flex, Heading, Spacer, Button, Text } from '@chakra-ui/react';
 import { useColorMode } from '@chakra-ui/color-mode';
 import React from 'react';
