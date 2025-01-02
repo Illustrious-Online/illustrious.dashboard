@@ -12,6 +12,8 @@ import * as authService from "../services/auth";
 import * as userService from "../services/user";
 import { getSub } from "../utils/extract-sub";
 import axios from "axios";
+import { supabaseClient } from "../app";
+import { Provider } from "@supabase/supabase-js";
 
 export const create = async (code: string): Promise<Tokens> => {
   // Get tokens from bearer access token
@@ -101,6 +103,40 @@ export const deleteOne = async (
     message: "Successfully deleted requested authentaction",
   };
 };
+
+////////////////////////////////////////
+
+export const signInWithOAuth = async (authProvider: Provider) => {
+  const { data, error } = await supabaseClient.auth.signInWithOAuth({
+    provider: authProvider
+  });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+
+export const oauthCallback = async (code: string) => {
+  const { data, error } = await supabaseClient.auth.exchangeCodeForSession(code);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+
+export const signOut = async () => {
+  const { error } = await supabaseClient.auth.signOut();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return;
+}
 
 export const linkSteam = async (path: string): Promise<any> => {
   const supaConfig = {

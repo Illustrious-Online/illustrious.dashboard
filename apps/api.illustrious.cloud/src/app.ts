@@ -1,4 +1,3 @@
-import fs from "fs";
 import bearer from "@elysiajs/bearer";
 import cors from "@elysiajs/cors";
 import swagger from "@elysiajs/swagger";
@@ -9,6 +8,12 @@ import errorPlugin from "./plugins/error";
 import loggerPlugin from "./plugins/logger";
 import authRoutes from "./routes/auth";
 import protectedRoutes from "./routes/protected";
+import { createClient } from "@supabase/supabase-js";
+
+export const supabaseClient = createClient(
+  `https://${config.auth.supabaseId}.supabase.co`,
+  config.auth.supabaseServiceRoleKey
+);
 
 export const app = new Elysia()
   .use(cors())

@@ -7,55 +7,27 @@ import * as userController from "../modules/user";
 
 export default (app: Elysia) =>
   app
-    // @ts-expect-error
-    .get("/me", userController.me, {
-      headers: t.Object({
-        authorization: t.String(),
-      }),
-      response: {
-        200: t.Object(
-          {
-            message: t.String(),
-            data: User,
-          },
-          {
-            description: "Successfully gathered the user based on token",
-          },
-        ),
-        401: t.Object(
-          {
-            code: t.Number({
-              examples: [401],
-            }),
-            message: t.String({
-              examples: [
-                "Authorization missing user sub value",
-                "Authorization token is missing",
-              ],
-            }),
-          },
-          {
-            description: "Unable to process with authorization from request",
-          },
-        ),
-        409: t.Object(
-          {
-            code: t.Number({
-              examples: [409],
-            }),
-            message: t.String({
-              examples: [
-                "Unable to find user with the provided sub",
-                "Unable to find user authentication details",
-              ],
-            }),
-          },
-          {
-            description: "There was a conflict gathering the user's details",
-          },
-        ),
-      },
-    })
+    .get(
+      "/profile",
+      async ({ request }) => {
+        const token = request.headers.get('authorization');
+
+        if (!token) {
+          return new Response('Unauthorized. Please log in.', { status: 400 });
+        }
+
+        try {
+          const data = await userController.profile(token);
+          return new Response(JSON.stringify(data), { status: 200 });
+        } catch (error) {
+          if (error instanceof Error) {
+            return new Response(error.message, { status: 500 });
+          } else {
+            return new Response('An unknown error occurred', { status: 500 });
+          }
+        }
+      }
+    )
     // @ts-expect-error Swagger plugin disagrees with context
     .get("/users", userController.fetchUser, {
       query: t.Optional(

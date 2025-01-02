@@ -22,6 +22,7 @@ export default {
     clientSecret: Bun.env.CLIENT_SECRET || "ipsum",
     supabaseId: Bun.env.SUPABASE_ID || "sit",
     edgeKey: Bun.env.EDGE_KEY!,
+    supabaseServiceRoleKey: Bun.env.SUPABASE_SERVICE_ROLE_KEY!,
   },
   db: {
     dbName: Bun.env.DB_NAME!,

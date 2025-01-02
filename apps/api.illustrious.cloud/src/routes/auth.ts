@@ -1,49 +1,58 @@
 import { Elysia, t } from "elysia";
-import config from "../config";
 import * as authController from "../modules/auth";
 import authPlugin from "../plugins/auth";
+import { Provider } from "@supabase/supabase-js";
 
 export default (app: Elysia) =>
   app
     .get(
-      "/auth/success",
+      '/auth/:provider',
       async ({ redirect, query }) => {
-        const tokens = await authController.create(query.code);
-        const { access_token, refresh_token } = tokens;
-        return new redirect(
-          `${config.app.url}?accessToken=${access_token}&refreshToken=${refresh_token}`,
-          302,
-        );
-      },
-      {
-        query: t.Object({
-          code: t.String(),
-        }),
-        response: {
-          301: t.Any({
-            description:
-              "Redirects browser/request to redirect URL with tokens",
-          }),
-        },
-      },
+        const { provider } = query;
+
+        if (!provider) {
+          return new Response('Provider not found', { status: 400 });
+        }
+
+        try {
+          const data = await authController.signInWithOAuth(provider as Provider);
+          return redirect(data?.url || '/');
+        } catch (error) {
+          if (error instanceof Error) {
+            return new Response(error.message, { status: 500 });
+          } else {
+            return new Response('An unknown error occurred', { status: 500 });
+          }
+        }
+      }
     )
     .get(
-      "/auth/logout",
-      ({ redirect }) => {
-        const { clientId } = config.auth;
-        const { dashboardUrl } = config.app;
+      "/auth/callback",
+      async ({ query }) => {
+        const { code } = query;
 
-        return redirect(
-          `${config.auth.url}/v2/logout?client_id=${clientId}&returnTo=${dashboardUrl}`,
-        );
-      },
-      {
-        response: {
-          302: t.Any({
-            description: "Redirects browser/request to redirect URL",
-          }),
-        },
-      },
+        if (!code) {
+          return new Response('Authorization code is missing', { status: 400 });
+        }
+
+        try {
+          const data = await authController.oauthCallback(code);
+          return new Response(JSON.stringify(data), { status: 200 });
+        } catch (error) {
+          if (error instanceof Error) {
+            return new Response(error.message, { status: 500 });
+          } else {
+            return new Response('An unknown error occurred', { status: 500 });
+          }
+        }
+      }
+    )
+    .get(
+      "/signout",
+      async ({ redirect }) => {
+        await authController.signOut();
+        return redirect('/');
+      }
     )
     .use(authPlugin)
     .post('/link/steam', async () => {

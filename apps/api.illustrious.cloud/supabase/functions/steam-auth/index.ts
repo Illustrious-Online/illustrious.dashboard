@@ -13,7 +13,7 @@ const supabase = createClient(`https://${SUPABASE_ID}.supabase.co`, SUPABASE_SER
 
 const steam = new SteamAuth({
   realm: `http://localhost:3000`,
-  returnUrl: `http://localhost:3000/steam-callback`,
+  returnUrl: `http://localhost:3000/profile/steam/link/callback`,
   apiKey: STEAM_API_KEY,
 });
 

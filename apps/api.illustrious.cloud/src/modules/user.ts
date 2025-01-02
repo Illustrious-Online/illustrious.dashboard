@@ -6,21 +6,16 @@ import UnauthorizedError from "../domain/exceptions/UnauthorizedError";
 import SuccessResponse from "../domain/types/generic/SuccessResponse";
 import * as userService from "../services/user";
 import { getSub } from "../utils/extract-sub";
+import { supabaseClient } from "../app";
 
-export const me = async (context: Context): Promise<SuccessResponse<User>> => {
-  const { authorization } = context.headers as { authorization: string };
-  const sub = await getSub(authorization);
+export const profile = async (token: string) => {
+  const { data: user, error } = await supabaseClient.auth.getUser(token);
 
-  if (!sub) {
-    throw new UnauthorizedError("Authorization missing user sub value");
+  if (error) {
+    throw new Error(error.message);
   }
 
-  const data = await userService.fetchOne({ sub });
-
-  return {
-    data,
-    message: "User details fetched successfully!",
-  };
+  return user;
 };
 
 export const create = async (
