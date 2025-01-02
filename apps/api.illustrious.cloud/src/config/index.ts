@@ -1,3 +1,4 @@
+import { SupabaseClient } from "@supabase/supabase-js";
 import data from "../../package.json";
 
 const isTestEnvironment = Bun.env.NODE_ENV === "test";
@@ -19,6 +20,8 @@ export default {
     audience: Bun.env.AUTH0_AUD || "illustrious",
     clientId: Bun.env.CLIENT_ID || "lorem",
     clientSecret: Bun.env.CLIENT_SECRET || "ipsum",
+    supabaseId: Bun.env.SUPABASE_ID || "sit",
+    edgeKey: Bun.env.EDGE_KEY!,
   },
   db: {
     dbName: Bun.env.DB_NAME!,

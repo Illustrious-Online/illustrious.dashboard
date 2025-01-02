@@ -11,6 +11,7 @@ import SuccessResponse from "../domain/types/generic/SuccessResponse";
 import * as authService from "../services/auth";
 import * as userService from "../services/user";
 import { getSub } from "../utils/extract-sub";
+import axios from "axios";
 
 export const create = async (code: string): Promise<Tokens> => {
   // Get tokens from bearer access token
@@ -100,3 +101,27 @@ export const deleteOne = async (
     message: "Successfully deleted requested authentaction",
   };
 };
+
+export const linkSteam = async (path: string): Promise<any> => {
+  const supaConfig = {
+    method: 'post',
+    maxBodyLength: Infinity,
+    headers: {
+      'Authorization': `Bearer ${config.auth.edgeKey}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type'
+    },
+    url: `https://${config.auth.supabaseId}.supabase.co/functions/v1/${path}`,
+    data: JSON.stringify({
+      '{"name":"Functions"}': '',
+    })
+  };
+
+  try {
+    const response = await axios.request(supaConfig);
+    return new Response(JSON.stringify(response.data), { status: 200 });
+  } catch (error) {
+    return new Response('Failed to link steam account', { status: 500 });
+  }
+}

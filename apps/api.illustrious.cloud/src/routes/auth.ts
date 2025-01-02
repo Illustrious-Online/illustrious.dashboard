@@ -3,40 +3,14 @@ import config from "../config";
 import * as authController from "../modules/auth";
 import authPlugin from "../plugins/auth";
 
-async function getSteamConfig() {
-  const steamClient = await client.discovery(
-    new URL('https://steamcommunity.com/openid'),
-    'STEAM_API_KEY'
-  );
-
-  return steamClient;
-}
-
 export default (app: Elysia) =>
   app
-    .get('/auth/steam', async ({ redirect }) => {
-      const config = await getSteamConfig();
-      const parameters: Record<string, string> = {
-        redirect_uri: 'http://localhost:3000/auth/steam/callback',
-        scope: 'openid'
-      }
-
-      const authUrl = client.buildAuthorizationUrl(
-        config,
-        parameters
-      );
-
-      return redirect(
-        authUrl.toString(),
-        302,
-      );
-    })
     .get(
       "/auth/success",
       async ({ redirect, query }) => {
         const tokens = await authController.create(query.code);
         const { access_token, refresh_token } = tokens;
-        return redirect(
+        return new redirect(
           `${config.app.url}?accessToken=${access_token}&refreshToken=${refresh_token}`,
           302,
         );
@@ -72,6 +46,12 @@ export default (app: Elysia) =>
       },
     )
     .use(authPlugin)
+    .post('/link/steam', async () => {
+      return await authController.linkSteam('steam-auth');
+    })
+    .post('/link/steam/auth', async ({ request }) => {
+      return await authController.linkSteam('steam-auth/authenticate');
+    })
     // @ts-expect-error Swagger plugin disagrees when adding 200 response
     .delete("/auth/delete/:id", authController.deleteOne, {
       params: t.Object({
