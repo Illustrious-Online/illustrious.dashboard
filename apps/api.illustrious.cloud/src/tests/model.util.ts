@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { Invoice, Org, Report, User } from "../../drizzle/schema";
-import config from "../config";
+import config from "@/config";
 import AuthUserInfo from "@/domain/interfaces/authUserInfo";
 import Tokens from "@/domain/interfaces/tokens";
 

@@ -2,7 +2,7 @@ import { jwtDecode } from "jwt-decode";
 import { v4 as uuidv4 } from "uuid";
 
 import { Context } from "elysia";
-import config from "@/config";
+import config from "@/index";
 import ConflictError from "@/domain/exceptions/ConflictError";
 import UnauthorizedError from "@/domain/exceptions/UnauthorizedError";
 import AuthUserInfo from "@/domain/interfaces/authUserInfo";

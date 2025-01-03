@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
 import { JsonWebTokenError, verify } from "jsonwebtoken";
 
-import config from "../config";
+import config from "@/config";
 import UnauthorizedError from "@/domain/exceptions/UnauthorizedError";
 
 function validateJwt(token: string) {
