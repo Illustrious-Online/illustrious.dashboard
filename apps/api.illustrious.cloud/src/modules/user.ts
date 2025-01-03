@@ -76,6 +76,11 @@ export const fetchUser = async (context: Context) => {
 
 export const fetchResources = async (context: Context) => {
   const { type } = context.params;
+
+  if (!type) {
+    throw new Error("Resource type is required.");
+  }
+
   const { authorization } = context.headers;
   const sub = await getSub(authorization!);
   const user = await userService.fetchOne({ sub });
