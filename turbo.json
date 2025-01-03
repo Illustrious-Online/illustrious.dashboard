@@ -1,5 +1,4 @@
 {
-  "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
   "tasks": {
     "build": {
@@ -20,6 +19,11 @@
     },
     "check": {
       "cache": false
+    }
+  },
+  "pipeline": {
+    "build": {
+      "outputs": ["apps/api.illustrious.cloud/dist/**"]
     }
   }
 }
