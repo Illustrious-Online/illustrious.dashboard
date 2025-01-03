@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "bun run --watch ./src/index.ts",
-    "build": "bun build ./src/index.ts --target bun --outdir ./dist",
+    "build": "bun build ./src/index.ts --target node --outdir ./dist",
     "start": "NODE_ENV=production bun ./src/index.ts",
     "db:reset": "./src/utils/reset-db.sh",
     "db:migrate": "bunx drizzle-kit migrate",
@@ -60,6 +60,8 @@
   "trustedDependencies": [
     "core-js",
     "core-js-pure",
-    "es5-ext"
+    "es5-ext",
+    "esbuild",
+    "sharp"
   ]
 }
