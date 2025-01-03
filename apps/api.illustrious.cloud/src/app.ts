@@ -1,5 +1,4 @@
 import bearer from "@elysiajs/bearer";
-import cors from "@elysiajs/cors";
 import swagger from "@elysiajs/swagger";
 import { Elysia } from "elysia";
 
@@ -17,7 +16,6 @@ export const supabaseClient = createClient(
 
 // Elysia application setup
 export const app = new Elysia()
-  .use(cors())
   .use(
     swagger({
       path: "/docs",
