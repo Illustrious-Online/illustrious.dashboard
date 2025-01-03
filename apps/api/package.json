@@ -3,7 +3,7 @@
   "version": "1.0.50",
   "scripts": {
     "dev": "bun index.ts",
-    "build": "bun build index.ts",
+    "build": "bun build index.ts --outdir dist",
     "start": "bun index.ts"
   },
   "dependencies": {
