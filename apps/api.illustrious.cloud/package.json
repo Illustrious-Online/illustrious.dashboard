@@ -9,8 +9,6 @@
     "dev": "bun run --watch src/app.ts",
     "build": "bun build src/app.ts --target bun --outdir ./dist",
     "start": "NODE_ENV=production bun src/app.ts",
-    "start:docker": "docker-compose -f docker-compose.app.yml up",
-    "db:docker": "docker compose -f docker-compose.db.yml up",
     "db:reset": "./src/utils/reset-db.sh",
     "db:migrate": "bunx drizzle-kit migrate",
     "db:push": "bunx drizzle-kit push",

@@ -1,10 +1,11 @@
 {
+  "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", "apps/api.illustrious.cloud/dist/**"]
     },
     "check-types": {
       "dependsOn": ["^check-types"]
@@ -19,11 +20,6 @@
     },
     "check": {
       "cache": false
-    }
-  },
-  "pipeline": {
-    "build": {
-      "outputs": ["apps/api.illustrious.cloud/dist/**"]
     }
   }
 }

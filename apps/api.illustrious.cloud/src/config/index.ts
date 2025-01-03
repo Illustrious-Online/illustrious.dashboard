@@ -1,4 +1,3 @@
-import { SupabaseClient } from "@supabase/supabase-js";
 import data from "../../package.json";
 
 const isTestEnvironment = Bun.env.NODE_ENV === "test";
