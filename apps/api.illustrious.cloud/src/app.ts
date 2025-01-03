@@ -1,5 +1,5 @@
 import bearer from "@elysiajs/bearer";
-import cors from "@elysiajs/cors";
+import cors from 'micro-cors';
 import swagger from "@elysiajs/swagger";
 import { Elysia } from "elysia";
 
