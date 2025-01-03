@@ -16,7 +16,7 @@ export const supabaseClient = createClient(
 );
 
 // Elysia application setup
-export const app = new Elysia()
+const app = new Elysia()
   .use(cors())
   .use(
     swagger({
@@ -43,8 +43,12 @@ export const app = new Elysia()
       },
     })
   )
-  .use(bearer())
-  .use(loggerPlugin)
+  .use(bearer());
+
+  if (process.env.NODE_ENV?.includes("dev")) {
+    app.use(loggerPlugin);
+  }
+  app
   .use(errorPlugin)
   .get("/", () => ({
     name: config.app.name,
