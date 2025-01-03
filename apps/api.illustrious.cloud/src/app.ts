@@ -45,7 +45,7 @@ export const app = new Elysia()
   )
   .use(bearer());
 
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV?.includes("dev")) {
   app.use(loggerPlugin);
 }
 
@@ -57,9 +57,14 @@ app
   }))
   .use(authRoutes)
   .use(protectedRoutes)
-  .listen(config.app.port, () => {
+
+if (process.env.NODE_ENV?.includes("dev")) {
+  app.listen(config.app.port, () => {
     console.log(`Environment: ${config.app.env}`);
     console.log(
       `Illustrious Cloud API is running at ${config.app.host}:${config.app.port}`,
     );
   });
+}
+
+export default app.fetch;
