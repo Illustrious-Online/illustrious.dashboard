@@ -4,6 +4,7 @@
   "type": "module",
   "private": true,
   "exports": {
+    "./color-mode": "./src/components/color-mode.tsx",
     "./button": "./src/components/button.tsx",
     "./provider": "./src/provider.tsx",
     "./wrapper": "./src/wrapper.tsx"
