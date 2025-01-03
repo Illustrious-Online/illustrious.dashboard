@@ -14,5 +14,10 @@
         "src": "/(.*)",
         "dest": "apps/api/src/index.ts"
       }
-    ]
+    ],
+    "functions": {
+        "api/*": {
+            "runtime": "nodejs16.x"
+        }
+    }
   }
