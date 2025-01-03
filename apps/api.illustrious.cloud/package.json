@@ -6,8 +6,8 @@
     "fallback": { "crypto": false }
   },
   "scripts": {
-    "dev": "bun run --watch ./src/app.ts",
-    "build": "bun build ./src/app.ts --target node --outdir ./dist",
+    "dev": "NODE_ENV=development bun run --watch ./src/app.ts",
+    "build": "bun build ./src/app.ts --target bun --outdir ./dist",
     "start": "NODE_ENV=production bun ./src/app.ts",
     "db:reset": "./src/utils/reset-db.sh",
     "db:migrate": "bunx drizzle-kit migrate",

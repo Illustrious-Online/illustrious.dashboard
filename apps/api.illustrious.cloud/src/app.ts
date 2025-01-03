@@ -15,6 +15,7 @@ export const supabaseClient = createClient(
   config.auth.supabaseServiceRoleKey
 );
 
+// Elysia application setup
 export const app = new Elysia()
   .use(cors())
   .use(
@@ -40,7 +41,7 @@ export const app = new Elysia()
       swaggerOptions: {
         persistAuthorization: true,
       },
-    }),
+    })
   )
   .use(bearer())
   .use(loggerPlugin)
@@ -50,10 +51,12 @@ export const app = new Elysia()
     version: config.app.version,
   }))
   .use(authRoutes)
-  .use(protectedRoutes)
-  .listen(config.app.port, () => {
-    console.log(`Environment: ${config.app.env}`);
-    console.log(
-      `Illustrious Cloud API is running at ${config.app.host}:${config.app.port}`,
-    );
-  });
+  .use(protectedRoutes);
+
+// Export `fetch` instead of `listen` for serverless environments (like Vercel)
+export default process.env.NODE_ENV?.includes("dev") ? app.listen(config.app.port, () => {
+  console.log(`Environment: ${config.app.env}`);
+  console.log(
+    `Illustrious Cloud API is running at ${config.app.host}:${config.app.port}`,
+  );
+}) : app.fetch;
