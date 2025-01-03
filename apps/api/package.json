@@ -1,19 +1,16 @@
 {
   "name": "api",
-  "module": "index.ts",
-  "type": "module",
+  "version": "1.0.50",
   "scripts": {
-    "dev": "bun run app/index.ts",
-    "build": "bun build app/index.ts",
-    "start": "node app/index.js"
-  },
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run --watch src/index.ts",
+    "build": "bun build src/index.ts"
   },
   "dependencies": {
-    "elysia": "^1.2.9"
-  }
+    "elysia": "latest"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "module": "src/index.js"
 }
