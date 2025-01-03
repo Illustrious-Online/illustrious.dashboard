@@ -1,11 +1,5 @@
 {
   "extends": "@repo/typescript-config/elysia.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
-  },
   "include": [
     "**/*.ts",
     "**/*.json",

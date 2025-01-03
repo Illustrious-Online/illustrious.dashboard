@@ -1,8 +1,8 @@
-import data from "../package.json";
+import data from "../../package.json";
 
 const isTestEnvironment = process.env.NODE_ENV === "test";
 
-const config = {
+export default {
   app: {
     env: process.env.NODE_ENV ?? 'development',
     url: process.env.APP_URL,
@@ -31,5 +31,3 @@ const config = {
     dbHost: process.env.DB_HOST!,
   },
 };
-
-export default config;

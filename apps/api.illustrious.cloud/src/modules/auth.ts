@@ -2,17 +2,17 @@ import { jwtDecode } from "jwt-decode";
 import { v4 as uuidv4 } from "uuid";
 
 import { Context } from "elysia";
-import config from "@/index";
-import ConflictError from "@/domain/exceptions/ConflictError";
-import UnauthorizedError from "@/domain/exceptions/UnauthorizedError";
-import AuthUserInfo from "@/domain/interfaces/authUserInfo";
-import Tokens from "@/domain/interfaces/tokens";
-import SuccessResponse from "@/domain/types/generic/SuccessResponse";
-import * as authService from "@/services/auth";
-import * as userService from "@/services/user";
-import { getSub } from "@/utils/extract-sub";
+import config from "../config";
+import ConflictError from "../domain/exceptions/ConflictError";
+import UnauthorizedError from "../domain/exceptions/UnauthorizedError";
+import AuthUserInfo from "../domain/interfaces/authUserInfo";
+import Tokens from "../domain/interfaces/tokens";
+import SuccessResponse from "../domain/types/generic/SuccessResponse";
+import * as authService from "../services/auth";
+import * as userService from "../services/user";
+import { getSub } from "../utils/extract-sub";
 import axios from "axios";
-import { supabaseClient } from "@/index";
+import { supabaseClient } from "../app";
 import { Provider } from "@supabase/supabase-js";
 
 export const create = async (code: string): Promise<Tokens> => {

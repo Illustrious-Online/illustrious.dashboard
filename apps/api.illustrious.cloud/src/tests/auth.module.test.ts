@@ -9,11 +9,11 @@ import {
 import { faker } from "@faker-js/faker";
 
 import { deleteRequest, getRequest } from ".";
-import { app } from "@/index";
-import config from "@/config";
-import AuthUserInfo from "@/domain/interfaces/authUserInfo";
-import Tokens from "@/domain/interfaces/tokens";
-import * as authService from "@/services/auth";
+import { app } from "../app";
+import config from "../config";
+import AuthUserInfo from "../domain/interfaces/authUserInfo";
+import Tokens from "../domain/interfaces/tokens";
+import * as authService from "../services/auth";
 import { MockResult, mockModule } from "./mock.util";
 import { generateData } from "./model.util";
 

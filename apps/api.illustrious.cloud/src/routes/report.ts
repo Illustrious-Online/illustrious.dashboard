@@ -1,5 +1,5 @@
 import { Elysia, t } from "elysia";
-import { Report } from "@/domain/models/report";
+import { Report } from "../domain/models/report";
 import * as reportController from "../modules/report";
 
 export default (app: Elysia) =>

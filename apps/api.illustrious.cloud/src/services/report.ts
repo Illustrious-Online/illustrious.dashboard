@@ -4,18 +4,16 @@ import { NotFoundError } from "elysia";
 import { db } from "../../drizzle/db";
 import {
   Report,
-  Role,
   orgReports,
   orgUsers,
   orgs,
   reports,
   userReports,
 } from "../../drizzle/schema";
-import ConflictError from "@/domain/exceptions/ConflictError";
-import ServerError from "@/domain/exceptions/ServerError";
-import UnauthorizedError from "@/domain/exceptions/UnauthorizedError";
-import { CreateReport, FetchReport } from "@/domain/interfaces/reports";
-import { UserRole } from "@/domain/types/UserRole";
+import ConflictError from "../domain/exceptions/ConflictError";
+import UnauthorizedError from "../domain/exceptions/UnauthorizedError";
+import { CreateReport, FetchReport } from "../domain/interfaces/reports";
+import { UserRole } from "../domain/types/UserRole";
 
 /**
  * Creates a new Report.

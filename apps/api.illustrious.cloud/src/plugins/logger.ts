@@ -1,6 +1,6 @@
 import Elysia from "elysia";
 import process from "process";
-import { durationString, methodString } from "@/utils/logger";
+import { durationString, methodString } from "../utils/logger";
 
 let colors: any;
 import("yoctocolors").then((module) => {

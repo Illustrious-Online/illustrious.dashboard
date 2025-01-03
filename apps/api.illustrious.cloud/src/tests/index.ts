@@ -1,6 +1,6 @@
 import path from "path";
 
-import config from "@/config";
+import config from "../config";
 
 export const baseUrl = `http://${config.app.host}:${config.app.port}`;
 

@@ -10,11 +10,11 @@ import {
   orgs,
   userInvoices,
 } from "../../drizzle/schema";
-import ConflictError from "@/domain/exceptions/ConflictError";
-import ServerError from "@/domain/exceptions/ServerError";
-import UnauthorizedError from "@/domain/exceptions/UnauthorizedError";
-import { CreateInvoice } from "@/domain/interfaces/invoices";
-import { UserRole } from "@/domain/types/UserRole";
+import ConflictError from "../domain/exceptions/ConflictError";
+import ServerError from "../domain/exceptions/ServerError";
+import UnauthorizedError from "../domain/exceptions/UnauthorizedError";
+import { CreateInvoice } from "../domain/interfaces/invoices";
+import { UserRole } from "../domain/types/UserRole";
 
 /**
  * Creates a new Invoice.

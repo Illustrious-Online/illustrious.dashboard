@@ -3,13 +3,13 @@ import { faker } from "@faker-js/faker";
 
 import moment from "moment";
 import { deleteRequest, getRequest, postRequest, putRequest } from ".";
-import { app } from "@/index";
-import AuthUserInfo from "@/domain/interfaces/authUserInfo";
-import Tokens from "@/domain/interfaces/tokens";
-import * as authService from "@/services/auth";
-import * as invoiceService from "@/services/invoice";
-import * as orgService from "@/services/org";
-import * as reportService from "@/services/report";
+import { app } from "../app";
+import AuthUserInfo from "../domain/interfaces/authUserInfo";
+import Tokens from "../domain/interfaces/tokens";
+import * as authService from "../services/auth";
+import * as invoiceService from "../services/invoice";
+import * as orgService from "../services/org";
+import * as reportService from "../services/report";
 import { MockResult, mockModule } from "./mock.util";
 import { generateData } from "./model.util";
 

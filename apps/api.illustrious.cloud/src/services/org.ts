@@ -18,11 +18,11 @@ import {
   userReports,
   users,
 } from "../../drizzle/schema";
-import BadRequestError from "@/domain/exceptions/BadRequestError";
-import ConflictError from "@/domain/exceptions/ConflictError";
-import ServerError from "@/domain/exceptions/ServerError";
-import UnauthorizedError from "@/domain/exceptions/UnauthorizedError";
-import { CreateOrg } from "@/domain/interfaces/orgs";
+import BadRequestError from "../domain/exceptions/BadRequestError";
+import ConflictError from "../domain/exceptions/ConflictError";
+import ServerError from "../domain/exceptions/ServerError";
+import UnauthorizedError from "../domain/exceptions/UnauthorizedError";
+import { CreateOrg } from "../domain/interfaces/orgs";
 
 /**
  * Creates a new Organization.
