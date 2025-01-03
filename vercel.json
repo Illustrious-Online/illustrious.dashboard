@@ -1,8 +1,0 @@
-{
-    "version": 2,
-    "functions": {
-        "apps/api/*": {
-            "runtime": "nodejs22.x"
-        }
-    }
-  }

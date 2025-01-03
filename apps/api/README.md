@@ -1,12 +1,15 @@
-## Development
-To start the development server run:
+# api
+
+To install dependencies:
+
 ```bash
-bun run dev
+bun install
 ```
 
-To start the development database:
+To run:
+
 ```bash
-docker run -d -p 5432:5432 --name illustrious -e POSTGRES_PASSWORD=illustrious postgres
+bun run index.ts
 ```
 
-Open http://localhost:3000/ with your browser to see the result.
+This project was created using `bun init` in bun v1.1.10. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
