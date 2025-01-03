@@ -43,13 +43,8 @@ export const app = new Elysia()
       },
     })
   )
-  .use(bearer());
-
-if (process.env.NODE_ENV?.includes("dev")) {
-  app.use(loggerPlugin);
-}
-
-app
+  .use(bearer())
+  .use(loggerPlugin)
   .use(errorPlugin)
   .get("/", () => ({
     name: config.app.name,

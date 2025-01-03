@@ -1,4 +1,4 @@
-import { Report } from "../../../drizzle/schema";
+import { Report } from "../../drizzle/schema";
 
 export interface CreateReport {
   user: string;

@@ -1,4 +1,4 @@
-import { User } from "../../../drizzle/schema";
+import { User } from "../../drizzle/schema";
 
 export interface CreateUser {
   sub: string;

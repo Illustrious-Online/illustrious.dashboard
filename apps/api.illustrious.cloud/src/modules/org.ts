@@ -1,6 +1,6 @@
 import { Context } from "elysia";
 
-import { Invoice, Org, Report, User } from "../../drizzle/schema";
+import { Invoice, Org, Report, User } from "../drizzle/schema";
 import UnauthorizedError from "../domain/exceptions/UnauthorizedError";
 import SuccessResponse from "../domain/types/generic/SuccessResponse";
 import * as orgService from "../services/org";

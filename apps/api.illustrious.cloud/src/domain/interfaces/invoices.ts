@@ -1,4 +1,4 @@
-import { Invoice } from "../../../drizzle/schema";
+import { Invoice } from "../../drizzle/schema";
 
 export interface CreateInvoice {
   user: string;

@@ -1,6 +1,6 @@
 import { Context } from "elysia";
 
-import { Invoice } from "../../drizzle/schema";
+import { Invoice } from "../drizzle/schema";
 import UnauthorizedError from "../domain/exceptions/UnauthorizedError";
 import { SubmitInvoice } from "../domain/interfaces/invoices";
 import SuccessResponse from "../domain/types/generic/SuccessResponse";

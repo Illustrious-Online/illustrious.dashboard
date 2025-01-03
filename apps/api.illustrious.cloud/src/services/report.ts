@@ -1,7 +1,7 @@
 import { and, eq } from "drizzle-orm";
 import { NotFoundError } from "elysia";
 
-import { db } from "../../drizzle/db";
+import { db } from "../drizzle/db";
 import {
   Report,
   orgReports,
@@ -9,7 +9,7 @@ import {
   orgs,
   reports,
   userReports,
-} from "../../drizzle/schema";
+} from "../drizzle/schema";
 import ConflictError from "../domain/exceptions/ConflictError";
 import UnauthorizedError from "../domain/exceptions/UnauthorizedError";
 import { CreateReport, FetchReport } from "../domain/interfaces/reports";

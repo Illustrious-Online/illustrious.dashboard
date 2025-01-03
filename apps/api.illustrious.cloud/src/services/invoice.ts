@@ -1,7 +1,7 @@
 import { NotFoundError } from "elysia";
 
 import { and, eq } from "drizzle-orm";
-import { db } from "../../drizzle/db";
+import { db } from "../drizzle/db";
 import {
   Invoice,
   invoices,
@@ -9,7 +9,7 @@ import {
   orgUsers,
   orgs,
   userInvoices,
-} from "../../drizzle/schema";
+} from "../drizzle/schema";
 import ConflictError from "../domain/exceptions/ConflictError";
 import ServerError from "../domain/exceptions/ServerError";
 import UnauthorizedError from "../domain/exceptions/UnauthorizedError";

@@ -2,7 +2,7 @@ import { NotFoundError } from "elysia";
 import { v4 as uuidv4 } from "uuid";
 
 import { eq } from "drizzle-orm";
-import { db } from "../../drizzle/db";
+import { db } from "../drizzle/db";
 import {
   Invoice,
   Org,
@@ -17,7 +17,7 @@ import {
   userInvoices,
   userReports,
   users,
-} from "../../drizzle/schema";
+} from "../drizzle/schema";
 import BadRequestError from "../domain/exceptions/BadRequestError";
 import ConflictError from "../domain/exceptions/ConflictError";
 import ServerError from "../domain/exceptions/ServerError";

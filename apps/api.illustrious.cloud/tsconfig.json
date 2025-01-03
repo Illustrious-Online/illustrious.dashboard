@@ -1,10 +1,6 @@
 {
   "extends": "@repo/typescript-config/elysia.json",
   "include": [
-    "**/*.ts",
-    "**/*.json",
-  ],
-  "exclude": [
-    "node_modules"
+    "src/**/*",
   ]
 }

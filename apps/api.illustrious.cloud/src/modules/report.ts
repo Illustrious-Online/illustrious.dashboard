@@ -1,6 +1,6 @@
 import { Context } from "elysia";
 
-import { Report } from "../../drizzle/schema";
+import { Report } from "../drizzle/schema";
 import UnauthorizedError from "../domain/exceptions/UnauthorizedError";
 import { SubmitReport } from "../domain/interfaces/reports";
 import SuccessResponse from "../domain/types/generic/SuccessResponse";

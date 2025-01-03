@@ -1,4 +1,4 @@
-import { Org, Report } from "../../../drizzle/schema";
+import { Org, Report } from "../../drizzle/schema";
 
 export interface CreateOrg {
   user: string;

@@ -1,8 +1,8 @@
 import { and, eq } from "drizzle-orm/sql";
 import config from "../config";
 
-import { db } from "../../drizzle/db";
-import { authentications, userAuthentications } from "../../drizzle/schema";
+import { db } from "../drizzle/db";
+import { authentications, userAuthentications } from "../drizzle/schema";
 import BadRequestError from "../domain/exceptions/BadRequestError";
 import ConflictError from "../domain/exceptions/ConflictError";
 import ResponseError from "../domain/exceptions/ResponseError";

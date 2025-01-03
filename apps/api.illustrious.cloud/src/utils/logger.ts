@@ -1,7 +1,4 @@
-let colors: any;
-import("yoctocolors").then((module) => {
-  colors = module.default;
-});
+import colors from "yoctocolors";
 
 /**
  * Returns the duration message.
