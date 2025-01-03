@@ -7,13 +7,15 @@
     "start": "bun start src/index.ts"
   },
   "dependencies": {
+    "@elysiajs/eden": "^1.2.0",
     "elysia": "latest"
   },
   "devDependencies": {
-    "typescript": "^5.0.0",
-    "bun-types": "^0.5.0"
+    "@types/bun": "^1.1.14",
+    "bun-types": "^0.5.0",
+    "typescript": "^5.0.0"
   },
-  "type":"module",
+  "type": "module",
   "module": "src/index.js",
   "engines": {
     "node": ">=16.0.0"
