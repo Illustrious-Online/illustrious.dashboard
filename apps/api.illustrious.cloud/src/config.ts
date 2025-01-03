@@ -2,17 +2,46 @@ import data from "../package.json";
 
 const isTestEnvironment = process.env.NODE_ENV === "test";
 
-export default {
+interface Config {
   app: {
-    env: process.env.NODE_ENV ?? 'development',
-    url: process.env.APP_URL,
+    env: string;
+    url: string;
+    name: string;
+    version: string;
+    host: string;
+    port: string;
+    dashboardUrl: string;
+    sentryUrl: string;
+  }
+  auth: {
+    url: string;
+    audience: string;
+    clientId: string;
+    clientSecret: string;
+    supabaseId: string;
+    edgeKey: string;
+    supabaseServiceRoleKey: string;
+  }
+  db: {
+    dbName: string;
+    dbPassword: string;
+    dbUsername: string;
+    dbPort: string;
+    dbHost: string;
+  }
+}
+
+const config: Config = {
+  app: {
+    env: process.env.NODE_ENV || 'development',
+    url: process.env.APP_URL || 'http://localhost',
     name: data.name,
     version: data.version,
     host: process.env.TEST_APP_HOST || process.env.APP_HOST || "localhost",
     port:
       (isTestEnvironment ? process.env.TEST_APP_PORT : process.env.APP_PORT) || "8000",
-    dashboardUrl: process.env.DASHBOARD_URL,
-    sentryUrl: process.env.SENTRY_URL,
+    dashboardUrl: process.env.DASHBOARD_URL || 'http://localhost:3000',
+    sentryUrl: process.env.SENTRY_URL || 'http://localhost:9000'
   },
   auth: {
     url: process.env.AUTH0_URL || "localhost",
@@ -31,3 +60,5 @@ export default {
     dbHost: process.env.DB_HOST!,
   },
 };
+
+export default config;
