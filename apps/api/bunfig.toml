@@ -1,5 +1,4 @@
 type = "module"
-target = "bun"
 [test]
 coverage = true
 coverageSkipTestFiles = true

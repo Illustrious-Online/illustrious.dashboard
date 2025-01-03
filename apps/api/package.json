@@ -1,12 +1,12 @@
 {
-  "name": "api.illustrious.cloud",
+  "name": "api",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "NODE_ENV=development bun run src/index.ts --watch",
     "start": "NODE_ENV=production bun run dist/index.js",
-    "build": "bun build src/index.ts --outdir=dist --target bun",
+    "build": "bun build src/index.ts --outdir=dist --target node",
     "db:reset": "./src/utils/reset-db.sh",
     "db:migrate": "bunx drizzle-kit migrate",
     "db:push": "bunx drizzle-kit push",
