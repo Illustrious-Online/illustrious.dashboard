@@ -1,12 +1,12 @@
 import { Context } from "elysia";
 
 import { Invoice, Org, Report, User } from "../../drizzle/schema";
-import ConflictError from "../domain/exceptions/ConflictError";
-import UnauthorizedError from "../domain/exceptions/UnauthorizedError";
-import SuccessResponse from "../domain/types/generic/SuccessResponse";
-import * as userService from "../services/user";
-import { getSub } from "../utils/extract-sub";
-import { supabaseClient } from "../app";
+import ConflictError from "@/domain/exceptions/ConflictError";
+import UnauthorizedError from "@/domain/exceptions/UnauthorizedError";
+import SuccessResponse from "@/domain/types/generic/SuccessResponse";
+import * as userService from "@/services/user";
+import { getSub } from "@/utils/extract-sub";
+import { supabaseClient } from "@/index";
 
 export const profile = async (token: string) => {
   const { data: user, error } = await supabaseClient.auth.getUser(token);

@@ -1,8 +1,8 @@
 import { Elysia, t } from "elysia";
-import { Invoice } from "../domain/models/invoice";
-import { Org } from "../domain/models/org";
-import { Report } from "../domain/models/report";
-import { User } from "../domain/models/user";
+import { Invoice } from "@/domain/models/invoice";
+import { Org } from "@/domain/models/org";
+import { Report } from "@/domain/models/report";
+import { User } from "@/domain/models/user";
 import * as orgController from "../modules/org";
 
 export default (app: Elysia) =>

@@ -16,11 +16,11 @@ import {
   userReports,
   users,
 } from "../../drizzle/schema";
-import BadRequestError from "../domain/exceptions/BadRequestError";
-import ConflictError from "../domain/exceptions/ConflictError";
-import UnauthorizedError from "../domain/exceptions/UnauthorizedError";
-import { CreateUser, FetchUser } from "../domain/interfaces/users";
-import { UserRole } from "../domain/types/UserRole";
+import BadRequestError from "@/domain/exceptions/BadRequestError";
+import ConflictError from "@/domain/exceptions/ConflictError";
+import UnauthorizedError from "@/domain/exceptions/UnauthorizedError";
+import { CreateUser, FetchUser } from "@/domain/interfaces/users";
+import { UserRole } from "@/domain/types/UserRole";
 
 /**
  * Creates a new user.

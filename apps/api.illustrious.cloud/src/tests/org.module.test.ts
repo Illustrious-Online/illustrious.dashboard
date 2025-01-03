@@ -11,16 +11,16 @@ import { faker } from "@faker-js/faker";
 
 import moment from "moment";
 import { deleteRequest, getRequest, postRequest, putRequest } from ".";
-import { app } from "../app";
-import AuthUserInfo from "../domain/interfaces/authUserInfo";
-import Tokens from "../domain/interfaces/tokens";
+import { app } from "@/index";
+import AuthUserInfo from "@/domain/interfaces/authUserInfo";
+import Tokens from "@/domain/interfaces/tokens";
 import invoice from "../routes/invoice";
 import org from "../routes/org";
 import report from "../routes/report";
-import * as authService from "../services/auth";
-import * as invoiceService from "../services/invoice";
-import * as reportService from "../services/report";
-import * as userService from "../services/user";
+import * as authService from "@/services/auth";
+import * as invoiceService from "@/services/invoice";
+import * as reportService from "@/services/report";
+import * as userService from "@/services/user";
 import { MockResult, mockModule } from "./mock.util";
 import { generateData } from "./model.util";
 

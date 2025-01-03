@@ -3,12 +3,12 @@ import config from "../config";
 
 import { db } from "../../drizzle/db";
 import { authentications, userAuthentications } from "../../drizzle/schema";
-import BadRequestError from "../domain/exceptions/BadRequestError";
-import ConflictError from "../domain/exceptions/ConflictError";
-import ResponseError from "../domain/exceptions/ResponseError";
-import { CreateAuth, FetchAuth } from "../domain/interfaces/auth";
-import AuthError from "../domain/interfaces/authError";
-import Tokens from "../domain/interfaces/tokens";
+import BadRequestError from "@/domain/exceptions/BadRequestError";
+import ConflictError from "@/domain/exceptions/ConflictError";
+import ResponseError from "@/domain/exceptions/ResponseError";
+import { CreateAuth, FetchAuth } from "@/domain/interfaces/auth";
+import AuthError from "@/domain/interfaces/authError";
+import Tokens from "@/domain/interfaces/tokens";
 
 /**
  * Gets authorization tokens for authentication

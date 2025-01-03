@@ -1,12 +1,12 @@
 import { Context } from "elysia";
 
 import { Invoice } from "../../drizzle/schema";
-import UnauthorizedError from "../domain/exceptions/UnauthorizedError";
-import { SubmitInvoice } from "../domain/interfaces/invoices";
-import SuccessResponse from "../domain/types/generic/SuccessResponse";
-import * as invoiceService from "../services/invoice";
-import * as userService from "../services/user";
-import { getSub } from "../utils/extract-sub";
+import UnauthorizedError from "@/domain/exceptions/UnauthorizedError";
+import { SubmitInvoice } from "@/domain/interfaces/invoices";
+import SuccessResponse from "@/domain/types/generic/SuccessResponse";
+import * as invoiceService from "@/services/invoice";
+import * as userService from "@/services/user";
+import { getSub } from "@/utils/extract-sub";
 
 export const create = async (
   context: Context,

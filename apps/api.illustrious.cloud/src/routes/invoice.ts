@@ -1,5 +1,5 @@
 import { Elysia, t } from "elysia";
-import { Invoice } from "../domain/models/invoice";
+import { Invoice } from "@/domain/models/invoice";
 import * as invoiceController from "../modules/invoice";
 
 export default (app: Elysia) =>

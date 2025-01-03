@@ -1,7 +1,7 @@
 import Elysia from "elysia";
 import process from "process";
 import * as yc from "yoctocolors";
-import { durationString, methodString } from "../utils/logger";
+import { durationString, methodString } from "@/utils/logger";
 
 export default (app: Elysia) =>
   app

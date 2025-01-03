@@ -4,7 +4,7 @@ const isTestEnvironment = Bun.env.NODE_ENV === "test";
 
 export default {
   app: {
-    env: Bun.env.NODE_ENV,
+    env: Bun.env.NODE_ENV ?? 'development',
     url: Bun.env.APP_URL,
     name: data.name,
     version: data.version,

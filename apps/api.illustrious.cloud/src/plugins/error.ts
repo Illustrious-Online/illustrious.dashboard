@@ -2,11 +2,11 @@ import { Elysia } from "elysia";
 import { StatusCodes } from "http-status-codes";
 
 import config from "../config";
-import BadRequestError from "../domain/exceptions/BadRequestError";
-import ConflictError from "../domain/exceptions/ConflictError";
-import ResponseError from "../domain/exceptions/ResponseError";
-import UnauthorizedError from "../domain/exceptions/UnauthorizedError";
-import ErrorResponse from "../domain/types/generic/ErrorResponse";
+import BadRequestError from "@/domain/exceptions/BadRequestError";
+import ConflictError from "@/domain/exceptions/ConflictError";
+import ResponseError from "@/domain/exceptions/ResponseError";
+import UnauthorizedError from "@/domain/exceptions/UnauthorizedError";
+import ErrorResponse from "@/domain/types/generic/ErrorResponse";
 
 export default (app: Elysia) =>
   app
