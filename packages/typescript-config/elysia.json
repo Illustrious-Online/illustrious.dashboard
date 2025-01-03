@@ -5,6 +5,6 @@
       "forceConsistentCasingInFileNames": true,
       "lib": ["es2022", "DOM", "ScriptHost"],
       "moduleResolution": "NodeNext",
-      "outDir": "./dist",
+      "outDir": "./dist"
     }
   }
