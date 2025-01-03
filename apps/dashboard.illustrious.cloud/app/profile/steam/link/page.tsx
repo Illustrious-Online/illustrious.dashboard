@@ -2,11 +2,12 @@
 
 import Wrapper from '@repo/ui/wrapper';
 import { Button } from '@repo/ui/button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function LinkSteam() {
   const [loading, setLoading] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
+  const [authUrl, setAuthUrl] = useState("");
 
   const handleClick = async () => {
     setLoading(true);
@@ -19,11 +20,14 @@ export default function LinkSteam() {
     fetch("http://localhost:8000/link/steam", requestOptions)
       .then(async (response) => {
         const json = await response.json();
-        window.location.href = json.url;
+        setAuthUrl(json.url);
       })
-      .catch((error) => setResponseMessage("An error occurred while sending the request."))
-      .finally(() => setLoading(false));
+      .catch((error) => setResponseMessage("An error occurred while sending the request."));
   }
+
+  useEffect(() => {
+    window.location.href = authUrl;
+  }, [authUrl])
   
   return (
     <Wrapper>

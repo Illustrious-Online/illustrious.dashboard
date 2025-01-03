@@ -14,7 +14,7 @@
     "db:reset": "./src/utils/reset-db.sh",
     "db:migrate": "bunx drizzle-kit migrate",
     "db:push": "bunx drizzle-kit push",
-    "check": "biome check --write ./src",
+    "check": "biome check --write ./",
     "test": "set -o pipefail && ./src/utils/run-tests.sh"
   },
   "dependencies": {
