@@ -1,9 +1,5 @@
 {
   "extends": "@repo/typescript-config/elysia.json",
-  "compilerOptions": {
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "nodenext",
-  },
   "include": [
     "**/*.ts",
     "**/*.json",
