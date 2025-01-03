@@ -52,14 +52,11 @@ export const app = new Elysia()
   }))
   .use(authRoutes)
   .use(protectedRoutes)
-
-if (process.env.NODE_ENV?.includes("dev")) {
-  app.listen(config.app.port, () => {
+  .listen(config.app.port, () => {
     console.log(`Environment: ${config.app.env}`);
     console.log(
       `Illustrious Cloud API is running at ${config.app.host}:${config.app.port}`,
     );
   });
-}
 
-export default app.fetch;
+export default app;
