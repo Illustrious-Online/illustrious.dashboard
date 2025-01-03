@@ -6,7 +6,7 @@ import UnauthorizedError from "../domain/exceptions/UnauthorizedError";
 import SuccessResponse from "../domain/types/generic/SuccessResponse";
 import * as userService from "../services/user";
 import { getSub } from "../utils/extract-sub";
-import { supabaseClient } from "../app";
+import { supabaseClient } from "..";
 
 export const profile = async (context: Context) => {
   const { authorization } = context.headers as { authorization: string };

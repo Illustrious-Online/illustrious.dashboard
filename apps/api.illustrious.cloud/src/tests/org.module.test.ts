@@ -11,7 +11,7 @@ import { faker } from "@faker-js/faker";
 
 import moment from "moment";
 import { deleteRequest, getRequest, postRequest, putRequest } from ".";
-import { app } from "../app";
+import { app } from "..";
 import AuthUserInfo from "../domain/interfaces/authUserInfo";
 import Tokens from "../domain/interfaces/tokens";
 import invoice from "../routes/invoice";

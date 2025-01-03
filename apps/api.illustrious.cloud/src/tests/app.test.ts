@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
 
 import { getRequest } from ".";
-import { app } from "../app"
+import { app } from ".."
 import config from "../config";
 
 describe("Elysia", () => {

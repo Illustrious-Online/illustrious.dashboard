@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker";
 import { v4 as uuidv4 } from "uuid";
 
 import { deleteRequest, getRequest, postRequest, putRequest } from ".";
-import { app } from "../app";
+import { app } from "..";
 import AuthUserInfo from "../domain/interfaces/authUserInfo";
 import Tokens from "../domain/interfaces/tokens";
 import * as authService from "../services/auth";

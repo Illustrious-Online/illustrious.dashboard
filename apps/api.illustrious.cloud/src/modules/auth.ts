@@ -12,7 +12,7 @@ import * as authService from "../services/auth";
 import * as userService from "../services/user";
 import { getSub } from "../utils/extract-sub";
 import axios from "axios";
-import { supabaseClient } from "../app";
+import { supabaseClient } from "..";
 import { Provider } from "@supabase/supabase-js";
 
 export const create = async (code: string): Promise<Tokens> => {
