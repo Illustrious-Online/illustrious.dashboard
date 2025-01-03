@@ -16,8 +16,8 @@
       }
     ],
     "functions": {
-        "api/*": {
-            "runtime": "nodejs16.x"
+        "apps/api/*": {
+            "runtime": "nodejs22.x"
         }
     }
   }
