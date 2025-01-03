@@ -7,27 +7,36 @@ import * as userController from "../modules/user";
 
 export default (app: Elysia) =>
   app
-    .get(
-      "/profile",
-      async ({ request }) => {
-        const token = request.headers.get('authorization');
-
-        if (!token) {
-          return new Response('Unauthorized. Please log in.', { status: 400 });
-        }
-
-        try {
-          const data = await userController.profile(token);
-          return new Response(JSON.stringify(data), { status: 200 });
-        } catch (error) {
-          if (error instanceof Error) {
-            return new Response(error.message, { status: 500 });
-          } else {
-            return new Response('An unknown error occurred', { status: 500 });
-          }
-        }
+    // @ts-expect-error Swagger plugin disagrees with context
+    .get("/profile", userController.profile, {
+      headers: t.Object({
+        authorization: t.String(),
+      }),
+      response: {
+        200: t.Object(
+          {
+            message: t.String(),
+            data: User,
+          },
+          {
+            description: "Successfully found the user profile",
+          },
+        ),
+        400: t.Object(
+          {
+            code: t.Number({
+              examples: [400],
+            }),
+            message: t.String({
+              examples: ["Unable to find user with ID"],
+            }),
+          },
+          {
+            description: "Failed to find the user based on ID",
+          },
+        ),
       }
-    )
+    })
     // @ts-expect-error Swagger plugin disagrees with context
     .get("/users", userController.fetchUser, {
       query: t.Optional(
