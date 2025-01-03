@@ -1,4 +1,4 @@
-import colors from "yoctocolors";
+import yoctocolors from "yoctocolors";
 
 /**
  * Returns the duration message.
@@ -39,25 +39,25 @@ export function durationString(beforeTime: bigint): string {
 export function methodString(method: string): string {
   switch (method) {
     case "GET":
-      return colors.white("GET");
+      return yoctocolors.white("GET");
 
     case "POST":
-      return colors.yellow("POST");
+      return yoctocolors.yellow("POST");
 
     case "PUT":
-      return colors.blue("PUT");
+      return yoctocolors.blue("PUT");
 
     case "DELETE":
-      return colors.red("DELETE");
+      return yoctocolors.red("DELETE");
 
     case "PATCH":
-      return colors.green("PATCH");
+      return yoctocolors.green("PATCH");
 
     case "OPTIONS":
-      return colors.gray("OPTIONS");
+      return yoctocolors.gray("OPTIONS");
 
     case "HEAD":
-      return colors.magenta("HEAD");
+      return yoctocolors.magenta("HEAD");
 
     default:
       return method;

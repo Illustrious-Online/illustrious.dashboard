@@ -50,7 +50,7 @@ export async function getTokens(code: string): Promise<Tokens> {
     );
   }
 
-  return resJson;
+  return resJson as Tokens;
 }
 
 /**

@@ -1,7 +1,7 @@
 import Elysia from "elysia";
 import process from "process";
 import { durationString, methodString } from "../utils/logger";
-import colors from "yoctocolors";
+import yoctocolors from 'yoctocolors';
 
 export default (app: Elysia) =>
   app
@@ -34,7 +34,7 @@ export default (app: Elysia) =>
     .onError({ as: "global" }, ({ request, error, store }) => {
       const logStr: string[] = [];
 
-      logStr.push(colors.red(methodString(request.method)));
+      logStr.push(yoctocolors.red(methodString(request.method)));
 
       const requestUrl = request.url;
       if (requestUrl && isValidUrl(requestUrl)) {
@@ -43,7 +43,7 @@ export default (app: Elysia) =>
         logStr.push("Invalid URL");
       }
 
-      logStr.push(colors.red("Error"));
+      logStr.push(yoctocolors.red("Error"));
 
       if ("status" in error) {
         logStr.push(String(error.status));
