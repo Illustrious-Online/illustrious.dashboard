@@ -2,16 +2,21 @@
   "name": "api",
   "version": "1.0.50",
   "scripts": {
-    "dev": "bun run src/index.ts",
+    "dev": "bun --watch src/index.ts",
     "build": "bun build src/index.ts",
-    "start": "bun run src/index.ts"
+    "start": "bun start src/index.ts"
   },
   "dependencies": {
-    "elysia": "latest"
+    "elysia": "latest",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "typescript": "^5.0.0",
-    "bun-types": "^0.5.0"  
+    "bun-types": "^0.5.0"
   },
-  "module": "src/index.js"
+  "type":"module",
+  "module": "src/index.js",
+  "engines": {
+    "node": ">=16.0.0"
+  }
 }
