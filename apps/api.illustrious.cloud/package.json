@@ -2,10 +2,6 @@
   "name": "api.illustrious.cloud",
   "version": "0.0.1",
   "private": true,
-  "resolve": {
-    "fallback": { "crypto": false }
-  },
-  "type": "module",
   "scripts": {
     "dev": "NODE_ENV=development bun run --watch ./src/app.ts",
     "build": "bun build --compile --minify-whitespace --minify-syntax --target bun ./src/app.ts",
