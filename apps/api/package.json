@@ -2,9 +2,9 @@
   "name": "api",
   "version": "1.0.50",
   "scripts": {
-    "dev": "NODE_ENV=development bun --watch src/index.ts",
-    "build": "bun build --compile --minify-whitespace --minify-syntax --target node --outfile ./dist/index.js ./src/index.ts",
-    "start": "bun start src/index.ts"
+    "dev": "bun index.ts",
+    "build": "bun build",
+    "start": "bun index.ts"
   },
   "dependencies": {
     "@elysiajs/eden": "^1.2.0",
