@@ -3,12 +3,11 @@
   "version": "1.0.50",
   "scripts": {
     "dev": "bun --watch src/index.ts",
-    "build": "bun build src/index.ts",
+    "build": "bun build --compile --minify-whitespace --minify-syntax --target bun --outfile ./dist/index.js ./src/index.ts",
     "start": "bun start src/index.ts"
   },
   "dependencies": {
-    "elysia": "latest",
-    "ts-node": "^10.9.2"
+    "elysia": "latest"
   },
   "devDependencies": {
     "typescript": "^5.0.0",
