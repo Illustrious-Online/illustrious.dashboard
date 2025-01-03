@@ -44,14 +44,20 @@ export async function create(payload: CreateOrg): Promise<Org> {
     const result = await db.insert(orgs).values(payload.org).returning();
 
     if (result.length > 0) {
+      const resultOrg = result[0];
+
+      if (!resultOrg) {
+        throw new ConflictError("Failed to return response on create");
+      }
+
       await db.insert(orgUsers).values({
         id: uuidv4(),
         role: "OWNER",
         userId: user,
-        orgId: result[0].id,
+        orgId: resultOrg.id,
       });
 
-      return result[0];
+      return resultOrg;
     }
 
     throw new ConflictError("Failed to create the new organization.");
@@ -76,7 +82,13 @@ export async function fetchOne(id: string): Promise<Org> {
   const result = await db.select().from(orgs).where(eq(orgs.id, id));
 
   if (result.length > 0) {
-    return result[0];
+    const response = result[0];
+
+    if (!response) {
+      throw new ConflictError("Failed to return response on create");
+    }
+
+    return response;
   }
 
   throw new NotFoundError();
@@ -156,7 +168,13 @@ export async function update(payload: Org): Promise<Org> {
     .where(eq(orgs.id, id))
     .returning();
 
-  return result[0];
+  const response = result[0];
+
+  if (!response) {
+    throw new NotFoundError();
+  }
+
+  return response;
 }
 
 /**
@@ -191,6 +209,10 @@ export async function deleteOne(userId: string, id: string): Promise<void> {
 
   if (orgUser.role !== "OWNER") {
     throw new UnauthorizedError("This user is not allowed to delete this org");
+  }
+
+  if (!currentOrg) {
+    throw new NotFoundError();
   }
 
   const orgInvoicesList = await db

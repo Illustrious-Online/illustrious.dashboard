@@ -49,8 +49,13 @@ export async function create(payload: User): Promise<User> {
   }
 
   const result = await db.insert(users).values(payload).returning();
+  const response = result[0];
 
-  return result[0];
+  if (!response) {
+    throw new ConflictError("Failed to return response on create");
+  }
+
+  return response;
 }
 
 /**
@@ -65,7 +70,14 @@ export async function fetchOne(payload: FetchUser): Promise<User> {
       .select()
       .from(users)
       .where(eq(users.id, payload.id));
-    return result[0];
+
+    const response = result[0];
+
+    if (!response) {
+      throw new ConflictError("Unable to find User");
+    }
+
+    return response;
   }
 
   if (payload.email) {
@@ -73,7 +85,14 @@ export async function fetchOne(payload: FetchUser): Promise<User> {
       .select()
       .from(users)
       .where(eq(users.email, payload.email));
-    return result[0];
+
+    const response = result[0];
+
+    if (!response) {
+      throw new ConflictError("Unable to find User");
+    }
+
+    return response;
   }
 
   if (payload.sub) {
@@ -98,7 +117,13 @@ export async function fetchOne(payload: FetchUser): Promise<User> {
       .from(users)
       .where(eq(users.id, auth.userId));
 
-    return result[0];
+    const finalResult = result[0];
+
+    if (!finalResult) {
+      throw new ConflictError("Unable to find User");
+    }
+
+    return finalResult;
   }
 
   throw new BadRequestError("Failed to fetch user with provided details");
@@ -165,7 +190,13 @@ export async function update(payload: User): Promise<User> {
     .where(eq(users.id, id))
     .returning();
 
-  return result[0];
+  const response = result[0];
+
+  if (!response) {
+    throw new ConflictError("Failed to return response on update");
+  }
+
+  return response;
 }
 
 /**
@@ -222,6 +253,13 @@ export async function validatePermissions(
   }
 
   const orgUser = userFromOrg[0];
+
+  if (!orgUser) {
+    throw new ConflictError(
+      "Unable to continue: Failed to find user in organization",
+    );
+  }
+
   const clientIndex = Object.keys(UserRole).indexOf("CLIENT");
   const roleIndex = Object.keys(UserRole).indexOf(orgUser.role);
 

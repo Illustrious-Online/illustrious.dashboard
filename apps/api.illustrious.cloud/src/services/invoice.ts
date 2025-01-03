@@ -80,16 +80,24 @@ export async function fetchById(payload: {
       );
     }
 
+    const selected = invoiceOrg[0];
+
+    if (!selected) {
+      throw new UnauthorizedError(
+        "User does not have direct association this Invoice.",
+      );
+    }
+
     const users = await db
       .select()
       .from(orgUsers)
       .where(
         and(
           eq(orgUsers.userId, userId),
-          eq(orgUsers.orgId, invoiceOrg[0].orgId),
+          eq(orgUsers.orgId, selected.orgId),
         ),
       )
-      .innerJoin(orgs, eq(orgs.id, invoiceOrg[0].orgId));
+      .innerJoin(orgs, eq(orgs.id, selected.orgId));
 
     if (users.length !== 1) {
       throw new UnauthorizedError(
@@ -97,7 +105,15 @@ export async function fetchById(payload: {
       );
     }
 
-    const orgUser = users[0].OrgUser;
+    const selectedUser = users[0];
+
+    if (!selectedUser) {
+      throw new UnauthorizedError(
+        "User does not have and Org assocation this Invoice.",
+      );
+    }
+
+    const orgUser = selectedUser.OrgUser;
     const clientIndex = Object.keys(UserRole).indexOf("CLIENT");
     const roleIndex = Object.keys(UserRole).indexOf(orgUser.role);
 
@@ -114,7 +130,13 @@ export async function fetchById(payload: {
     throw new NotFoundError();
   }
 
-  return data[0];
+  const result = data[0];
+
+  if (!result) {
+    throw new NotFoundError();
+  }
+
+  return result;
 }
 
 /**
@@ -138,7 +160,13 @@ export async function update(payload: Invoice): Promise<Invoice> {
     .where(eq(invoices.id, id))
     .returning();
 
-  return result[0];
+  const response = result[0];
+
+  if (!response) {
+    throw new ConflictError("Failed to return response on update");
+  }
+
+  return response;
 }
 
 /**

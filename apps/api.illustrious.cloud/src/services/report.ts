@@ -46,7 +46,13 @@ export async function create(payload: CreateReport): Promise<Report> {
     reportId: report.id,
   });
 
-  return result[0];
+  const response = result[0];
+
+  if (!response) {
+    throw new ConflictError("Failed to return response on create");
+  }
+
+  return response;
 }
 
 /**
@@ -74,16 +80,24 @@ export async function fetchOne(payload: FetchReport): Promise<Report> {
       );
     }
 
+    const org = reportOrg[0];
+
+    if (!org) {
+      throw new UnauthorizedError(
+        "Unable to find org association for this Report.",
+      );
+    }
+
     const users = await db
       .select()
       .from(orgUsers)
       .where(
         and(
           eq(orgUsers.userId, userId),
-          eq(orgUsers.orgId, reportOrg[0].orgId),
+          eq(orgUsers.orgId, org.orgId),
         ),
       )
-      .innerJoin(orgs, eq(orgs.id, reportOrg[0].orgId));
+      .innerJoin(orgs, eq(orgs.id, org.orgId));
 
     if (users.length !== 1) {
       throw new UnauthorizedError(
@@ -91,7 +105,15 @@ export async function fetchOne(payload: FetchReport): Promise<Report> {
       );
     }
 
-    const orgUser = users[0].OrgUser;
+    const userOrg = users[0];
+
+    if (!userOrg) {
+      throw new UnauthorizedError(
+        "Unable to find user org association for this Report.",
+      );
+    }
+
+    const orgUser = userOrg.OrgUser;
     const clientIndex = Object.keys(UserRole).indexOf("CLIENT");
     const roleIndex = Object.keys(UserRole).indexOf(orgUser.role);
 
@@ -108,7 +130,13 @@ export async function fetchOne(payload: FetchReport): Promise<Report> {
     throw new NotFoundError();
   }
 
-  return data[0];
+  const result = data[0];
+
+  if (!result) {
+    throw new NotFoundError();
+  }
+
+  return result;
 }
 
 /**
@@ -139,7 +167,13 @@ export async function update(payload: Report): Promise<Report> {
     throw new ConflictError("Failed to return response on update");
   }
 
-  return result[0];
+  const response = result[0];
+
+  if (!response) {
+    throw new ConflictError("Failed to return response on update");
+  }
+
+  return response;
 }
 
 /**
