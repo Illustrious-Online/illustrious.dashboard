@@ -8,14 +8,23 @@ import * as userService from "../services/user";
 import { getSub } from "../utils/extract-sub";
 import { supabaseClient } from "../app";
 
-export const profile = async (token: string) => {
-  const { data: user, error } = await supabaseClient.auth.getUser(token);
+export const profile = async (context: Context) => {
+  const { authorization } = context.headers as { authorization: string };
 
-  if (error) {
-    throw new Error(error.message);
+  if (!authorization) {
+    return new Response('Unauthorized. Please log in.', { status: 400 });
   }
 
-  return user;
+  const { data: user, error } = await supabaseClient.auth.getUser(authorization);
+
+  if (error) {
+    throw new Error(error instanceof Error ? error?.message : "An unknown error occurred.");
+  }
+
+  return {
+    data: user,
+    message: "User profile fetched successfully."
+  }
 };
 
 export const create = async (
