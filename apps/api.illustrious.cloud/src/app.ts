@@ -1,5 +1,5 @@
 import bearer from "@elysiajs/bearer";
-import cors from 'micro-cors';
+import cors from "@elysiajs/cors";
 import swagger from "@elysiajs/swagger";
 import { Elysia } from "elysia";
 
@@ -16,7 +16,7 @@ export const supabaseClient = createClient(
 );
 
 // Elysia application setup
-const app = new Elysia()
+export const app = new Elysia()
   .use(cors())
   .use(
     swagger({
@@ -45,22 +45,21 @@ const app = new Elysia()
   )
   .use(bearer());
 
-  if (process.env.NODE_ENV?.includes("dev")) {
-    app.use(loggerPlugin);
-  }
-  app
+if (process.env.NODE_ENV === "development") {
+  app.use(loggerPlugin);
+}
+
+app
   .use(errorPlugin)
   .get("/", () => ({
     name: config.app.name,
     version: config.app.version,
   }))
   .use(authRoutes)
-  .use(protectedRoutes);
-
-// Export `fetch` instead of `listen` for serverless environments (like Vercel)
-export default process.env.NODE_ENV?.includes("dev") ? app.listen(config.app.port, () => {
-  console.log(`Environment: ${config.app.env}`);
-  console.log(
-    `Illustrious Cloud API is running at ${config.app.host}:${config.app.port}`,
-  );
-}) : app.fetch;
+  .use(protectedRoutes)
+  .listen(config.app.port, () => {
+    console.log(`Environment: ${config.app.env}`);
+    console.log(
+      `Illustrious Cloud API is running at ${config.app.host}:${config.app.port}`,
+    );
+  });
