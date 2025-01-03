@@ -1,6 +1,5 @@
 import { Context } from "elysia";
 
-import { jwtDecode } from "jwt-decode";
 import { Invoice, Org, Report, User } from "../../drizzle/schema";
 import UnauthorizedError from "@/domain/exceptions/UnauthorizedError";
 import SuccessResponse from "@/domain/types/generic/SuccessResponse";
@@ -34,6 +33,11 @@ export const create = async (
 export const fetchOrg = async (context: Context) => {
   const { id } = context.params;
   const { include } = context.query;
+
+  if (!id) {
+    throw new UnauthorizedError("Organization ID is required.");
+  }
+
   const data = await orgService.fetchOne(id);
   const result: {
     org: Org;
@@ -68,6 +72,11 @@ export const fetchOrg = async (context: Context) => {
 
 export const fetchResources = async (context: Context) => {
   const { id, type } = context.params;
+
+  if (!id || !type) {
+    throw new UnauthorizedError("Organization ID and resource type are required.");
+  }
+
   const data = await orgService.fetchAll(id, type);
 
   return {
@@ -107,6 +116,10 @@ export const deleteOne = async (context: Context) => {
   const { id } = context.params;
   const sub = await getSub(context.headers.authorization);
   const user = await userService.fetchOne({ sub });
+
+  if (!id) {
+    throw new UnauthorizedError("Organization ID is required.");
+  }
 
   await orgService.deleteOne(user.id, id);
 

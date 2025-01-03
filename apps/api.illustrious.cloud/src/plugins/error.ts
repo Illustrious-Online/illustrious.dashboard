@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
 import { StatusCodes } from "http-status-codes";
 
-import config from "../config";
+import config from "@/config";
 import BadRequestError from "@/domain/exceptions/BadRequestError";
 import ConflictError from "@/domain/exceptions/ConflictError";
 import ResponseError from "@/domain/exceptions/ResponseError";
@@ -13,7 +13,7 @@ export default (app: Elysia) =>
     .error({ BadRequestError, ConflictError, ResponseError, UnauthorizedError })
     .onError((handler): ErrorResponse<number> => {
       if (config.app.env !== "test") {
-        console.error(handler.error?.stack);
+        console.error(handler.error instanceof Error ? handler.error.stack : 'Unknown Error');
       }
 
       if (
@@ -49,7 +49,7 @@ export default (app: Elysia) =>
       handler.set.status = StatusCodes.SERVICE_UNAVAILABLE;
 
       return {
-        message: handler.error.message,
+        message: handler.error instanceof Error ? handler.error.message : 'Unknown Error',
         code: handler.set.status,
       };
     });

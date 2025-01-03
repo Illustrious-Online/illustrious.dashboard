@@ -30,6 +30,11 @@ export const create = async (
 export const fetchOne = async (context: Context) => {
   const { authorization } = context.headers as { authorization: string };
   const { id } = context.params;
+
+  if (!id) {
+    throw new UnauthorizedError("Report ID is required.");
+  }
+
   const sub = await getSub(authorization);
   const user = await userService.fetchOne({ sub });
   const data = await reportService.fetchOne({
@@ -61,6 +66,10 @@ export const deleteOne = async (context: Context) => {
   const { authorization } = context.headers as { authorization: string };
   const sub = await getSub(authorization);
   const { id, org } = context.params;
+
+  if (!org || !id) {
+    throw new UnauthorizedError("Report ID and Org ID are required.");
+  }
 
   await userService.validatePermissions(sub, org);
   await reportService.deleteOne(id);

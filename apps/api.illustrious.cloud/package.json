@@ -49,12 +49,17 @@
     "tsx": "^4.9.3",
     "typescript": "^5.4.5",
     "uuid": "^9.0.1",
-    "yoctocolors": "^2.0.0"
+    "yoctocolors": "^2.1.1"
   },
   "release": {
     "branches": [
       "main"
     ]
   },
-  "module": "src/app.ts"
+  "module": "src/app.ts",
+  "trustedDependencies": [
+    "core-js",
+    "core-js-pure",
+    "es5-ext"
+  ]
 }

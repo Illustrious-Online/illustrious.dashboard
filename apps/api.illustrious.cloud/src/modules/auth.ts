@@ -91,13 +91,15 @@ export const deleteOne = async (
   const { id } = context.params;
   const auth = await authService.fetchOne({ id });
 
-  if (auth.sub !== sub) {
+  if (auth?.sub !== sub) {
     throw new UnauthorizedError(
       "This user is not allowed to delete this Authentication",
     );
   }
 
-  await authService.deleteOne(id);
+  if (id) {
+    await authService.deleteOne(id);
+  }
 
   return {
     message: "Successfully deleted requested authentaction",

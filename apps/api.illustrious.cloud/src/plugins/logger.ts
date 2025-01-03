@@ -1,7 +1,11 @@
 import Elysia from "elysia";
 import process from "process";
-import * as yc from "yoctocolors";
 import { durationString, methodString } from "@/utils/logger";
+
+let colors: any;
+import("yoctocolors").then((module) => {
+  colors = module.default;
+});
 
 export default (app: Elysia) =>
   app
@@ -27,15 +31,15 @@ export default (app: Elysia) =>
     .onError({ as: "global" }, ({ request, error, store }) => {
       const logStr: string[] = [];
 
-      logStr.push(yc.red(methodString(request.method)));
+      logStr.push(colors.red(methodString(request.method)));
       logStr.push(new URL(request.url).pathname);
-      logStr.push(yc.red("Error"));
+      logStr.push(colors.red("Error"));
 
       if ("status" in error) {
         logStr.push(String(error.status));
       }
 
-      logStr.push(error.message);
+      logStr.push(error instanceof Error ? error.message : 'Uknown Error');
 
       const beforeTime: bigint = store.beforeTime;
       logStr.push(durationString(beforeTime));

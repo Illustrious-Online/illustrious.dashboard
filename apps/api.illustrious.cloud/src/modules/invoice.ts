@@ -37,6 +37,11 @@ export const fetchOne = async (context: Context) => {
   const { id } = context.params;
   const sub = await getSub(context.headers.authorization);
   const user = await userService.fetchOne({ sub });
+
+  if (!id) {
+    throw new UnauthorizedError("Invoice ID is required.");
+  }
+
   const data = await invoiceService.fetchById({
     id,
     userId: user.id,
@@ -66,6 +71,10 @@ export const deleteOne = async (context: Context) => {
   const { authorization } = context.headers;
   const sub = await getSub(authorization!);
   const { id, org } = context.params;
+
+  if (!org || !id) {
+    throw new UnauthorizedError("Invoice ID and Org ID are required.");
+  }
 
   await userService.validatePermissions(sub, org);
   await invoiceService.deleteOne(id);
