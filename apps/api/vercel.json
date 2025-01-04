@@ -1,7 +1,8 @@
 {
   "functions": {
     "api/elysia.ts": {
-      "runtime": "edge"
+      "memory": 3009,
+      "maxDuration": 30
     }
   }
 }
