@@ -18,12 +18,5 @@
   },
   "engines": {
     "bun": "latest"
-  },
-  "vercel": {
-    "functions": {
-      "api/elysia.ts": {
-        "runtime": "bun@1.1.42"
-      }
-    }
   }
 }
