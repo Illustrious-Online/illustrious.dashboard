@@ -6,7 +6,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true
+    "strict": true,
+  	"baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["index.ts", "api/**/*.ts"]
+  "include": ["src/**/*.ts", "node_modules/elysia"]
 }

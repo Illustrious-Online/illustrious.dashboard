@@ -3,9 +3,13 @@
   "version": "1.0.50",
   "main": "index.ts",
   "scripts": {
-    "dev": "bun index.ts", 
-    "build": "bun build", 
-    "start": "bun index.ts"
+    "dev": "bun run --watch src/app.ts",
+    "start": "NODE_ENV=production bun src/app.ts",
+    "start:docker": "docker-compose -f docker-compose.app.yml up",
+    "db:docker": "docker compose -f docker-compose.db.yml up",
+    "db:reset": "./src/utils/reset-db.sh",
+    "db:migrate": "bunx drizzle-kit migrate",
+    "db:push": "bunx drizzle-kit push"
   },
   "dependencies": {
     "@elysiajs/eden": "^1.2.0",
