@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/elysia.ts": {
-      "runtime": "node"
+      "runtime": "@vercel/node"
     }
   }
 }
