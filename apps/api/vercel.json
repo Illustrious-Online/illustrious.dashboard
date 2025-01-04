@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "app/elysia.ts": {
+      "runtime": "bun"
+    }
+  }
+}
