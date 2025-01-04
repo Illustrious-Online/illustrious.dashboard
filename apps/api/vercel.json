@@ -1,7 +1,7 @@
 {
   "functions": {
     "app/elysia.ts": {
-      "runtime": "bun"
+      "runtime": "bun@1.1.42"
     }
   }
 }
