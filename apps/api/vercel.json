@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/elysia.ts": {
-      "runtime": "@vercel/node"
+      "runtime": "nodejs22.x"
     }
   }
 }
