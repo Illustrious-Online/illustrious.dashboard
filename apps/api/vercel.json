@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/elysia.ts": {
-      "runtime": "node18"
+      "runtime": "edge"
     }
   }
 }
