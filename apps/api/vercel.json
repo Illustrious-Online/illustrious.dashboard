@@ -1,6 +1,6 @@
 {
   "functions": {
-    "app/elysia.ts": {
+    "api/elysia.ts": {
       "runtime": "bun@1.1.42"
     }
   }
