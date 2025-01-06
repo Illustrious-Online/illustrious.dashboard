@@ -1,5 +1,5 @@
 {
-  "name": "dashboard",
+  "name": "ill.dashboard",
   "version": "0.1.0",
   "private": true,
   "release": {
@@ -7,7 +7,6 @@
       "main"
     ]
   },
-  "strict": false,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -27,5 +26,8 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19"
+  },
+  "engines": {
+    "bun": "latest"
   }
 }

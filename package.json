@@ -22,6 +22,8 @@
   ],
   "trustedDependencies": [
     "core-js",
-    "core-js-pure"
+    "core-js-pure",
+    "esbuild",
+    "sharp"
   ]
 }
