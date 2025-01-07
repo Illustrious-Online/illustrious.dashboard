@@ -12,7 +12,7 @@ terraform {
 }
 
 provider "digitalocean" {
-  token = "dop_v1_bc2cbf89b37af95140431251ef6c403d2907e64d06e6cf4febefdd6f65e7762a"
+  token = "dop_v1_eaad4c331875bda7cfdccd55ea29758743ae2699a5c37cbe669f4b17446c19d4"
 }
 
 provider "kubernetes" {
@@ -21,7 +21,7 @@ provider "kubernetes" {
 
 resource "digitalocean_kubernetes_cluster" "main" {
   name       = "illustrious-cluster"
-  region     = "nyc3"
+  region     = "nyc1"
   version    = "1.31.1-do.5"
   node_pool {
     name       = "default-node-pool"

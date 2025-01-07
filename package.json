@@ -25,5 +25,8 @@
     "core-js-pure",
     "esbuild",
     "sharp"
-  ]
+  ],
+  "dependencies": {
+    "next": "^15.1.3"
+  }
 }

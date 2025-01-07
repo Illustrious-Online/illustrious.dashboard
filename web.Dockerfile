@@ -1,29 +1,23 @@
-# Step 1: Use the Bun image for Node.js
-FROM oven/bun:latest AS base
 
-# Step 2: Set the working directory inside the container
+FROM oven/bun:latest AS builder
+
 WORKDIR /app
 
-# Step 3: Copy the root package files (including bun.lockb, turbo.json, and package.json)
-# This ensures we only copy the relevant package files to optimize caching
 COPY package.json bun.lockb turbo.json ./
+COPY packages ./packages
+COPY apps ./apps
 
-# Step 5: Copy all other necessary files (like source code and ui package)
-# This step should copy everything in your repo, including the `packages/ui` workspace
-COPY apps/ill.web apps/ill.web
-COPY packages/typescript-config packages/typescript-config
-COPY packages/ui packages/ui
-
-# Step 4: Install dependencies across workspaces using Bun
 RUN bun install
+RUN bun run build --filter ill.web
 
-# Step 6: Build the Next.js app
-# Assuming your Next.js app is in the `apps/nextjs-app` directory
-RUN bun run build --cwd apps/ill.web
+FROM oven/bun:latest AS production
 
-# Step 7: Expose the app on port 3000
+WORKDIR /app
+
+COPY --from=builder /app/apps/ill.web/.next/standalone/apps/ill.web /app
+COPY --from=builder /app/apps/ill.web/.next/static /app/.next/static
+COPY --from=builder /app/node_modules /app/node_modules 
+
+ENV NODE_ENV=production
 EXPOSE 3000
-
-# Step 8: Start the app
-# Assuming the start script is configured for your Next.js app
-CMD ["bun", "start", "--cwd", "apps/ill.web"]
+CMD ["bun", "server.js"]

@@ -27,6 +27,13 @@ out/
 build
 dist
 
+# k8s package details
+packages/k8s/.terraform
+packages/k8s/.terraform.lock.hcl
+packages/k8s/kubeconfig.yaml
+packages/k8s/terraform.tfstate
+packages/k8s/terraform.tfstate.backup
+packages/k8s/terraform.tfstate.lock.info
 
 # Debug
 npm-debug.log*
