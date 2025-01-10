@@ -4,6 +4,8 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "lint": "turbo lint",
+    "format": "turbo format",
     "check": "turbo check"
   },
   "devDependencies": {

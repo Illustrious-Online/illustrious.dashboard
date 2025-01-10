@@ -10,8 +10,10 @@
     "./wrapper": "./src/wrapper.tsx"
   },
   "scripts": {
-    "check": "biome check --write ./src",
-    "generate:component": "turbo gen react-component"
+    "generate:component": "turbo gen react-component",
+    "format": "biome format --write ./app",
+    "lint": "biome lint --write ./app",
+    "check": "biome check --write ./app"
   },
   "devDependencies": {
     "@repo/typescript-config": "*",

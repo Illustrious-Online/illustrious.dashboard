@@ -13,7 +13,7 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": false,
+			"recommended": true,
 			"a11y": { "useButtonType": "error" },
 			"complexity": { "noUselessFragments": "warn" },
 			"correctness": {
