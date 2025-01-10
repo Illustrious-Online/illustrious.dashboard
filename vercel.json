@@ -1,8 +1,0 @@
-{
-  "builds": [
-    {
-      "src": "apps/api/Dockerfile",
-      "use": "@vercel/docker"
-    }
-  ]
-}
