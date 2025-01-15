@@ -2,14 +2,15 @@
 
 import { useColorMode } from "@chakra-ui/color-mode";
 import { Box, Button, Flex, Heading, Spacer, Text } from "@chakra-ui/react";
-import type React from "react";
 import { ColorModeButton } from "./components/color-mode";
+import type { FC, ReactNode } from "react";
+import * as React from "react";
 
 interface LayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-const Wrapper: React.FC<LayoutProps> = ({ children }) => {
+const Wrapper: FC<LayoutProps> = ({ children }) => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (

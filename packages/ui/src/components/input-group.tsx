@@ -7,7 +7,7 @@ export interface InputGroupProps extends BoxProps {
   endElementProps?: InputElementProps;
   startElement?: React.ReactNode;
   endElement?: React.ReactNode;
-  children: React.ReactElement;
+  children: React.ReactElement<InputElementProps>;
   startOffset?: InputElementProps["paddingStart"];
   endOffset?: InputElementProps["paddingEnd"];
 }
@@ -25,8 +25,7 @@ export const InputGroup = React.forwardRef<HTMLDivElement, InputGroupProps>(
       ...rest
     } = props;
 
-    const child =
-      React.Children.only<React.ReactElement<InputElementProps>>(children);
+    const child = React.Children.only(children);
 
     return (
       <Group ref={ref} {...rest}>

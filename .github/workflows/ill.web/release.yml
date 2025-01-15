@@ -1,0 +1,43 @@
+name: Perform release
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/ill.web/**'
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install Dependencies
+        run: bun install --frozen-lockfile
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_TOKEN }}
+      - name: Install spaces-cli
+        run: bun install -g spaces-cli
+      - name: Download dependency files
+        run: |
+          export SPACE_URL=https://${{ secrets.SPACE_NAME }}.${{ secrets.SPACE_REGION }}.digitaloceanspaces.com
+          spaces-cli down $SPACE_URL/web/production.env -o ./apps/ill.web/.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+      - name: Build Docker image
+        run: |
+          bunx turbo run build --filter=ill.web
+          docker build -t ${{ secrets.REGISTRY_URL }}/ill-web:latest -f packages/deployment/docker/web.Dockerfile .
+      - name: Authenticate with DO registry
+        run: doctl registry login --expiry-seconds 1200
+      - name: Push Docker Container
+        run: docker push ${{ secrets.REGISTRY_URL }}/ill-web:latest
+      - name: Execute Semantic Release
+        run: bunx semantic-release

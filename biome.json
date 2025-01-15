@@ -29,7 +29,7 @@
 	},
   "overrides": [
     {
-      "include": ["*.json"],
+      "include": ["*.json,*.yml"],
       "formatter": {
         "indentWidth": 2
       }

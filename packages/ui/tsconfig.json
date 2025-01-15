@@ -4,8 +4,12 @@
     "jsx": "react",
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "Node",
     "skipLibCheck": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "declaration": true,
+    "declarationDir": "dist",
     "paths": {
       "@/*": ["./src/*"]
     },
@@ -13,7 +17,6 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }
-
