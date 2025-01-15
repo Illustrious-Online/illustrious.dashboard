@@ -3,6 +3,8 @@ on:
   push:
     branches-ignore:
       - main
+    paths:
+      - 'apps/ill.cloud/src/**'
 jobs:
   check-and-test:
     runs-on: ubuntu-latest

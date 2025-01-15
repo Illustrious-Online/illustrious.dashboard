@@ -1,6 +1,5 @@
-[coverage]
-exclude = ['**/src/utils/*','**/src/drizzle/*']
 [test]
 coverage = true
 coverageSkipTestFiles = true
 coverageThreshold = { lines = 0.75, functions = 0.85 }
+coverageReporter = ["lcov"]
