@@ -97,7 +97,7 @@ describe("User Module", () => {
       org: mockOrg.id,
       invoice: mockInvoice,
     });
-    console.log('test created invoice', mockInvoice);
+    console.log("test created invoice", mockInvoice);
   });
 
   afterAll(async () => {

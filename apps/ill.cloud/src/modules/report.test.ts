@@ -1,12 +1,12 @@
-import type { Report, User as IllustriousUser, Org } from "@/drizzle/schema";
+import type { User as IllustriousUser, Org, Report } from "@/drizzle/schema";
+import type { AuthenticatedContext } from "@/plugins/auth";
 import { faker } from "@faker-js/faker";
 import type { Context } from "elysia";
 import UnauthorizedError from "../domain/exceptions/UnauthorizedError";
 import { UserRole } from "../domain/types/UserRole";
-import * as userService from "../services/user";
 import * as orgService from "../services/org";
+import * as userService from "../services/user";
 import { create, deleteOne, fetchOne, update } from "./report";
-import type { AuthenticatedContext } from "@/plugins/auth";
 
 const defaultContext: Context = {} as Context;
 const mockUser: IllustriousUser = {
@@ -54,9 +54,9 @@ const mockContext = (overrides = {}) => ({
 
 describe("Report Module", () => {
   beforeAll(async () => {
-      await userService.updateOrCreate(mockUser);
-      await userService.updateOrCreate(secondUser);
-      await orgService.create({ user: mockUser.id, org: mockOrg });
+    await userService.updateOrCreate(mockUser);
+    await userService.updateOrCreate(secondUser);
+    await orgService.create({ user: mockUser.id, org: mockOrg });
   });
 
   afterAll(async () => {
@@ -67,7 +67,7 @@ describe("Report Module", () => {
   describe("create", () => {
     it("should create a report if user has permission", async () => {
       const context = mockContext({
-        body: { client: secondUser.id, org: mockOrg.id, report: mockReport }
+        body: { client: secondUser.id, org: mockOrg.id, report: mockReport },
       });
       const result = await create(context as AuthenticatedContext);
 
@@ -84,10 +84,12 @@ describe("Report Module", () => {
           org: { id: mockOrg.id, role: UserRole.CLIENT },
         },
         user: secondUser,
-        body: { client: mockUser.id, org: mockOrg.id, report: mockReport }
+        body: { client: mockUser.id, org: mockOrg.id, report: mockReport },
       });
 
-      await expect(create(context as AuthenticatedContext)).rejects.toThrow(UnauthorizedError);
+      await expect(create(context as AuthenticatedContext)).rejects.toThrow(
+        UnauthorizedError,
+      );
     });
   });
 
@@ -95,7 +97,7 @@ describe("Report Module", () => {
     it("should fetch a report if user has permission", async () => {
       const context = mockContext({
         user: mockUser,
-        params: { report: mockReport.id }
+        params: { report: mockReport.id },
       });
 
       const result = await fetchOne(context as AuthenticatedContext);
@@ -113,10 +115,12 @@ describe("Report Module", () => {
           org: { id: mockOrg.id, role: UserRole.CLIENT },
         },
         user: secondUser,
-        params: { report: mockReport.id }
+        params: { report: mockReport.id },
       });
 
-      await expect(fetchOne(context as AuthenticatedContext)).rejects.toThrow(UnauthorizedError);
+      await expect(fetchOne(context as AuthenticatedContext)).rejects.toThrow(
+        UnauthorizedError,
+      );
     });
   });
 
@@ -130,8 +134,8 @@ describe("Report Module", () => {
           report: {
             ...mockReport,
             rating: 4,
-          }
-        }
+          },
+        },
       });
 
       const result = await update(context as AuthenticatedContext);
@@ -158,18 +162,20 @@ describe("Report Module", () => {
           report: {
             ...mockReport,
             rating: 4,
-          }
-        }
+          },
+        },
       });
 
-      await expect(update(context as AuthenticatedContext)).rejects.toThrow(UnauthorizedError);
+      await expect(update(context as AuthenticatedContext)).rejects.toThrow(
+        UnauthorizedError,
+      );
     });
   });
 
   describe("deleteOne", () => {
     it("should delete a report if user has permission", async () => {
       const context = mockContext({
-        params: { report: mockReport.id }
+        params: { report: mockReport.id },
       });
       const result = await deleteOne(context as AuthenticatedContext);
 
@@ -185,10 +191,12 @@ describe("Report Module", () => {
           org: { id: mockOrg.id, role: UserRole.CLIENT },
         },
         user: secondUser,
-        params: { report: mockReport.id }
+        params: { report: mockReport.id },
       });
 
-      await expect(deleteOne(context as AuthenticatedContext)).rejects.toThrow(UnauthorizedError);
+      await expect(deleteOne(context as AuthenticatedContext)).rejects.toThrow(
+        UnauthorizedError,
+      );
     });
   });
 });
