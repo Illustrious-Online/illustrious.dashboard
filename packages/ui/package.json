@@ -11,9 +11,9 @@
   },
   "scripts": {
     "generate:component": "turbo gen react-component",
-    "format": "biome format --write ./app",
-    "lint": "biome lint --write ./app",
-    "check": "biome check --write ./app"
+    "check": "bunx @biomejs/biome check --write ./src",
+    "format": "bunx @biomejs/biome format --write ./src",
+    "lint": "bunx @biomejs/biome lint --write ./src"
   },
   "devDependencies": {
     "@repo/typescript-config": "*",

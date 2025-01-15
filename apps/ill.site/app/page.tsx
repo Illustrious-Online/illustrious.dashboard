@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import Wrapper from '@repo/ui/wrapper';
+import Wrapper from "@repo/ui/wrapper";
 
 export default function Home() {
   return (

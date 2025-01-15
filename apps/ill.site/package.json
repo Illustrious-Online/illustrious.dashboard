@@ -12,9 +12,9 @@
     "build": "next build",
     "start": "next start",
     "test": "jest --passWithNoTests",
-    "format": "biome format --write ./app",
-    "lint": "biome lint --write ./app",
-    "check": "biome check --write ./app"
+    "check": "bunx @biomejs/biome check --write ./app",
+    "format": "bunx @biomejs/biome format --write ./app",
+    "lint": "bunx @biomejs/biome lint --write ./app"
   },
   "dependencies": {
     "@repo/ui": "*",

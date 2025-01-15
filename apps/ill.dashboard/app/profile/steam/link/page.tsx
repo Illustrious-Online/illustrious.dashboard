@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import Wrapper from '@repo/ui/wrapper';
-import { Button } from '@repo/ui/button';
-import { useEffect, useState } from 'react';
+import { Button } from "@repo/ui/button";
+import Wrapper from "@repo/ui/wrapper";
+import { useEffect, useState } from "react";
 
 export default function LinkSteam() {
   const [loading, setLoading] = useState(false);
@@ -14,33 +14,35 @@ export default function LinkSteam() {
 
     const requestOptions: RequestInit = {
       method: "POST",
-      redirect: "follow"
+      redirect: "follow",
     };
-    
+
     fetch("http://localhost:8000/link/steam", requestOptions)
       .then(async (response) => {
         const json = await response.json();
         setAuthUrl(json.url);
       })
-      .catch((error) => setResponseMessage("An error occurred while sending the request."));
-  }
+      .catch((error) =>
+        setResponseMessage("An error occurred while sending the request."),
+      );
+  };
 
   useEffect(() => {
     window.location.href = authUrl;
-  }, [authUrl])
-  
+  }, [authUrl]);
+
   return (
     <Wrapper>
       <h1>Hello World</h1>
       <Button
-          loading={loading}
-          loadingText="Processing..."
-          colorScheme="teal"
-          onClick={handleClick}
-        >
-          Login with steam?
-        </Button>
-        {responseMessage && <p>{responseMessage}</p>}
+        loading={loading}
+        loadingText="Processing..."
+        colorScheme="teal"
+        onClick={handleClick}
+      >
+        Login with steam?
+      </Button>
+      {responseMessage && <p>{responseMessage}</p>}
     </Wrapper>
   );
 }

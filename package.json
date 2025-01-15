@@ -9,7 +9,8 @@
     "check": "turbo check"
   },
   "devDependencies": {
-    "biome": "^0.3.3",
+    "@biomejs/biome": "^1.9.4",
+    "c8": "^10.1.3",
     "husky": "^9.1.7",
     "turbo": "^2.3.3",
     "typescript": "5.5.4"
@@ -23,10 +24,12 @@
     "packages/*"
   ],
   "trustedDependencies": [
+    "@biomejs/biome",
     "core-js",
     "core-js-pure",
     "esbuild",
-    "sharp"
+    "sharp",
+    "supabase"
   ],
   "dependencies": {
     "next": "^15.1.3"
