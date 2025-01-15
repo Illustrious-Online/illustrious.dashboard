@@ -1,0 +1,78 @@
+{
+  "name": "ill.cloud",
+  "version": "0.0.1",
+  "private": true,
+  "resolve": {
+    "fallback": {
+      "crypto": false
+    }
+  },
+  "c8": {
+    "exclude": ["node_modules", "src/utils/*", "src/drizzle/*"]
+  },
+  "scripts": {
+    "dev": "bun run --watch ./src/app.ts",
+    "build": "bun build ./src/app.ts --target node --outdir ./dist",
+    "start": "NODE_ENV=production bun ./src/app.ts",
+    "db:docker": "docker compose -f docker-compose.db.yml up",
+    "db:reset": "./src/utils/reset-db.sh",
+    "db:migrate": "bunx drizzle-kit migrate",
+    "db:push": "bunx drizzle-kit push",
+    "check": "bunx @biomejs/biome check --write ./src",
+    "format": "bunx @biomejs/biome format --write ./src",
+    "lint": "bunx @biomejs/biome lint --write ./src"
+  },
+  "dependencies": {
+    "@elysiajs/bearer": "^1.0.2",
+    "@elysiajs/cors": "^1.0.2",
+    "@elysiajs/swagger": "^1.0.5",
+    "@supabase/supabase-js": "^2.47.11",
+    "@types/generate-password": "^1.5.3",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/node-steam-openid": "^1.0.3",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.30.10",
+    "elysia": "latest",
+    "generate-password-ts": "^1.6.5",
+    "http-status-codes": "^2.3.0",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
+    "moment": "^2.30.1",
+    "node-steam-openid": "^2.0.0",
+    "openid-client": "^6.1.7",
+    "pg": "^8.11.5"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^9.3.0",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.12.10",
+    "@types/pg": "^8.11.6",
+    "@types/supertest": "^6.0.2",
+    "@types/uuid": "^9.0.8",
+    "axios": "^1.6.8",
+    "bun-types": "latest",
+    "drizzle-kit": "^0.21.0",
+    "jest": "^29.7.0",
+    "postgres": "^3.4.4",
+    "semantic-release": "^23.0.8",
+    "supabase": "^2.6.8",
+    "supertest": "^7.0.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.9.3",
+    "typescript": "^5.4.5",
+    "uuid": "^9.0.1",
+    "vitest": "^2.1.8",
+    "yoctocolors": "^2.1.1"
+  },
+  "release": {
+    "branches": ["main"]
+  },
+  "module": "src/app.ts",
+  "trustedDependencies": [
+    "core-js",
+    "core-js-pure",
+    "es5-ext",
+    "esbuild",
+    "sharp"
+  ]
+}
