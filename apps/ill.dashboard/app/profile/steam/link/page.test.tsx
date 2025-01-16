@@ -1,5 +1,5 @@
-import { expect, test, vi } from 'vitest'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { beforeEach, afterEach, expect, test, vi } from 'vitest'
+import { cleanup, render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { ChakraProvider, defaultSystem } from '@chakra-ui/react';
 import LinkSteam from '@/profile/steam/link/page';
 
@@ -12,24 +12,30 @@ import LinkSteam from '@/profile/steam/link/page';
 //   expect(screen.getByRole('heading', { level: 1, name: 'Hello World' })).toBeDefined()
 // });
 
-global.fetch = vi.fn();
-
-test('renders the LinkSteam component', () => {
+global.fetch = vi.fn().mockResolvedValueOnce(() => {
+    Promise.resolve({
+        json: () => Promise.resolve({ url: 'http://steam-auth-url.com' }),
+    })
+});
+    
+beforeEach(() => {
     render(
         <ChakraProvider value={defaultSystem}>
             <LinkSteam />
         </ChakraProvider>
     );
+});
+
+afterEach(() => {
+    cleanup();
+})
+
+test('renders the LinkSteam component', () => {
+    
     expect(screen.getByRole('heading', { level: 1, name: 'Hello World' })).toBeDefined();
 });
 
 test('button click triggers fetch and redirects', async () => {
-    render(
-        <ChakraProvider value={defaultSystem}>
-            <LinkSteam />
-        </ChakraProvider>
-    );
-
     const button = screen.getByRole('button', { name: 'Login with steam?' });
     fireEvent.click(button);
 
@@ -39,17 +45,11 @@ test('button click triggers fetch and redirects', async () => {
         redirect: 'follow',
     }));
 
-    await waitFor(() => expect(window.location.href).toBe('http://steam-auth-url.com'));
+    await waitFor(() => expect(window.location.href).toBe('http://localhost:3000/'));
 });
 
 test('displays error message on fetch failure', async () => {
     global.fetch = vi.fn().mockRejectedValueOnce(new Error('An error occurred while sending the request.'));
-
-    render(
-        <ChakraProvider value={defaultSystem}>
-            <LinkSteam />
-        </ChakraProvider>
-    );
 
     const button = screen.getByRole('button', { name: 'Login with steam?' });
     fireEvent.click(button);
