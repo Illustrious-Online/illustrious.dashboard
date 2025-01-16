@@ -27,12 +27,6 @@ jobs:
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DO_TOKEN }}
-      - name: Install spaces-cli
-        run: bun install -g spaces-cli
-      - name: Download dependency files
-        run: |
-          export SPACE_URL=https://${{ secrets.SPACE_NAME }}.${{ secrets.SPACE_REGION }}.digitaloceanspaces.com
-          spaces-cli down $SPACE_URL/dashboard/production.env -o ./apps/ill.dashboard/.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
       - name: Build Docker image
         run: |
           bunx turbo run build --filter=ill.dashboard
