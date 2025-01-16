@@ -15,7 +15,8 @@
     },
     "forceConsistentCasingInFileNames": true,
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "types": ["jest", "testing-library__jest-dom"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

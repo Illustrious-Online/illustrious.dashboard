@@ -14,9 +14,9 @@ FROM oven/bun:latest AS production
 
 WORKDIR /app
 
+COPY --from=builder app/apps/ill.dashboard/.next/standalone/node_modules /app/node_modules 
 COPY --from=builder /app/apps/ill.dashboard/.next/standalone/apps/ill.dashboard /app
 COPY --from=builder /app/apps/ill.dashboard/.next/static /app/.next/static
-COPY --from=builder /app/node_modules /app/node_modules 
 
 ENV NODE_ENV=production
 EXPOSE 3000

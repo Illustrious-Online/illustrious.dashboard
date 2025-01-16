@@ -1,10 +1,14 @@
 name: Execute Dashboard checks & tests
 on:
-  push:
-    branches-ignore:
-      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened 
     paths:
       - 'apps/ill.dashboard/**'
+    paths_ignore:
+      - 'apps/ill.cloud/package.json'
 jobs:
   check-and-test:
     runs-on: ubuntu-latest

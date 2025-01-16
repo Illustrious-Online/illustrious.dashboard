@@ -1,25 +1,29 @@
 name: Execute checks & tests
 on:
-  push:
-    branches-ignore:
-      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened 
     paths:
-      - 'apps/ill.cloud/**'
+      - 'packages/ui/**'
+    paths_ignore:
+      - 'apps/ill.cloud/package.json'
 jobs:
   check-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
       - name: Setup Bun
-        uses: oven-sh/setup-bun@v1
+        uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
       - name: Install Dependencies
         run: bun install
       - name: Run Biome Checks
         run: bun check
+      - name: Build application
+        run: bun build
       - name: Run unit tests
         run: bun run test

@@ -21,7 +21,7 @@ export default function SteamCallback() {
 
   return (
     <Wrapper>
-      <h1>Hello Callback</h1>
+      <h1>Hello World: Steam Callback</h1>
     </Wrapper>
   );
 }

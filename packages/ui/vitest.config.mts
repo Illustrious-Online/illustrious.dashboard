@@ -14,7 +14,10 @@ export default defineConfig({
         'next.config.ts', 
         'vitest.config.mts',
         'next-env.d.ts',
-        '__tests__'
+        '__tests__',
+        'dist',
+        'turbo/generators',
+        '**/*.test.tsx'
       ],
     },
   },

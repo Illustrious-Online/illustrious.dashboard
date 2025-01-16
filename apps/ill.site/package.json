@@ -5,27 +5,48 @@
   "release": {
     "branches": [
       "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/git",
+      "@semantic-release/github"
     ]
   },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "test": "jest --passWithNoTests",
+    "test": "vitest --passWithNoTests --coverage",
     "check": "bunx @biomejs/biome check --write ./app",
     "format": "bunx @biomejs/biome format --write ./app",
     "lint": "bunx @biomejs/biome lint --write ./app"
   },
   "dependencies": {
+    "@next/env": "^15.1.4",
     "@repo/ui": "*",
+    "@testing-library/dom": "^10.4.0",
+    "@types/jest": "^29.5.14",
+    "@vitejs/plugin-react": "^4.3.4",
+    "next": "15.1.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.1.2"
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^2.1.8"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19"
+    "@testing-library/react": "^16.2.0",
+    "@types/jsdom": "^21.1.7",
+    "@types/node": "^20.17.14",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "@vitest/coverage-v8": "2.1.8",
+    "jsdom": "^26.0.0",
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "bun": "latest"
   }
 }

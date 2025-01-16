@@ -2,9 +2,9 @@
 
 import { useColorMode } from "@chakra-ui/color-mode";
 import { Box, Button, Flex, Heading, Spacer, Text } from "@chakra-ui/react";
-import { ColorModeButton } from "./components/color-mode";
 import type { FC, ReactNode } from "react";
 import * as React from "react";
+import { ColorModeButton } from "./components/color-mode";
 
 interface LayoutProps {
   children: ReactNode;

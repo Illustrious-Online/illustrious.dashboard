@@ -5,6 +5,8 @@ on:
       - main
     paths:
       - 'apps/ill.web/**'
+    paths_ignore:
+      - 'apps/ill.web/package.json'
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -40,4 +42,13 @@ jobs:
       - name: Push Docker Container
         run: docker push ${{ secrets.REGISTRY_URL }}/ill-web:latest
       - name: Execute Semantic Release
-        run: bunx semantic-release
+        run: |
+          cd apps/ill.web
+          bunx semantic-release
+      - name: Commit changes
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Actions"
+          git add apps/ill.web/package.json
+          git commit -m "chore(release): [ill.web] update version and changelog [skip ci]"
+          git push origin main

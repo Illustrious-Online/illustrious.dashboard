@@ -16,6 +16,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "test": "vitest --passWithNoTests --coverage",
     "generate:component": "turbo gen react-component",
     "check": "bunx @biomejs/biome check --write ./src",
     "format": "bunx @biomejs/biome format --write ./src",
@@ -23,10 +24,12 @@
   },
   "devDependencies": {
     "@repo/typescript-config": "*",
+    "@testing-library/jest-dom": "^6.6.3",
     "@turbo/gen": "^1.12.4",
     "@types/node": "^20.11.24",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
+    "jest": "^29.7.0",
     "typescript": "5.5.4"
   },
   "dependencies": {
@@ -43,6 +46,9 @@
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
     "snippet": "^0.1.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
   },
   "publishConfig": {
     "access": "public"

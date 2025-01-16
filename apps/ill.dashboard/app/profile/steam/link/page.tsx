@@ -33,14 +33,14 @@ export default function LinkSteam() {
 
   return (
     <Wrapper>
-      <h1>Hello World</h1>
+      <h1>Hello World: Link Steam</h1>
       <Button
         loading={loading}
         loadingText="Processing..."
         colorScheme="teal"
         onClick={handleClick}
       >
-        Login with steam?
+        Login with steam
       </Button>
       {responseMessage && <p>{responseMessage}</p>}
     </Wrapper>

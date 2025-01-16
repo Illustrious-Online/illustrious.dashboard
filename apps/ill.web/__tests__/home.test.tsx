@@ -1,13 +1,13 @@
 import { expect, test } from 'vitest'
 import { render } from '@testing-library/react'
 import { ChakraProvider, defaultSystem } from '@chakra-ui/react';
-import SteamCallback from '@/profile/steam/callback/page';
+import Home from '../app/page';
 
-test('renders the SteamCallback component', () => {
+test('renders the Home component', () => {
   const screen = render(
     <ChakraProvider value={defaultSystem}>
-      <SteamCallback />
+      <Home />
     </ChakraProvider>
   );
-  expect(screen.getByRole('heading', { level: 1, name: 'Hello World: Steam Callback' })).toBeDefined()
+  expect(screen.getByRole('heading', { level: 1, name: 'Hello World: Web' })).toBeDefined()
 });
