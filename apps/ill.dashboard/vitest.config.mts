@@ -10,6 +10,8 @@ export default defineConfig({
     setupFiles: './setupTests.ts',
     coverage: {
       exclude: [
+        'sentry.*.ts',
+        'instrumentation.ts',
         '.next', 
         'next.config.ts', 
         'vitest.config.mts',
