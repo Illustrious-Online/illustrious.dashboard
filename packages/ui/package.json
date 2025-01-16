@@ -25,6 +25,7 @@
   "devDependencies": {
     "@repo/typescript-config": "*",
     "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/user-event": "^14.6.0",
     "@turbo/gen": "^1.12.4",
     "@types/node": "^20.11.24",
     "@types/react": "^19.0.2",
