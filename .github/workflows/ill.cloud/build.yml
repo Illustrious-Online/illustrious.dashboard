@@ -7,8 +7,6 @@ on:
       - reopened 
     paths:
       - 'apps/ill.cloud/**'
-    paths_ignore:
-      - 'apps/ill.cloud/package.json'
 jobs:
   check-and-test:
     runs-on: ubuntu-latest
