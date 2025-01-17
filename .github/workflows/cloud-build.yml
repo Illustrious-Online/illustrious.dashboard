@@ -1,4 +1,4 @@
-name: Execute checks & tests
+name: "[ill.cloud] Execute checks & tests"
 on:
   pull_request:
     types:

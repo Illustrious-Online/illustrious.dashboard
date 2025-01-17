@@ -1,4 +1,4 @@
-name: Terraform Update
+name: "[ill.cluster] Perform Terraform checks"
 
 on:
   push:

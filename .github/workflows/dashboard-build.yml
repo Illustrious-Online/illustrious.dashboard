@@ -1,4 +1,4 @@
-name: Execute Dashboard checks & tests
+name: "[ill.dashboard] Execute checks & tests"
 on:
   pull_request:
     types:

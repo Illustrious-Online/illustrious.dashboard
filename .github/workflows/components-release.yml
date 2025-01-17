@@ -1,12 +1,12 @@
-name: Execute checks & tests
+name: "[ill.components] Perform release"
 on:
-  push:
-    branches-ignore:
+  pull_request_review:
+    types:
+      - submitted
+    branches:
       - main
     paths:
       - 'packages/ui/**'
-    paths_ignore:
-      - 'packages/ui/package.json'
 jobs:
   check-and-test:
     runs-on: ubuntu-latest

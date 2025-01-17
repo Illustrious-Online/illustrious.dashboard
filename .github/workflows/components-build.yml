@@ -1,4 +1,4 @@
-name: Execute checks & tests
+name: "[ill.components] Execute checks & tests"
 on:
   pull_request:
     types:
@@ -7,8 +7,6 @@ on:
       - reopened 
     paths:
       - 'packages/ui/**'
-    paths_ignore:
-      - 'apps/ill.cloud/package.json'
 jobs:
   check-and-test:
     runs-on: ubuntu-latest

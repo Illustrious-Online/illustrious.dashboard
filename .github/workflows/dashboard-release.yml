@@ -1,6 +1,8 @@
-name: Perform release
+name: "[ill.dashboard] Perform release"
 on:
-  push:
+  pull_request_review:
+    types:
+      - submitted
     branches:
       - main
     paths:

@@ -1,12 +1,11 @@
-name: Terraform Update
+name: "[ill.cluster] Perform Terraform release"
 
 on:
-  push:
+  pull_request_review:
+    types:
+      - submitted
     branches:
       - main
-    paths:
-      - 'packages/deployment/k8s/**'
-  pull_request:
     paths:
       - 'packages/deployment/k8s/**'
 
