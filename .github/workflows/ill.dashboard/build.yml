@@ -25,3 +25,8 @@ jobs:
         run: bun check --filter=ill.dashboard
       - name: Run unit tests
         run: bun run test --filter=ill.dashboard
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: Illustrious-Online/api.illustrious.cloud
