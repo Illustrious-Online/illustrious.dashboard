@@ -10,7 +10,7 @@ on:
       - 'packages/deployment/k8s/**'
 
 jobs:
-  terraform:
+  terraform-release:
     runs-on: ubuntu-latest
 
     steps:

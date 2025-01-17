@@ -8,7 +8,7 @@ on:
     paths:
       - 'packages/ui/**'
 jobs:
-  check-and-test:
+  ui-check-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -20,8 +20,12 @@ jobs:
       - name: Install Dependencies
         run: bun install
       - name: Run Biome Checks
-        run: bun check
-      - name: Build application
-        run: bun build
+        run: bunx turbo check --filter=@repo/ui
       - name: Run unit tests
-        run: bun run test
+        run: bunx turbo test --filter=@repo/ui
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./packages/ui/coverage/lcov-report/index-lcov.html
+          slug: Illustrious-Online/illustrious.online

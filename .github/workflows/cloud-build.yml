@@ -8,8 +8,22 @@ on:
     paths:
       - 'apps/ill.cloud/**'
 jobs:
-  check-and-test:
+  cloud-check-and-test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: illustrious
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -19,7 +33,19 @@ jobs:
           bun-version: latest
       - name: Install Dependencies
         run: bun install --frozen-lockfile
+      - name: Install spaces-cli
+        run: bun install -g spaces-cli
+      - name: Download dependency files
+        run: |
+          export SPACE_URL=https://${{ secrets.SPACE_NAME }}.${{ secrets.SPACE_REGION }}.digitaloceanspaces.com
+          spaces-cli down $SPACE_URL/cloud/ci-production.env -o ./apps/ill.cloud/.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
       - name: Run Biome Checks
-        run: bunx turbo run check --filter=ill.cloud
+        run: bunx turbo check --filter=ill.cloud
       - name: Run unit tests
-        run: bunx turbo run test --filter=ill.cloud
+        run: bunx turbo test --filter=ill.cloud
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./apps/ill.cloud/coverage/lcov-report/index-lcov.html
+          slug: Illustrious-Online/illustrious.online/ill.cloud

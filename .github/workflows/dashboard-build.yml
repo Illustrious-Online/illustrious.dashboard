@@ -8,7 +8,7 @@ on:
     paths:
       - 'apps/ill.dashboard/**'
 jobs:
-  check-and-test:
+  dashboard-check-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -20,11 +20,12 @@ jobs:
       - name: Install Dependencies
         run: bun install --frozen-lockfile
       - name: Run Biome Checks
-        run: bun check --filter=ill.dashboard
+        run: bunx turbo check --filter=ill.dashboard
       - name: Run unit tests
-        run: bun run test --filter=ill.dashboard
+        run: bunx turbo test --filter=ill.dashboard
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          slug: Illustrious-Online/api.illustrious.cloud
+          files: ./apps/ill.dashboard/coverage/lcov-report/index-lcov.html
+          slug: Illustrious-Online/illustrious.online/ill.dashboard
