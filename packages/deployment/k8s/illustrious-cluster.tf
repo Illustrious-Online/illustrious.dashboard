@@ -11,8 +11,14 @@ terraform {
   }
 }
 
+variable "dop_token" {
+  description = "DigitalOcean Personal Access Token"
+  type        = string
+  default     = ""
+}
+
 provider "digitalocean" {
-  token = "dop_v1_eaad4c331875bda7cfdccd55ea29758743ae2699a5c37cbe669f4b17446c19d4"
+  token = var.dop_token != "" ? var.dop_token : env.DOP_TOKEN
 }
 
 provider "kubernetes" {

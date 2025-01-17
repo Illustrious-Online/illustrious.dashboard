@@ -1,0 +1,56 @@
+name: Terraform Update
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/deployment/k8s/**'
+  pull_request:
+    paths:
+      - 'packages/deployment/k8s/**'
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install spaces-cli
+        run: bun install -g spaces-cli
+
+      - name: Download dependency files
+        run: |
+          export SPACE_URL=https://${{ secrets.SPACE_NAME }}.${{ secrets.SPACE_REGION }}.digitaloceanspaces.com
+          spaces-cli down $SPACE_URL/k8s/deployment.env -o ./packages/deployment/k8s/.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+
+      - name: Install dotenv-cli
+        run: npm install -g dotenv-cli
+
+      - name: Load environment variables
+        run: dotenv -e packages/deployment/k8s/.env -- printenv
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.3.7
+
+      - name: Initialize Terraform
+        run: terraform init
+        working-directory: packages/deployment/k8s
+
+      - name: Plan Terraform changes
+        run: terraform plan -out=tfplan
+        working-directory: packages/deployment/k8s
+
+      - name: Apply Terraform changes
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve tfplan
+        working-directory: packages/deployment/k8s
