@@ -38,7 +38,9 @@ jobs:
       - name: Download dependency files
         run: |
           export SPACE_URL=https://${{ secrets.SPACE_NAME }}.${{ secrets.SPACE_REGION }}.digitaloceanspaces.com
-          spaces-cli down $SPACE_URL/cloud/ci-production.env -o ./apps/ill.cloud/.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+          spaces-cli down $SPACE_URL/cloud/ci.env -o ./apps/ill.cloud/.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+      - name: Push drizzle details
+        run: yes "Yes, I want to execute all statements" | bunx drizzle-kit push
       - name: Run Biome Checks
         run: bunx turbo check --filter=ill.cloud
       - name: Run unit tests
@@ -48,4 +50,4 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./apps/ill.cloud/coverage/lcov-report/index-lcov.html
-          slug: Illustrious-Online/illustrious.online/ill.cloud
+          slug: Illustrious-Online/illustrious.online

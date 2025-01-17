@@ -28,4 +28,4 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./apps/ill.dashboard/coverage/lcov-report/index-lcov.html
-          slug: Illustrious-Online/illustrious.online/ill.dashboard
+          slug: Illustrious-Online/illustrious.online
