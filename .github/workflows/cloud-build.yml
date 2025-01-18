@@ -41,9 +41,7 @@ jobs:
           spaces-cli down $SPACE_URL/cloud/ci.env -o ./apps/ill.cloud/.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
           cat ./apps/ill.cloud/.env
       - name: Push drizzle details
-        run: |
-          cd apps/ill.cloud
-          yes "Yes, I want to execute all statements" | bunx drizzle-kit push
+        run: cd apps/ill.cloud && bunx drizzle-kit migrate
       - name: Run Biome Checks
         run: bunx turbo check --filter=ill.cloud
       - name: Run unit tests
