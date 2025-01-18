@@ -27,5 +27,6 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          flags: ill-web
           files: ./apps/ill.web/coverage/lcov-report/index-lcov.html
           slug: Illustrious-Online/illustrious.online

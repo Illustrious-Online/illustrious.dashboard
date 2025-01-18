@@ -39,6 +39,7 @@ jobs:
         run: |
           export SPACE_URL=https://${{ secrets.SPACE_NAME }}.${{ secrets.SPACE_REGION }}.digitaloceanspaces.com
           spaces-cli down $SPACE_URL/cloud/ci.env -o ./apps/ill.cloud/.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+          cat ./apps/ill.cloud/.env
       - name: Push drizzle details
         run: |
           cd apps/ill.cloud
@@ -51,5 +52,6 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          flags: ill-cloud
           files: ./apps/ill.cloud/coverage/lcov-report/index-lcov.html
           slug: Illustrious-Online/illustrious.online
