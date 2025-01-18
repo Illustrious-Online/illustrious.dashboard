@@ -27,6 +27,7 @@
   "dependencies": {
     "@next/env": "^15.1.4",
     "@repo/ui": "*",
+    "@sentry/nextjs": "^8",
     "@testing-library/dom": "^10.4.0",
     "@types/jest": "^29.5.14",
     "@vitejs/plugin-react": "^4.3.4",
