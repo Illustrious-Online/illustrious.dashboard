@@ -1,0 +1,67 @@
+name: "[ill.site] Perform release"
+on:
+  pull_request_review:
+    types:
+      - submitted
+    branches:
+      - main
+    paths:
+      - 'apps/ill.site/**'
+jobs:
+  site-release:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install Dependencies
+        run: bun install --frozen-lockfile
+      - name: Run unit tests
+        run: bunx turbo test --filter=ill.site
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: ill-site
+          files: ./apps/ill.site/coverage/lcov-report/index-lcov.html
+          slug: Illustrious-Online/illustrious.online
+      - name: Install spaces-cli
+        run: bun install -g spaces-cli
+      - name: Download dependency files
+        working-directory: ./apps/ill.site
+        run: |
+          export SPACE_URL=https://${{ secrets.SPACE_NAME }}.${{ secrets.SPACE_REGION }}.digitaloceanspaces.com
+          spaces-cli down $SPACE_URL/site/.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+          spaces-cli down $SPACE_URL/instrumentation.ts -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+          spaces-cli down $SPACE_URL/site/sentry.client.config.ts -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+          spaces-cli down $SPACE_URL/site/sentry.edge.config.ts -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+          spaces-cli down $SPACE_URL/site/sentry.server.config.ts -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_TOKEN }}
+      - name: Build Docker image
+        run: |
+          bunx turbo run build --filter=ill.site
+          docker build -t ${{ secrets.REGISTRY_URL }}/ill-site:latest -f packages/deployment/docker/site.Dockerfile .
+      - name: Authenticate with DO registry
+        run: doctl registry login --expiry-seconds 1200
+      - name: Push Docker Container
+        run: docker push ${{ secrets.REGISTRY_URL }}/ill-site:latest
+      - name: Execute Semantic Release
+        working-directory: ./apps/ill.site
+        run: bunx semantic-release
+      - name: Commit changes
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Actions"
+          git add apps/ill.site/package.json
+          git commit -m "chore(release): [ill.site] update version and changelog [skip ci]"
+          git push origin main

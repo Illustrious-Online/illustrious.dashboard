@@ -1,4 +1,4 @@
-name: Execute Site checks & tests
+name: "[ill.site] Execute checks & tests"
 on:
   pull_request:
     types:
@@ -7,10 +7,8 @@ on:
       - reopened 
     paths:
       - 'apps/ill.site/**'
-    paths_ignore:
-      - 'apps/ill.cloud/package.json'
 jobs:
-  check-and-test:
+  site-check-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -22,6 +20,13 @@ jobs:
       - name: Install Dependencies
         run: bun install --frozen-lockfile
       - name: Run Biome Checks
-        run: bun check --filter=ill.site
+        run: bunx turbo check --filter=ill.site
       - name: Run unit tests
-        run: bun run test --filter=ill.site
+        run: bunx turbo test --filter=ill.site
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: ill-site
+          files: ./apps/ill.site/coverage/lcov-report/index-lcov.html
+          slug: Illustrious-Online/illustrious.online

@@ -4,6 +4,19 @@
   "private": true,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/git",
+      "@semantic-release/github"
+    ]
+  },
   "exports": {
     "./close-button": "./src/components/close-button.tsx",
     "./color-mode": "./src/components/color-mode.tsx",

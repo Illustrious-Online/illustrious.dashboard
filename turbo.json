@@ -19,6 +19,9 @@
     "check": {
       "dependsOn": ["^check"]
     },
+    "check:ci": {
+      "dependsOn": ["^check:ci"]
+    },
     "lint": {
       "dependsOn": ["^lint"]
     },

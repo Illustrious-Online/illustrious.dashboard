@@ -1,0 +1,32 @@
+name: "[ill.components] Execute checks & tests"
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened 
+    paths:
+      - 'packages/ui/**'
+jobs:
+  ui-check-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install Dependencies
+        run: bun install
+      - name: Run Biome Checks
+        run: bunx turbo check --filter=@repo/ui
+      - name: Run unit tests
+        run: bunx turbo test --filter=@repo/ui
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: ill-ui
+          files: ./packages/ui/coverage/lcov-report/index-lcov.html
+          slug: Illustrious-Online/illustrious.online

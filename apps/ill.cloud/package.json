@@ -16,6 +16,7 @@
     "db:migrate": "bunx drizzle-kit migrate",
     "db:push": "bunx drizzle-kit push",
     "check": "bunx @biomejs/biome check --write ./src",
+    "check:ci": "bunx @biomejs/biome check ./src",
     "format": "bunx @biomejs/biome format --write ./src",
     "lint": "bunx @biomejs/biome lint --write ./src",
     "test": "bun test"
@@ -24,6 +25,7 @@
     "@elysiajs/bearer": "^1.0.2",
     "@elysiajs/cors": "^1.0.2",
     "@elysiajs/swagger": "^1.0.5",
+    "@sentry/bun": "^8.50.0",
     "@supabase/supabase-js": "^2.47.11",
     "@types/generate-password": "^1.5.3",
     "@types/jsonwebtoken": "^9.0.7",
@@ -47,6 +49,7 @@
     "@types/pg": "^8.11.6",
     "@types/supertest": "^6.0.2",
     "@types/uuid": "^9.0.8",
+    "@vitest/coverage-v8": "^3.0.2",
     "axios": "^1.6.8",
     "bun-types": "latest",
     "codecov": "^3.8.3",
@@ -60,11 +63,21 @@
     "tsx": "^4.9.3",
     "typescript": "^5.4.5",
     "uuid": "^9.0.1",
-    "vitest": "^2.1.8",
+    "vitest": "^3.0.2",
     "yoctocolors": "^2.1.1"
   },
   "release": {
-    "branches": ["main"]
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/git",
+      "@semantic-release/github"
+    ]
   },
   "module": "src/app.ts",
   "trustedDependencies": [

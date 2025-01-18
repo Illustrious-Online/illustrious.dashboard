@@ -1,4 +1,4 @@
-name: Terraform Update
+name: "[ill.cluster] Perform Terraform checks"
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
       - 'packages/deployment/k8s/**'
 
 jobs:
-  terraform:
+  terraform-build:
     runs-on: ubuntu-latest
 
     steps:

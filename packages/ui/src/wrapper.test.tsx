@@ -1,9 +1,9 @@
+import Wrapper from "@/wrapper";
 import { ColorModeProvider } from "@chakra-ui/color-mode";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
-import { afterEach, describe, expect, test } from "vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import React, { type ReactElement} from "react";
-import Wrapper from "@/wrapper";
+import React, { type ReactElement } from "react";
+import { afterEach, describe, expect, test } from "vitest";
 
 describe("Wrapper component", () => {
   const renderWithProviders = (ui: ReactElement) => {
@@ -16,7 +16,7 @@ describe("Wrapper component", () => {
 
   afterEach(() => {
     cleanup();
-  })
+  });
 
   test("renders children correctly", () => {
     renderWithProviders(

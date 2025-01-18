@@ -10,6 +10,15 @@ import loggerPlugin from "./plugins/logger";
 import authRoutes from "./routes/auth";
 import protectedRoutes from "./routes/protected";
 
+import * as Sentry from "@sentry/bun";
+
+if (config.app.env === "production") {
+  Sentry.init({
+    dsn: config.app.sentryUrl,
+    tracesSampleRate: 1.0,
+  });
+}
+
 export const supabaseClient = createClient(
   `https://${config.auth.supabaseId}.supabase.co`,
   config.auth.supabaseServiceRoleKey,

@@ -1,14 +1,14 @@
-name: Perform release
+name: "[ill.cloud] Perform release"
 on:
-  push:
+  pull_request_review:
+    types:
+      - submitted
     branches:
       - main
     paths:
       - 'apps/ill.cloud/**'
-    paths_ignore:
-      - 'apps/ill.cloud/package.json'
 jobs:
-  release:
+  cloud-release:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -29,15 +29,38 @@ jobs:
           token: ${{ secrets.DO_TOKEN }}
       - name: Install spaces-cli
         run: bun install -g spaces-cli
-      - name: Download dependency files
+      - name: Download test dependency files
+        working-directory: ./apps/ill.cloud
         run: |
           export SPACE_URL=https://${{ secrets.SPACE_NAME }}.${{ secrets.SPACE_REGION }}.digitaloceanspaces.com
-          spaces-cli down $SPACE_URL/cloud/ci-production.env -o ./apps/ill.cloud/.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+          spaces-cli down $SPACE_URL/cloud/test.env -o ./.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+      - name: Push drizzle details
+        working-directory: ./apps/ill.cloud
+        run: bunx drizzle-kit migrate
+      - name: Run Biome Checks
+        run: bunx turbo check --filter=ill.cloud
+      - name: Run unit tests
+        run: bunx turbo test --filter=ill.cloud
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: ill-cloud
+          files: ./apps/ill.cloud/coverage/lcov-report/index-lcov.html
+          slug: Illustrious-Online/illustrious.online
+      - name: Download dependency files
+        working-directory: ./apps/ill.cloud
+        run: |
+          rm -rf ./.env
+          export SPACE_URL=https://${{ secrets.SPACE_NAME }}.${{ secrets.SPACE_REGION }}.digitaloceanspaces.com
+          spaces-cli down $SPACE_URL/cloud/ci.env -o ./.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+          spaces-cli down $SPACE_URL/cloud/ca-certificate.crt -o ./cert.crt -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
       - name: Add actions IP to trusted source for database
         run: |
           IP=$(curl -s ifconfig.me)
           doctl databases firewalls append ${{ secrets.DB_UUID }} --rule ip_addr:$IP
       - name: Push database migrations
+        working-directory: ./apps/ill.cloud
         run: |
           export NODE_TLS_REJECT_UNAUTHORIZED=0
           bunx drizzle-kit migrate
@@ -53,7 +76,6 @@ jobs:
           rm -rf apps/ill.cloud/.env
           export SPACE_URL=https://${{ secrets.SPACE_NAME }}.${{ secrets.SPACE_REGION }}.digitaloceanspaces.com
           spaces-cli down $SPACE_URL/cloud/production.env -o ./apps/ill.cloud/.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
-          spaces-cli down $SPACE_URL/cloud/ca-certificate.crt -o ./apps/ill.cloud/cert.crt -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
           bunx turbo run build --filter=ill.cloud
           docker build -t ${{ secrets.REGISTRY_URL }}/ill-cloud:latest -f packages/deployment/docker/cloud.Dockerfile .
       - name: Authenticate with DO registry
@@ -61,9 +83,8 @@ jobs:
       - name: Push Docker Container
         run: docker push ${{ secrets.REGISTRY_URL }}/ill-cloud:latest
       - name: Execute Semantic Release
-        run: |
-          cd apps/ill.cloud
-          bunx semantic-release
+        working-directory: ./apps/ill.cloud
+        run: bunx semantic-release
       - name: Commit changes
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"

@@ -1,0 +1,32 @@
+name: "[ill.dashboard] Execute checks & tests"
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened 
+    paths:
+      - 'apps/ill.dashboard/**'
+jobs:
+  dashboard-check-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install Dependencies
+        run: bun install --frozen-lockfile
+      - name: Run Biome Checks
+        run: bunx turbo check --filter=ill.dashboard
+      - name: Run unit tests
+        run: bunx turbo test --filter=ill.dashboard
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: ill-dashboard
+          files: ./apps/ill.dashboard/coverage/lcov-report/index-lcov.html
+          slug: Illustrious-Online/illustrious.online
