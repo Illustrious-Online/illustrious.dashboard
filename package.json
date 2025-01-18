@@ -1,12 +1,26 @@
 {
   "name": "illustrious.online",
   "private": true,
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/git",
+      "@semantic-release/github"
+    ]
+  },
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "turbo format",
     "check": "turbo check",
+    "check:ci": "turbo check:ci",
     "test": "turbo test",
     "prepare": "husky && husky install"
   },

@@ -21,6 +21,7 @@
     "start": "next start",
     "test": "vitest --passWithNoTests --coverage",
     "check": "bunx @biomejs/biome check --write ./app",
+    "check:ci": "bunx @biomejs/biome check ./app",
     "format": "bunx @biomejs/biome format --write ./app",
     "lint": "bunx @biomejs/biome lint --write ./app"
   },

@@ -11,7 +11,7 @@ export default {
     user: process.env.DB_USERNAME ?? "default",
     password: process.env.DB_PASSWORD ?? "password",
     database: process.env.DB_NAME ?? "illustrious",
-    ssl: false
+    ssl: process.env.DB_SSL !== "false"
   },
   // Print all statements
   verbose: true,

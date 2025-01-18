@@ -36,12 +36,13 @@ jobs:
       - name: Install spaces-cli
         run: bun install -g spaces-cli
       - name: Download dependency files
+        working-directory: ./apps/ill.cloud
         run: |
           export SPACE_URL=https://${{ secrets.SPACE_NAME }}.${{ secrets.SPACE_REGION }}.digitaloceanspaces.com
-          spaces-cli down $SPACE_URL/cloud/ci.env -o ./apps/ill.cloud/.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
-          cat ./apps/ill.cloud/.env
+          spaces-cli down $SPACE_URL/cloud/test.env -o ./.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
       - name: Push drizzle details
-        run: cd apps/ill.cloud && bunx drizzle-kit migrate
+        working-directory: ./apps/ill.cloud
+        run: bunx drizzle-kit migrate
       - name: Run Biome Checks
         run: bunx turbo check --filter=ill.cloud
       - name: Run unit tests

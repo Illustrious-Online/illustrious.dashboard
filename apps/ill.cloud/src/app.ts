@@ -12,11 +12,12 @@ import protectedRoutes from "./routes/protected";
 
 import * as Sentry from "@sentry/bun";
 
-Sentry.init({
-  dsn: "https://a31357832e4719518574fa224b02f412@o4507144038907904.ingest.us.sentry.io/4508662410903552",
-  // Tracing
-  tracesSampleRate: 1.0, // Capture 100% of the transactions
-});
+if (config.app.env === "production") {
+  Sentry.init({
+    dsn: config.app.sentryUrl,
+    tracesSampleRate: 1.0,
+  });
+}
 
 export const supabaseClient = createClient(
   `https://${config.auth.supabaseId}.supabase.co`,

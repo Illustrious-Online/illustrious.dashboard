@@ -16,6 +16,7 @@
     "db:migrate": "bunx drizzle-kit migrate",
     "db:push": "bunx drizzle-kit push",
     "check": "bunx @biomejs/biome check --write ./src",
+    "check:ci": "bunx @biomejs/biome check ./src",
     "format": "bunx @biomejs/biome format --write ./src",
     "lint": "bunx @biomejs/biome lint --write ./src",
     "test": "bun test"
@@ -66,7 +67,17 @@
     "yoctocolors": "^2.1.1"
   },
   "release": {
-    "branches": ["main"]
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/git",
+      "@semantic-release/github"
+    ]
   },
   "module": "src/app.ts",
   "trustedDependencies": [
