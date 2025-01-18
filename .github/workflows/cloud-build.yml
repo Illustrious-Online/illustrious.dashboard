@@ -17,7 +17,7 @@ jobs:
           - 5432:5432
         env:
           POSTGRES_USER: admin
-          POSTGRES_PASSWORD: password
+          POSTGRES_PASSWORD: illustrious
           POSTGRES_DB: illustrious
         options: >-
           --health-cmd pg_isready
