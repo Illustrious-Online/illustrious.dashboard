@@ -19,14 +19,14 @@
     "check": {
       "dependsOn": ["^check"]
     },
-    "check:ci": {
-      "dependsOn": ["^check:ci"]
+    "check:fix": {
+      "dependsOn": ["^check:fix"]
     },
     "lint": {
       "dependsOn": ["^lint"]
     },
-    "format": {
-      "cache": false
+    "release": {
+      "dependsOn": ["^release", "build"]
     }
   }
 }
