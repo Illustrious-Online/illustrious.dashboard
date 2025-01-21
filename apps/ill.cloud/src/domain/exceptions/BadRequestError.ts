@@ -6,7 +6,6 @@ export default class BadRequestError extends Error {
   constructor(public message: string) {
     super(message);
 
-    console.error("BAD REQUEST ERROR: ", message);
     this.status = StatusCodes.BAD_REQUEST;
   }
 }

@@ -6,13 +6,12 @@ on:
       - main
     paths:
       - 'packages/deployment/k8s/**'
-    paths-ignore:
-      - 'packages/deployment/k8s/package.json'
-      - 'packages/deployment/k8s/CHANGELOG.md'
+      - '!packages/deployment/k8s/CHANGELOG.md'
 
 jobs:
   terraform-release:
     runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
 
     steps:
       - name: Checkout repository
