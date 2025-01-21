@@ -83,9 +83,10 @@ jobs:
         run: doctl registry login --expiry-seconds 1200
       - name: Push Docker Container
         run: docker push ${{ secrets.REGISTRY_URL }}/ill-cloud:latest
-      - name: Execute Semantic Release
-        working-directory: ./apps/ill.cloud
-        run: bunx semantic-release
+      - name: Create and apply changeset
+        run: |
+          bunx changeset version
+
       - name: Commit changes
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -93,3 +94,15 @@ jobs:
           git add apps/ill.cloud/package.json
           git commit -m "chore(release): [ill.cloud] update version and changelog [skip ci]"
           git push origin main
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ./apps/ill.cloud/dist/**  # Adjust according to your build output
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish new version
+        run: |
+          bunx changeset publish
