@@ -1,5 +1,5 @@
 {
-  "changelog": "@changesets/changelog-github",
+  "changelog": "@changesets/cli/changelog",
   "commit": true,
   "fixed": [],
   "independent": true,
