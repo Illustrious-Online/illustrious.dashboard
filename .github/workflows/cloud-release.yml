@@ -5,19 +5,19 @@ on:
       - main
     paths:
       - 'apps/ill.cloud/**'
-    paths-ignore:
-      - 'apps/ill.cloud/package.json'
-      - 'apps/ill.cloud/CHANGELOG.md'
+      - '!apps/ill.cloud/CHANGELOG.md'
 jobs:
   cloud-release:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           persist-credentials: false
+
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
@@ -91,7 +91,7 @@ jobs:
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Actions"
-          git add apps/ill.cloud/package.json
+          git add -A
           git commit -m "chore(release): [ill.cloud] update version and changelog [skip ci]"
           git push origin main
 
