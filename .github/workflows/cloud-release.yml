@@ -1,12 +1,13 @@
 name: "[ill.cloud] Perform release"
 on:
-  pull_request_review:
-    types:
-      - submitted
+  push:
     branches:
       - main
     paths:
       - 'apps/ill.cloud/**'
+    paths-ignore:
+      - 'apps/ill.cloud/package.json'
+      - 'apps/ill.cloud/CHANGELOG.md'
 jobs:
   cloud-release:
     runs-on: ubuntu-latest

@@ -1,13 +1,14 @@
 name: "[ill.cluster] Perform Terraform release"
 
 on:
-  pull_request_review:
-    types:
-      - submitted
+  push:
     branches:
       - main
     paths:
       - 'packages/deployment/k8s/**'
+    paths-ignore:
+      - 'packages/deployment/k8s/package.json'
+      - 'packages/deployment/k8s/CHANGELOG.md'
 
 jobs:
   terraform-release:

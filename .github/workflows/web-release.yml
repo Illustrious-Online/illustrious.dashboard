@@ -1,12 +1,13 @@
 name: "[ill.web] Perform release"
 on:
-  pull_request_review:
-    types:
-      - submitted
+  push:
     branches:
       - main
     paths:
       - 'apps/ill.web/**'
+    paths-ignore:
+      - 'apps/ill.web/package.json'
+      - 'apps/ill.web/CHANGELOG.md'
 jobs:
   web-release:
     runs-on: ubuntu-latest

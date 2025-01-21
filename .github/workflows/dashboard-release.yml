@@ -1,12 +1,13 @@
 name: "[ill.dashboard] Perform release"
 on:
-  pull_request_review:
-    types:
-      - submitted
+  push:
     branches:
       - main
     paths:
       - 'apps/ill.dashboard/**'
+    paths-ignore:
+      - 'apps/ill.dashboard/package.json'
+      - 'apps/ill.dashboard/CHANGELOG.md'
 jobs:
   dashboard-release:
     runs-on: ubuntu-latest

@@ -1,4 +1,5 @@
-# docker-compose.yml
+# This file is used by the `docker-compose` command to start a basic postgres database.
+# It is used to test the app locally and is used in the CI/CD pipeline for testing.
 version: '3.9'
 
 services:

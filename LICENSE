@@ -1,0 +1,36 @@
+BUSINESS SOURCE LICENSE 1.1
+
+Copyright (c) 2025 Illustrious Online
+
+The software provided under this license is governed by the terms of the Business Source License 1.1 ("License").
+
+1. Definitions
+- "You" refers to the individual or legal entity exercising the rights granted by this License.
+- "The Software" refers to the codebase and its components, as well as any related documentation, provided under this License.
+
+2. License Grant
+- Subject to the terms and conditions of this License, you are hereby granted a non-exclusive, worldwide, royalty-free, and perpetual license to:
+  - Use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, provided that the Software is used **only for self-hosting purposes**, i.e., running the software on your own infrastructure or on a private server.
+  - You are **not** allowed to offer the Software as a service (SaaS) to third parties, unless you have a separate commercial agreement with Illustrious Online.
+
+3. Restrictions on Commercial Cloud Hosting
+- The Software cannot be used to provide a service to third parties on a commercial basis over the internet or other public networks (such as cloud hosting platforms) without purchasing a commercial license.
+- If you are a cloud provider or any entity that intends to provide the Software as a service to third parties, you must obtain a commercial license from Illustrious Online.
+
+4. Change of License
+- The Software will be relicensed to a more permissive open-source license (e.g., MIT or Apache 2.0) after a period of 3 years from the date of this License.
+
+5. No Warranty
+- The Software is provided "as-is," without warranty of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement.
+
+6. Termination
+- This License will automatically terminate if you violate any of its terms. Upon termination, you must immediately cease using and destroy any copies of the Software.
+
+7. Commercial License
+- If you wish to use the Software in a commercial cloud environment or offer it as a service to third parties before the expiration of the relicensing period, please contact Illustrious Online to acquire a commercial license.
+
+8. No Other Rights
+- This License does not grant you any rights to use the trademarks, trade names, or other proprietary marks of Illustrious Online, except for the limited rights expressly granted herein.
+
+9. Notices
+- You must include a copy of this License in all copies or substantial portions of the Software.

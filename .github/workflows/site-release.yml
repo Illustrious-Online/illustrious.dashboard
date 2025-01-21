@@ -1,12 +1,13 @@
 name: "[ill.site] Perform release"
 on:
-  pull_request_review:
-    types:
-      - submitted
+  push:
     branches:
       - main
     paths:
       - 'apps/ill.site/**'
+    paths-ignore:
+      - 'apps/ill.site/package.json'
+      - 'apps/ill.site/CHANGELOG.md'
 jobs:
   site-release:
     runs-on: ubuntu-latest

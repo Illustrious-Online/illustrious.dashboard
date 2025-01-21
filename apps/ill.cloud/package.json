@@ -1,6 +1,6 @@
 {
   "name": "ill.cloud",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "resolve": {
     "fallback": {
@@ -38,6 +38,10 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^9.3.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/release-notes-generator": "^14.0.3",
     "@types/pg": "^8.11.6",
     "@types/supertest": "^6.0.2",
     "@types/uuid": "^10.0.0",
