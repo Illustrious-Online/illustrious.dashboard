@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@repo/typescript-config": "*",
-    "@turbo/gen": "^1.12.4"
+    "@turbo/gen": "^2.4.0"
   },
   "dependencies": {
     "@chakra-ui/cli": "^3.2.3",
