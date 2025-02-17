@@ -21,7 +21,7 @@
     "@elysiajs/bearer": "^1.0.2",
     "@elysiajs/cors": "^1.0.2",
     "@elysiajs/swagger": "^1.0.5",
-    "@sentry/bun": "^8.50.0",
+    "@sentry/bun": "^9.1.0",
     "@supabase/supabase-js": "^2.47.11",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node-steam-openid": "^1.0.3",
