@@ -50,7 +50,7 @@
     "supertest": "^7.0.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.9.3",
-    "uuid": "^9.0.1",
+    "uuid": "^11.1.0",
     "yoctocolors": "^2.1.1"
   },
   "module": "src/app.ts",
