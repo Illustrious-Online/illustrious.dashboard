@@ -1,7 +1,16 @@
-const { withSentryConfig } = require("@sentry/nextjs");
+import {withSentryConfig} from "@sentry/nextjs";
+import type { NextConfig } from "next";
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig: NextConfig = {
+  output: "standalone",
+  reactStrictMode: false,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  experimental: {
+    optimizePackageImports: ["@chakra-ui/react"],
+  },
+};
 
 module.exports = withSentryConfig(
   nextConfig,
@@ -31,6 +40,9 @@ module.exports = withSentryConfig(
     // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
     // side errors will fail.
     // tunnelRoute: "/monitoring",
+
+    // Hides source maps from generated client bundles
+    hideSourceMaps: true,
 
     // Automatically tree-shake Sentry logger statements to reduce bundle size
     disableLogger: true,
