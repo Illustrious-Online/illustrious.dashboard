@@ -17,7 +17,10 @@ export default defineConfig({
         '__tests__',
         'dist',
         'turbo/generators',
-        '**/*.test.tsx'
+        '**/*.test.tsx',
+        'sentry.*.config.ts',
+        'app/global-error.tsx',
+        'instrumentation.ts',
       ],
     },
   },
