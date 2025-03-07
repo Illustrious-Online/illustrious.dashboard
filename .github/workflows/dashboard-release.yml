@@ -23,6 +23,14 @@ jobs:
         uses: oven-sh/setup-bun@4bc047ad259df6fc24a6c9b0f9a0cb08cf17fbe5
         with:
           bun-version: latest
+      - name: Install spaces-cli
+        run: bun install -g spaces-cli
+      - name: Download dependency files
+        run: |
+          spaces-cli down $SPACE_URL/dashboard/.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+          spaces-cli down $SPACE_URL/dashboard/sentry.client.config.ts  -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+          spaces-cli down $SPACE_URL/dashboard/sentry.edge.config.ts  -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+          spaces-cli down $SPACE_URL/dashboard/sentry.server.config.ts  -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
       - name: Install Dependencies
         run: bun install --frozen-lockfile
       - name: Compare versions
