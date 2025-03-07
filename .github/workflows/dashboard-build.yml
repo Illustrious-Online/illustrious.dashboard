@@ -31,3 +31,12 @@ jobs:
           flags: illustrious-dashboard
           files: ./coverage/lcov-report/index-lcov.html
           slug: Illustrious-Online/illustrious.dashboard
+      - name: Run vitest with junit output
+        run: bun run test:junit
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: illustrious-dashboard
+          slug: Illustrious-Online/illustrious.dashboard

@@ -13,6 +13,7 @@
     "build": "next build",
     "start": "next start",
     "test": "vitest --coverage",
+    "test:junit": "vitest --reporter=junit --outputFile=test-report.junit.xml",
     "check": "bunx @biomejs/biome check ./app",
     "check:fix": "bunx @biomejs/biome check --write ./app",
     "prepare": "husky"
