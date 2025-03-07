@@ -2,5 +2,5 @@ apiVersion: v2
 name: ill-dashboard
 description: Helm chart for deploying the Illustrious Dashboard application
 type: application
-version: 0.0.1
-appVersion: "0.0.1"
+version: 0.1.0
+appVersion: "0.1.0"
