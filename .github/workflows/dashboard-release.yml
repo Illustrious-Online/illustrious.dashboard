@@ -48,18 +48,18 @@ jobs:
           echo $NEXT_VERSION
           echo $CURRENT_VERSION
           jq --arg nextVersion "${{ env.NEXT_VERSION }}" '.version = $nextVersion' package.json > tmp.json && mv tmp.json package.json
-          echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
           sed -i "s/tag: .*/tag: ${{ env.NEXT_VERSION }}/" k8s/values.yaml
           sed -i "s/version: .*/version: ${{ env.NEXT_VERSION }}/" k8s/Chart.yaml
           sed -i 's/appVersion: .*/appVersion: "'${{ env.NEXT_VERSION }}'"/' k8s/Chart.yaml
-      - name: Build Docker image
+      - name: Build & Push Docker image with latest tag
         run: |
-          bun run build
+          echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
           docker build -t ${{ secrets.REGISTRY_URL }}:latest .
           docker push ${{ secrets.REGISTRY_URL }}:latest
       - name: Push versioned Docker image to registry, if updated
         if: env.NEXT_VERSION != env.CURRENT_VERSION
         run: |
+          echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
           docker build -t ${{ secrets.REGISTRY_URL }}:${{ env.NEXT_VERSION }} .
           docker push ${{ secrets.REGISTRY_URL }}:${{ env.NEXT_VERSION }}
       - name: Push argo-cd application updates, if updated
