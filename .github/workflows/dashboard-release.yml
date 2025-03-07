@@ -29,6 +29,7 @@ jobs:
       - name: Download dependency files
         run: |
           spaces-cli down $SPACE_URL/dashboard/.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+          spaces-cli down $SPACE_URL/instrumentation.ts -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
           spaces-cli down $SPACE_URL/dashboard/sentry.client.config.ts  -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
           spaces-cli down $SPACE_URL/dashboard/sentry.edge.config.ts  -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
           spaces-cli down $SPACE_URL/dashboard/sentry.server.config.ts  -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
