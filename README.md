@@ -1,51 +1,36 @@
-# Illustrious Online
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-[![codecov](https://codecov.io/gh/Illustrious-Online/illustrious.online/graph/badge.svg?token=5T3N4K13S9)](https://codecov.io/gh/Illustrious-Online/illustrious.online)
+## Getting Started
 
-Illustrious Online is an open-source solution that allows you to [describe the core functionality and purpose of your software]. Whether you are looking to self-host your own instance or explore its features, this software is designed to be flexible and customizable.
+First, run the development server:
 
-## Features
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-- Feature 1
-- Feature 2
-- Feature 3
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Installation
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-[Insert installation instructions here, such as using package managers, Docker, etc.]
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## License
+## Learn More
 
-This project is licensed under the **Business Source License 1.1 (BSL 1.1)**.
+To learn more about Next.js, take a look at the following resources:
 
-- You are free to use, modify, and distribute the software for **self-hosting purposes**, which means you can run the software on your own servers or infrastructure.
-- You are **not allowed to use** the software to provide a service to third parties via cloud platforms (e.g., AWS, Azure, Google Cloud) without obtaining a commercial license.
-- After **[X years]**, this software will be relicensed under a more permissive open-source license (e.g., MIT or Apache 2.0).
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-For more details, see the full text of the license in the [LICENSE](./LICENSE) file.
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-### Commercial License
+## Deploy on Vercel
 
-If you wish to use the software for commercial hosting or offer it as a service to third parties, please contact us for a commercial license. We offer tailored commercial licensing options for cloud providers and enterprises.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-## Contributing
-
-We welcome contributions! Please read our [CONTRIBUTING.md](./CONTRIBUTING.md) file for more information on how you can get involved.
-
-## Contact
-
-If you have any questions or need a commercial license, feel free to reach out to us at [your-email@domain.com].
-
-What's missing?
-- [x] codecov
-- [x] sentry
-- [x] snyk
-- [x] turbo
-- [x] gh actions
-- [x] husky
-- [x] biome
-- [ ] versioning
-- [ ] releases
-  - [ ] gh
-  - [ ] sentry
-- [ ] deployment
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

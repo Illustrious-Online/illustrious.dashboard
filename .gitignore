@@ -48,3 +48,6 @@ yarn-error.log*
 
 **/sentry.*.ts
 **/instrumentation.ts
+
+# Sentry Config File
+.env.sentry-build-plugin

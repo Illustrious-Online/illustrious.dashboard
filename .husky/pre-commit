@@ -1,1 +1,1 @@
-turbo check
+bun run check:fix
