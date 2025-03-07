@@ -20,12 +20,11 @@ jobs:
         with:
           persist-credentials: false
       - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
+        uses: oven-sh/setup-bun@4bc047ad259df6fc24a6c9b0f9a0cb08cf17fbe5
         with:
           bun-version: latest
       - name: Install Dependencies
         run: bun install --frozen-lockfile
-      ### Compare versions using semantic-release
       - name: Compare versions
         id: compare
         run: |
@@ -33,7 +32,6 @@ jobs:
           echo "CURRENT_VERSION=${CURRENT_VERSION}" >> $GITHUB_ENV
           export NEXT_VERSION=$(bunx semantic-release --dry-run | grep 'The next release version is' | awk '{print $NF}')
           echo "NEXT_VERSION=${NEXT_VERSION}" >> $GITHUB_ENV
-      ### Update version in files using NEXT_VERSION
       - name: Update versions based on NEXT_VERSION
         if: env.NEXT_VERSION != env.CURRENT_VERSION
         run: |
@@ -47,13 +45,11 @@ jobs:
           bun run build
           docker build -t ${{ secrets.REGISTRY_URL }}:latest .
           docker push ${{ secrets.REGISTRY_URL }}:latest
-      ### Push new versioned Docker image to registry
       - name: Push versioned Docker image to registry, if updated
         if: env.NEXT_VERSION != env.CURRENT_VERSION
         run: |
           docker build -t ${{ secrets.REGISTRY_URL }}:${{ env.NEXT_VERSION }} .
           docker push ${{ secrets.REGISTRY_URL }}:${{ env.NEXT_VERSION }}
-      ### Push argo-cd application updates
       - name: Push argo-cd application updates, if updated
         if: env.NEXT_VERSION != env.CURRENT_VERSION
         run: |
@@ -63,6 +59,5 @@ jobs:
           git add .
           git commit -m "chore: Prepare deployment (${{ env.NEXT_VERSION }}) [skip ci]"
           git push origin main
-     ### Execute final versioning updates via semantic-release
       - name: Execute semantic-release
         run: bunx semantic-release
