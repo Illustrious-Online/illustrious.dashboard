@@ -38,4 +38,8 @@ yarn-error.log*
 # Sentry Config File
 .env.sentry-build-plugin
 
+# Codecov Files
+codecov
+codecov.*
 test-report.junit.xml
+
