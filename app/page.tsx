@@ -1,11 +1,14 @@
 "use client";
 
 import Wrapper from "@/components/wrapper";
+import { Heading } from "@chakra-ui/react";
 
 export default function Home() {
   return (
     <Wrapper>
-      <h1>Hello World: Home</h1>
+      <Heading as="h1" size="2xl">
+        Illustrious Dashboard
+      </Heading>
     </Wrapper>
   );
 }

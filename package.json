@@ -53,7 +53,7 @@
     "supabase"
   ],
   "dependencies": {
-    "@chakra-ui/cli": "^3.9.0",
+    "@chakra-ui/cli": "^3.10.0",
     "@chakra-ui/color-mode": "^2.2.0",
     "@chakra-ui/next-js": "^2.4.2",
     "@chakra-ui/react": "^3.9.0",
