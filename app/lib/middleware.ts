@@ -1,25 +1,25 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 export async function middleware(req: NextRequest) {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
   const response = await fetch(`${apiUrl}/auth/session`, {
-    method: 'GET',
-    credentials: 'include',
+    method: "GET",
+    credentials: "include",
     headers: {
-      cookie: req.headers.get('cookie') || '',
+      cookie: req.headers.get("cookie") || "",
     },
-  })
+  });
 
   if (response.status === 401) {
-    const url = req.nextUrl.clone()
-    url.pathname = '/auth'
-    return NextResponse.redirect(url)
+    const url = req.nextUrl.clone();
+    url.pathname = "/auth";
+    return NextResponse.redirect(url);
   }
 
-  const user = await response.json()
+  const user = await response.json();
 
-  return NextResponse.next(user)
+  return NextResponse.next(user);
 }
 
 export const config = {
@@ -31,6 +31,6 @@ export const config = {
      * - /_next/image (image optimization files)
      * - /favicon.ico (favicon file)
      */
-    '/((?!auth|_next/static|_next/image|favicon.ico).*)',
+    "/((?!auth|_next/static|_next/image|favicon.ico).*)",
   ],
-}
+};
