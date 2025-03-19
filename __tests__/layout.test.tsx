@@ -1,14 +1,14 @@
 import React from 'react';
 import { expect, test } from 'vitest'
 import { render } from '@testing-library/react';
-import { ChakraProvider, defaultSystem } from '@chakra-ui/react';
-import RootLayout from '@/layout';
+import { ChakraProvider } from '@chakra-ui/react';
+import RootLayout from '@/app/layout';
 
 test('RootLayout', () => {
     const screen = render(
-      <ChakraProvider value={defaultSystem}>
+      <ChakraProvider>
         <RootLayout>
-            <span>Test Child</span>
+          <span>Test Child</span>
         </RootLayout>
       </ChakraProvider>
     );

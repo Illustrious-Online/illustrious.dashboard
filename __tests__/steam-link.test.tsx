@@ -1,7 +1,7 @@
 import { beforeEach, afterEach, expect, test, vi } from 'vitest'
 import { cleanup, render, screen, fireEvent, waitFor } from '@testing-library/react'
-import { ChakraProvider, defaultSystem } from '@chakra-ui/react';
-import LinkSteam from '@/profile/steam/link/page';
+import { ChakraProvider } from '@chakra-ui/react';
+import LinkSteam from '@/app/profile/steam/link/page';
 
 global.fetch = vi.fn().mockResolvedValueOnce(() => {
     Promise.resolve({
@@ -11,7 +11,7 @@ global.fetch = vi.fn().mockResolvedValueOnce(() => {
     
 beforeEach(() => {
   render(
-    <ChakraProvider value={defaultSystem}>
+    <ChakraProvider>
       <LinkSteam />
     </ChakraProvider>
   );

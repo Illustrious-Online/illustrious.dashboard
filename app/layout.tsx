@@ -1,4 +1,4 @@
-import { Provider } from "@/components/provider";
+import { Provider } from "@/app/components/provider";
 import type { Metadata } from "next";
 import React, { type ReactNode } from "react";
 
@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: "Created by Illustrious Online",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: ReactNode;

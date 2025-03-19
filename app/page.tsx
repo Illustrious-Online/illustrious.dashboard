@@ -1,6 +1,6 @@
 "use client";
 
-import Wrapper from "@/components/wrapper";
+import Wrapper from "@/app/components/wrapper";
 import { Heading } from "@chakra-ui/react";
 
 export default function Home() {

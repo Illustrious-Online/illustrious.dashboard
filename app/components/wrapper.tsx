@@ -1,7 +1,7 @@
 "use client";
 
 import { useColorMode } from "@chakra-ui/color-mode";
-import { Box, Button, Flex, Heading, Spacer, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Spacer, Text } from "@chakra-ui/react";
 import type { FC, ReactNode } from "react";
 import * as React from "react";
 import { ColorModeButton } from "./color-mode";
@@ -11,7 +11,7 @@ interface LayoutProps {
 }
 
 const Wrapper: FC<LayoutProps> = ({ children }) => {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode } = useColorMode();
 
   return (
     <Box minHeight="100vh" display="flex" flexDirection="column">
