@@ -1,7 +1,7 @@
 import Wrapper from "@/app/components/wrapper";
 import { ColorModeProvider } from "@chakra-ui/color-mode";
 import { ChakraProvider } from "@chakra-ui/react";
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import React, { type ReactElement } from "react";
 import { afterEach, describe, expect, test } from "vitest";
 

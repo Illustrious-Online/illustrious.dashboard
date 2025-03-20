@@ -11,8 +11,8 @@ import {
   type FormikProps,
   type FormikValues,
 } from "formik";
+import { withZodSchema } from "formik-validator-zod";
 import { z } from "zod";
-import { withZodSchema } from 'formik-validator-zod'
 
 export default function AuthForm() {
   const toast = useToast();
@@ -106,7 +106,9 @@ export default function AuthForm() {
                 }) => (
                   <FormControl isInvalid={!!errors.email && !!touched.email}>
                     <Input {...field} id="email" type="email" />
-                    <FormErrorMessage>{errors.email as string}</FormErrorMessage>
+                    <FormErrorMessage>
+                      {errors.email as string}
+                    </FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
