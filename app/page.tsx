@@ -1,7 +1,8 @@
 "use client";
 
 import Wrapper from "@/app/components/wrapper";
-import { Heading } from "@chakra-ui/react";
+import { Heading, Button } from "@chakra-ui/react";
+import { toaster } from "./components/toaster";
 
 export default function Home() {
   return (

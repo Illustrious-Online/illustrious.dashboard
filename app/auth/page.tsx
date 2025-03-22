@@ -1,25 +1,21 @@
-import { Box, Heading, VStack } from "@chakra-ui/react";
-import AuthForm from "./AuthForm";
+import { Box, Heading } from "@chakra-ui/react";
+import LoginForm from "./LoginForm";
+import Wrapper from "@/app/components/wrapper";
 
 export default function AuthPage() {
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      p={4}
-    >
-      <VStack
-        gap={4}
+    <Wrapper>
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
         p={4}
-        borderWidth={1}
-        borderRadius={8}
-        borderColor="gray.200"
+        height="100%"
       >
-        <Heading>Sign in to your account</Heading>
-        <AuthForm />
-      </VStack>
-    </Box>
+        <Heading marginBottom={4}>Sign in to your account</Heading>
+        <LoginForm />
+      </Box>
+    </Wrapper>
   );
 }
