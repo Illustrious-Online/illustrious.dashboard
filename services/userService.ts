@@ -9,7 +9,7 @@ export class UserService {
 
   async createUser(userData: {
     id: string,
-    email: string,
+    email?: string,
     firstName?: string,
     lastName?: string,
     avatarUrl?: string

@@ -35,7 +35,7 @@ export default function LinkSteam() {
     <Wrapper>
       <h1>Hello World: Link Steam</h1>
       <Button
-        isLoading={loading}
+        loading={loading}
         loadingText="Processing..."
         colorScheme="teal"
         onClick={handleClick}
