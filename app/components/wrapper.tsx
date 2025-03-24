@@ -1,36 +1,30 @@
 "use client";
 
-import { useColorMode } from "@chakra-ui/color-mode";
-import { Box, Button, Flex, Heading, Spacer, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Spacer } from "@chakra-ui/react";
 import type { FC, ReactNode } from "react";
 import * as React from "react";
-import { ColorModeButton } from "./color-mode";
+import { ColorModeButton, useColorMode } from "./color-mode";
+import { Toaster } from "./toaster";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 const Wrapper: FC<LayoutProps> = ({ children }) => {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode } = useColorMode();
 
   return (
-    <Box minHeight="100vh" display="flex" flexDirection="column">
-      {/* Top Bar Navigation */}
-      <Flex
-        as="nav"
-        padding={4}
-        bg={colorMode === "light" ? "teal.500" : "teal.700"}
-        color="white"
-        align="center"
-      >
-        <Heading size="lg">My App</Heading>
+    <Box height="100vh" display="flex" flexDirection="column">
+      <Toaster />
+      <Flex as="nav" padding={4} color="white" align="center">
+        <Heading size="lg" color={"fg.muted"}>
+          Illustrious Dashboard
+        </Heading>
         <Spacer />
-        <Text>HELLO WORLD</Text>
         <ColorModeButton />
       </Flex>
 
-      {/* Page Content */}
-      <Box as="main" flex="1" padding={4}>
+      <Box as="main" height="100%">
         {children}
       </Box>
     </Box>

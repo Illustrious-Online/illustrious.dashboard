@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/button";
-import Wrapper from "@/components/wrapper";
+import Wrapper from "@/app/components/wrapper";
+import { Button } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 export default function LinkSteam() {

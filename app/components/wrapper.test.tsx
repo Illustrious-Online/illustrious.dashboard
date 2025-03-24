@@ -1,38 +1,42 @@
-import Wrapper from "@/components/wrapper";
-import { ColorModeProvider } from "@chakra-ui/color-mode";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import React, { type ReactElement } from "react";
-import { afterEach, describe, expect, test } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+import Wrapper from "./wrapper";
 
-describe("Wrapper component", () => {
-  const renderWithProviders = (ui: ReactElement) => {
-    return render(
+describe("Wrapper Component", () => {
+  it("renders without crashing", () => {
+    render(
       <ChakraProvider value={defaultSystem}>
-        <ColorModeProvider>{ui}</ColorModeProvider>
+        <Wrapper>
+          <div>Test Content</div>
+        </Wrapper>
       </ChakraProvider>,
     );
-  };
 
-  afterEach(() => {
-    cleanup();
+    expect(screen.getByText("Illustrious Dashboard")).toBeInTheDocument();
   });
 
-  test("renders children correctly", () => {
-    renderWithProviders(
-      <Wrapper>
-        <div>Test Child</div>
-      </Wrapper>,
+  it("renders children inside the main content area", () => {
+    render(
+      <ChakraProvider value={defaultSystem}>
+        <Wrapper>
+          <div>Test Content</div>
+        </Wrapper>
+      </ChakraProvider>,
     );
-    expect(screen.getByText("Test Child")).toBeDefined();
+
+    expect(screen.getByText("Test Content")).toBeInTheDocument();
   });
 
-  test("renders top bar navigation with correct elements", () => {
-    renderWithProviders(<Wrapper>Test</Wrapper>);
-    expect(screen.getByText("My App")).toBeDefined();
-    expect(screen.getByText("HELLO WORLD")).toBeDefined();
-    expect(
-      screen.getByRole("button", { name: /Toggle color mode/i }),
-    ).toBeDefined();
+  it("renders the ColorModeButton component", () => {
+    render(
+      <ChakraProvider value={defaultSystem}>
+        <Wrapper>
+          <div>Test Content</div>
+        </Wrapper>
+      </ChakraProvider>,
+    );
+
+    expect(screen.getByRole("button")).toBeInTheDocument();
   });
 });
