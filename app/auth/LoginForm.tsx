@@ -1,17 +1,13 @@
 "use client";
 
+import { toaster } from "@/app/components/toaster";
 import { createClient } from "@/lib/supabase/client";
-import { Icon, IconButton, VStack } from "@chakra-ui/react";
+import { IconButton, VStack } from "@chakra-ui/react";
 import { Button, Field, Input } from "@chakra-ui/react";
-import { toaster } from "@/app/components/toaster"
-import {
-  Form,
-  Formik,
-  type FormikValues,
-} from "formik";
+import { Form, Formik, type FormikValues } from "formik";
 import { withZodSchema } from "formik-validator-zod";
-import { z } from "zod";
 import { FaDiscord } from "react-icons/fa";
+import { z } from "zod";
 
 export default function LoginForm() {
   const supabase = createClient();
@@ -50,7 +46,7 @@ export default function LoginForm() {
         title: "Error",
         description: err.message,
         type: "error",
-        duration: 2500
+        duration: 2500,
       });
       console.error("Authentication error:", error);
     }
@@ -72,7 +68,7 @@ export default function LoginForm() {
         title: "Error",
         description: err.message,
         type: "error",
-        duration: 2500
+        duration: 2500,
       });
       console.error("OAuth error:", error);
     }
@@ -91,7 +87,15 @@ export default function LoginForm() {
           setSubmitting(false);
         }}
       >
-        {({ isValid, isSubmitting, touched, errors, values, handleChange, handleBlur }) => (
+        {({
+          isValid,
+          isSubmitting,
+          touched,
+          errors,
+          values,
+          handleChange,
+          handleBlur,
+        }) => (
           <Form>
             <VStack gap={2}>
               <Field.Root required invalid={touched.email && !!errors.email}>
@@ -109,7 +113,10 @@ export default function LoginForm() {
                 />
                 <Field.ErrorText>{errors.email}</Field.ErrorText>
               </Field.Root>
-              <Field.Root required invalid={touched.password && !!errors.password}>
+              <Field.Root
+                required
+                invalid={touched.password && !!errors.password}
+              >
                 <Field.Label>
                   Password
                   <Field.RequiredIndicator />
@@ -138,8 +145,8 @@ export default function LoginForm() {
         aria-label="Discord"
         onClick={() => handleOAuthSignIn("discord")}
       >
-          <FaDiscord />
-        </IconButton>
+        <FaDiscord />
+      </IconButton>
     </>
   );
 }

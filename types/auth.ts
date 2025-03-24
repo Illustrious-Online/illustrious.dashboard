@@ -4,7 +4,7 @@ export interface UserDetails {
   firstName?: string
   lastName?: string
   avatarUrl?: string
-  role: 'user' | 'admin'
+  role: string
   // Add any other user fields you need
 }
 

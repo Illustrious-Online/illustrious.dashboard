@@ -1,7 +1,7 @@
 import type { UserDetails } from '@/types/auth'
 
 export class UserService {
-  private apiUrl: string
+  public apiUrl: string
 
   constructor() {
     this.apiUrl = process.env.ELYSIA_API_URL || 'http://localhost:8000'

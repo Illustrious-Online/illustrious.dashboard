@@ -36,17 +36,13 @@ const PUBLIC_FILE_EXTENSIONS = [
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-  console.log('middleware', pathname)
   
   // Check if the path should be excluded from authentication
   const isPublicPath = PUBLIC_PATHS.some(path => pathname.startsWith(path))
-  console.log('isPublicPath', isPublicPath)
   const hasPublicFileExtension = PUBLIC_FILE_EXTENSIONS.some(ext => pathname.endsWith(ext))
-  console.log('hasPublicFileExtension', hasPublicFileExtension)
 
   // Skip middleware for public paths and file extensions
   if (isPublicPath || hasPublicFileExtension) {
-    console.log('skipping middleware')
     return NextResponse.next()
   }
   
@@ -57,7 +53,6 @@ export function middleware(request: NextRequest) {
 async function authenticateRequest(request: NextRequest) {
   const supabase = await createClient()
   const { data: { session } } = await supabase.auth.getSession()
-  console.log('session', session)
   if (!session) {
     // Extract the URL to redirect back to after authentication
     const returnUrl = encodeURIComponent(request.nextUrl.pathname + request.nextUrl.search)

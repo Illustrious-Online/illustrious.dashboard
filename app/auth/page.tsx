@@ -1,6 +1,8 @@
+"use client";
+
+import Wrapper from "@/app/components/wrapper";
 import { Box, Heading } from "@chakra-ui/react";
 import LoginForm from "./LoginForm";
-import Wrapper from "@/app/components/wrapper";
 
 export default function AuthPage() {
   return (

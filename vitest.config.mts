@@ -5,6 +5,7 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 export default defineConfig({
   plugins: [tsconfigPaths(), react()],
   test: {
+    globals: true,
     watch: false,
     environment: 'jsdom',
     setupFiles: './setupTests.ts',
@@ -21,6 +22,7 @@ export default defineConfig({
         'sentry.*.config.ts',
         'app/global-error.tsx',
         'instrumentation.ts',
+        'lib/supabase',
       ],
     },
   },

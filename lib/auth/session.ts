@@ -10,7 +10,6 @@ export async function getSession(): Promise<Session | null> {
     return null
   }
   
-  // Get user details from your Elysia API
   const userService = new UserService()
   const userDetails = await userService.getUserById(session.user.id)
 
