@@ -28,7 +28,7 @@ jobs:
         run: bun install -g spaces-cli
       - name: Download dependency files
         run: |
-          spaces-cli down $SPACE_URL/dashboard/.env -o ./.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
+          spaces-cli down $SPACE_URL/dashboard/local.env -o ./.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
           spaces-cli down $SPACE_URL/instrumentation.ts -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
           spaces-cli down $SPACE_URL/dashboard/sentry.client.config.ts  -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
           spaces-cli down $SPACE_URL/dashboard/sentry.edge.config.ts  -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
@@ -53,6 +53,10 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: illustrious-dashboard
           slug: Illustrious-Online/illustrious.dashboard
+      - name: Replace .env file for production
+        run: |
+          rm -rf .env
+          spaces-cli down $SPACE_URL/dashboard/production.env -o ./.env -k ${{ secrets.SPACE_SECRET }} -i ${{ secrets.SPACE_KEY }}
       - name: Compare versions
         id: compare
         run: |
