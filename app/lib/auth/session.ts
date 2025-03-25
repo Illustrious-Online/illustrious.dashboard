@@ -1,24 +1,26 @@
-import type { Session } from '@/types/auth'
-import { createClient } from '@/lib/supabase/server'
-import { UserService } from '@/services/userService'
+import { createClient } from "@/lib/supabase/server";
+import { UserService } from "@/services/userService";
+import type { Session } from "@/types/auth";
 
 export async function getSession(): Promise<Session | null> {
-  const supabase = await createClient()
-  const { data: { session } } = await supabase.auth.getSession()
-  
+  const supabase = await createClient();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
   if (!session) {
-    return null
+    return null;
   }
-  
-  const userService = new UserService()
-  const userDetails = await userService.getUserById(session.user.id)
+
+  const userService = new UserService();
+  const userDetails = await userService.getUserById(session.user.id);
 
   if (!userDetails) {
-    return null
+    return null;
   }
 
   return {
     user: userDetails,
-    accessToken: session.access_token
-  }
+    accessToken: session.access_token,
+  };
 }
