@@ -1,7 +1,7 @@
 "use client";
 
 import { createClient } from "@/lib/supabase/client";
-import logo from "@/public/logo.png";
+import logo from "../../public/logo.png";
 import { Box, Button, Flex, Spacer } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -31,6 +31,7 @@ const Wrapper: FC<LayoutProps> = ({ children }) => {
       });
       console.error("Error signing out:", error.message);
     } else {
+      console.log('oh?');
       router.push("/login");
       toaster.success({
         description: "Successfully signed out",
@@ -44,7 +45,7 @@ const Wrapper: FC<LayoutProps> = ({ children }) => {
       <Box height="100vh" display="flex" flexDirection="column">
         <Toaster />
         <Flex as="nav" padding={4} color="white" align="center">
-          <Image src={logo} alt="Logo" height={25} width={50} />
+          <Image src={logo} alt="Logo" height={45} width={60} />
           <Spacer />
           {session && (
             <Button variant={"ghost"} onClick={handleSignOut}>

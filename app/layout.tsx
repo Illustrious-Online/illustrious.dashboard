@@ -1,4 +1,4 @@
-import { Provider } from "@/components/provider";
+import { Providers } from "@/providers";
 import { ColorModeScript } from "@chakra-ui/color-mode"; // Correct import for ColorModeScript
 import type { Metadata } from "next";
 import React, { type ReactNode } from "react";
@@ -19,7 +19,7 @@ export default async function RootLayout({
         <ColorModeScript />
       </head>
       <body>
-        <Provider>{children}</Provider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

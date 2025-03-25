@@ -12,7 +12,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "vitest --coverage --silent",
+    "test": "vitest --coverage --silent --no-file-parallelism",
     "test:junit": "vitest --reporter=junit --outputFile=test-report.junit.xml",
     "check": "bunx @biomejs/biome check ./app",
     "check:fix": "bunx @biomejs/biome check --write ./app",

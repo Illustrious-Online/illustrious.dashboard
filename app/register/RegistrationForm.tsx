@@ -2,7 +2,7 @@
 
 import { toaster } from "@/components/toaster";
 import { createClient } from "@/lib/supabase/client";
-import { Box, Flex, IconButton, VStack } from "@chakra-ui/react";
+import { Flex, IconButton, VStack } from "@chakra-ui/react";
 import { Button, Text } from "@chakra-ui/react";
 import { Form, Formik, type FormikValues } from "formik";
 import { withZodSchema } from "formik-validator-zod";

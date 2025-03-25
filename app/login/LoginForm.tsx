@@ -150,7 +150,7 @@ export default function LoginForm() {
       </Formik>
 
       <Text fontSize="sm" marginTop={4} textAlign="center">
-        Or sign up with
+        Or sign in with
       </Text>
       <IconButton
         marginTop={4}
