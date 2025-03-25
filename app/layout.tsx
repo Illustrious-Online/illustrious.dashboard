@@ -1,4 +1,4 @@
-import { Provider } from "@/app/components/provider";
+import { Provider } from "@/components/provider";
 import { ColorModeScript } from "@chakra-ui/color-mode"; // Correct import for ColorModeScript
 import type { Metadata } from "next";
 import React, { type ReactNode } from "react";

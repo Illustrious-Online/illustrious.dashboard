@@ -10,7 +10,7 @@ vi.mock('@/lib/supabase/server', () => ({
 describe('middleware', () => {
     it('should allow requests to public paths', () => {
         const request = {
-            nextUrl: { pathname: '/auth' },
+            nextUrl: { pathname: '/login' },
         } as unknown as NextRequest
 
         const response = middleware(request)
@@ -39,7 +39,7 @@ describe('middleware', () => {
 
         const response = await middleware(request)
         expect(response).toEqual(
-            NextResponse.redirect(new URL('/auth?returnUrl=%2Fdashboard', request.url))
+            NextResponse.redirect(new URL('/login?returnUrl=%2Fdashboard', request.url))
         )
     })
 

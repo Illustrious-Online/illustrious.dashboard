@@ -3,7 +3,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
 import LinkSteam from "./page";
 
-vi.mock("@/app/components/wrapper", () => ({
+vi.mock("@/components/wrapper", () => ({
   default: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="wrapper">{children}</div>
   ),

@@ -1,10 +1,8 @@
-"use client";
-
-import Wrapper from "@/app/components/wrapper";
+import Wrapper from "@/components/wrapper";
 import { Box, Heading } from "@chakra-ui/react";
 import LoginForm from "./LoginForm";
 
-export default function AuthPage() {
+export default function LoginPage() {
   return (
     <Wrapper>
       <Box
@@ -13,7 +11,6 @@ export default function AuthPage() {
         alignItems="center"
         justifyContent="center"
         p={4}
-        height="100%"
       >
         <Heading marginBottom={4}>Sign in to your account</Heading>
         <LoginForm />

@@ -1,6 +1,6 @@
 "use client";
 
-import Wrapper from "@/app/components/wrapper";
+import Wrapper from "@/components/wrapper";
 import { useEffect } from "react";
 
 export default function SteamCallback() {

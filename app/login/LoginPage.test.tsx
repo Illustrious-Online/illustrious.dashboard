@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import AuthPage from "./page";
 
-vi.mock("@/app/components/wrapper", () => ({
+vi.mock("@/components/wrapper", () => ({
   default: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="wrapper">{children}</div>
   ),

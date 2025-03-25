@@ -10,7 +10,7 @@ import {
 } from "vitest";
 import SteamCallback from "./page";
 
-vi.mock("@/app/components/wrapper", () => ({
+vi.mock("@/components/wrapper", () => ({
   __esModule: true,
   default: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="wrapper">{children}</div>

@@ -6,7 +6,8 @@ import { createClient } from '@/lib/supabase/server'
 // Define paths that should be excluded from authentication checks
 const PUBLIC_PATHS = [
   // Auth routes
-  '/auth',
+  '/login',
+  '/register',
   '/api/auth',
   
   // Static files and resources
@@ -58,7 +59,7 @@ async function authenticateRequest(request: NextRequest) {
     const returnUrl = encodeURIComponent(request.nextUrl.pathname + request.nextUrl.search)
     
     // Redirect to auth page with return URL
-    return NextResponse.redirect(new URL(`/auth?returnUrl=${returnUrl}`, request.url))
+    return NextResponse.redirect(new URL(`/login?returnUrl=${returnUrl}`, request.url))
   }
   
   return NextResponse.next()

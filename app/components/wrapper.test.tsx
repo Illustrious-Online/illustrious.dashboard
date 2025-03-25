@@ -13,7 +13,7 @@ describe("Wrapper Component", () => {
       </ChakraProvider>,
     );
 
-    expect(screen.getByText("Illustrious Dashboard")).toBeInTheDocument();
+    expect(screen.getByAltText("Logo")).toBeInTheDocument();
   });
 
   it("renders children inside the main content area", () => {
