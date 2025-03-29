@@ -1,9 +1,9 @@
 import { toaster } from "@/components/toaster";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi, type Mock } from "vitest";
+import { createClient } from "@/lib/supabase/client";
 import RegistrationForm from "@/register/RegistrationForm";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
-import { createClient } from "@/lib/supabase/client";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/lib/supabase/client", () => ({
   createClient: vi.fn(),

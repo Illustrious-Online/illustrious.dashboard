@@ -1,10 +1,10 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import Wrapper from "@/components/wrapper";
+import { useAuth } from "@/context/auth-context";
 import { createClient } from "@/lib/supabase/client";
-import { useAuth } from "@/context/AuthContext";
-import { beforeEach, describe, expect, it, vi, type Mock } from "vitest";
-import { useRouter } from "next/navigation";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { useRouter } from "next/navigation";
+import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/lib/supabase/client", () => ({
   createClient: vi.fn(),
@@ -30,7 +30,9 @@ describe("Wrapper Component", () => {
   const renderWrapper = () => {
     return render(
       <ChakraProvider value={defaultSystem}>
-        <Wrapper><p>Test Content</p></Wrapper>
+        <Wrapper>
+          <p>Test Content</p>
+        </Wrapper>
       </ChakraProvider>,
     );
   };
@@ -63,7 +65,7 @@ describe("Wrapper Component", () => {
 
     await waitFor(() => {
       expect(mockSignOut).toHaveBeenCalled();
-      expect(mockPush).toHaveBeenCalledWith("/login");
+      expect(mockPush).toHaveBeenCalledWith("/auth/login");
     });
   });
 

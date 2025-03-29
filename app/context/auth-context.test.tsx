@@ -1,8 +1,8 @@
-import { render, screen, waitFor } from "@testing-library/react";
 import { createClient } from "@/lib/supabase/client";
-import { beforeEach, describe, expect, it, vi, type Mock } from "vitest";
 import type { Session, User } from "@supabase/supabase-js";
-import { useAuth, AuthProvider } from "./AuthContext";
+import { render, screen, waitFor } from "@testing-library/react";
+import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
+import { AuthProvider, useAuth } from "./auth-context";
 
 vi.mock("@/lib/supabase/client", () => ({
   createClient: vi.fn(),
@@ -31,11 +31,9 @@ describe("AuthProvider", () => {
         getSession: vi
           .fn()
           .mockResolvedValue({ data: { session: mockSession } }),
-        onAuthStateChange: vi
-          .fn()
-          .mockReturnValue({
-            data: { subscription: { unsubscribe: vi.fn() } },
-          }),
+        onAuthStateChange: vi.fn().mockReturnValue({
+          data: { subscription: { unsubscribe: vi.fn() } },
+        }),
       },
     };
     (createClient as unknown as Mock).mockReturnValue(mockSupabase);
@@ -68,11 +66,9 @@ describe("AuthProvider", () => {
     const mockSupabase = {
       auth: {
         getSession: vi.fn().mockResolvedValue({ data: { session: null } }),
-        onAuthStateChange: vi
-          .fn()
-          .mockReturnValue({
-            data: { subscription: { unsubscribe: vi.fn() } },
-          }),
+        onAuthStateChange: vi.fn().mockReturnValue({
+          data: { subscription: { unsubscribe: vi.fn() } },
+        }),
       },
     };
     (createClient as unknown as Mock).mockReturnValue(mockSupabase);

@@ -1,23 +1,23 @@
-"use client";
-
+import InputControl from "@/components/input-control";
+import NavLink from "@/components/nav-link";
 import { toaster } from "@/components/toaster";
+import { useAuth } from "@/context/auth-context";
 import { createClient } from "@/lib/supabase/client";
-import { Flex, IconButton, VStack } from "@chakra-ui/react";
-import { Button, Text } from "@chakra-ui/react";
+import { UserService } from "@/services/user-service";
+import { Flex, VStack } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { Form, Formik, type FormikValues } from "formik";
 import { withZodSchema } from "formik-validator-zod";
-import { FaDiscord } from "react-icons/fa";
-import { z } from "zod";
-import InputControl from "../components/input-control";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { set, z } from "zod";
 
-export default function RegistrationForm() {
+export default function ResetPasswordForm() {
+  const auth = useAuth();
+  const router = useRouter();
   const supabase = createClient();
   const authSchema = z
     .object({
-      email: z
-        .string()
-        .email("Invalid email address")
-        .min(1, "Email is required"),
       password: z
         .string()
         .min(1, "Password is required")
@@ -30,7 +30,6 @@ export default function RegistrationForm() {
           "Password must contain at least one special character",
         ),
       confirmPassword: z.string().min(1, "Password confirmation is required"),
-      phone: z.string().optional(),
     })
     .superRefine(({ confirmPassword, password }, ctx) => {
       if (confirmPassword !== password) {
@@ -42,27 +41,34 @@ export default function RegistrationForm() {
       }
     });
 
-  const handleRegistration = async (values: FormikValues) => {
+  const handleUpdatePassword = async (values: FormikValues) => {
     try {
-      const { error } = await supabase.auth.signUp({
-        phone: values.phone,
-        email: values.email,
+      const { error: updateError } = await supabase.auth.updateUser({
         password: values.password,
-        options: {
-          emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/callback`,
-          data: {
-            phone: values.phone,
-            email: values.email,
-            password: values.password,
-          },
-        },
       });
 
-      if (error) {
-        throw error;
+      if (updateError) {
+        throw updateError;
       }
 
-      window.location.href = "/";
+      const { error: signOutError } = await supabase.auth.signOut({
+        scope: "global",
+      });
+
+      if (signOutError) {
+        throw signOutError;
+      }
+
+      toaster.create({
+        title: "Success",
+        description:
+          "Password updated successfully. You will be redirected to the login page.",
+        type: "success",
+        duration: 2500,
+      });
+      setTimeout(() => {
+        router.push("/auth/login");
+      }, 2500);
     } catch (error) {
       const err = error as Error;
       toaster.create({
@@ -75,51 +81,42 @@ export default function RegistrationForm() {
     }
   };
 
-  const handleOAuthSignIn = async (provider: "google" | "discord") => {
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/callback`,
-        },
-      });
+  useEffect(() => {
+    const { loading, session } = auth;
+    const setPasswordReset = async () => {
+      if (auth.user) {
+        await new UserService().updateUser(auth.user?.id, {
+          passwordReset: true,
+        });
+      }
+    };
 
-      if (error) throw error;
-    } catch (error) {
-      const err = error as Error;
+    if (!loading && !session) {
       toaster.create({
         title: "Error",
-        description: err.message,
+        description: "You are not authenticated.",
         type: "error",
         duration: 2500,
       });
-      console.error("OAuth error:", error);
+      setTimeout(() => {
+        router.push("/auth/login");
+      }, 2500);
+    } else {
+      setPasswordReset();
     }
-  };
+  }, [auth, router]);
 
   return (
     <>
-      <Formik<{
-        email: string;
-        password: string;
-        confirmPassword: string;
-        phone?: string;
-      }>
-        enableReinitialize={true}
-        initialValues={{
-          email: "",
-          password: "",
-          confirmPassword: "",
-          phone: "",
-        }}
+      <Formik<{ password: string; confirmPassword: string }>
+        initialValues={{ password: "", confirmPassword: "" }}
         initialErrors={{
-          email: "Email is required",
           password: "Password is required",
           confirmPassword: "Password confirmation is required",
         }}
         validate={withZodSchema(authSchema)}
         onSubmit={(values, { setSubmitting }) => {
-          handleRegistration(values);
+          handleUpdatePassword(values);
           setSubmitting(false);
         }}
       >
@@ -131,8 +128,6 @@ export default function RegistrationForm() {
           values,
           handleChange,
           handleBlur,
-          setFieldValue,
-          setFieldTouched,
         }) => (
           <Form
             style={{
@@ -141,20 +136,6 @@ export default function RegistrationForm() {
             }}
           >
             <VStack gap={2}>
-              <InputControl
-                id="email"
-                name="email"
-                label="Email Address"
-                type="text"
-                required={true}
-                placeholder="Enter your email address"
-                value={values.email}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-                touched={touched.email}
-                errors={errors.email}
-              />
-
               <InputControl
                 id="password"
                 name="password"
@@ -183,19 +164,6 @@ export default function RegistrationForm() {
                 errors={errors.confirmPassword}
               />
 
-              <InputControl
-                id="phone"
-                name="phone"
-                label="Phone Number"
-                type="phone"
-                required={false}
-                value={values.phone}
-                setFieldValue={setFieldValue}
-                setFieldTouched={setFieldTouched}
-                touched={touched.phone}
-                errors={errors.phone}
-              />
-
               <Flex
                 marginTop={2}
                 gap={4}
@@ -208,11 +176,7 @@ export default function RegistrationForm() {
                   loading={isSubmitting}
                   disabled={!isValid}
                 >
-                  Register
-                </Button>
-
-                <Button asChild variant="ghost" size={"sm"}>
-                  <a href="/login">Login</a>
+                  Update Password
                 </Button>
               </Flex>
             </VStack>
@@ -220,17 +184,14 @@ export default function RegistrationForm() {
         )}
       </Formik>
 
-      <Text fontSize="sm" marginTop={4} textAlign="center">
-        Or sign up with
-      </Text>
-      <IconButton
+      <NavLink
+        href="/auth/login"
+        asButton
+        buttonProps={{ variant: "plain" }}
         marginTop={4}
-        variant="outline"
-        aria-label="Discord"
-        onClick={() => handleOAuthSignIn("discord")}
       >
-        <FaDiscord />
-      </IconButton>
+        Back to Login
+      </NavLink>
     </>
   );
 }

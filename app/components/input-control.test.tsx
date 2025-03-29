@@ -1,16 +1,16 @@
-import { render, screen, fireEvent } from "@testing-library/react";
 import InputControl from "@/components/input-control";
-import { describe, expect, it, vi } from "vitest";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 
 describe("InputControl Component", () => {
-  const renderInputControl = (props: React.ComponentProps<typeof InputControl>) => {
+  const renderInputControl = (
+    props: React.ComponentProps<typeof InputControl>,
+  ) => {
     return render(
       <ChakraProvider value={defaultSystem}>
-        <InputControl
-          {...props}
-        />
-      </ChakraProvider>
+        <InputControl {...props} />
+      </ChakraProvider>,
     );
   };
 
@@ -35,7 +35,7 @@ describe("InputControl Component", () => {
       required: true,
       handleChange,
     });
-    
+
     const input = screen.getByRole("textbox");
     fireEvent.change(input, { target: { value: "Hello" } });
     expect(handleChange).toHaveBeenCalled();
@@ -67,7 +67,7 @@ describe("InputControl Component", () => {
       touched: true,
       errors: "This field is required",
     });
-    
+
     expect(screen.getByText("This field is required")).toBeInTheDocument();
   });
 });

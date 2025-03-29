@@ -1,38 +1,69 @@
-"use client";
-
+import InputControl from "@/components/input-control";
+import NavLink from "@/components/nav-link";
 import { toaster } from "@/components/toaster";
 import { createClient } from "@/lib/supabase/client";
 import { Flex, IconButton, VStack } from "@chakra-ui/react";
 import { Button, Text } from "@chakra-ui/react";
 import { Form, Formik, type FormikValues } from "formik";
 import { withZodSchema } from "formik-validator-zod";
+import { useRouter } from "next/navigation";
 import { FaDiscord } from "react-icons/fa";
 import { z } from "zod";
-import InputControl from "../components/input-control";
 
-export default function LoginForm() {
+export default function RegistrationForm() {
+  const router = useRouter();
   const supabase = createClient();
-  const authSchema = z.object({
-    email: z
-      .string()
-      .email("Invalid email address")
-      .min(1, "Email is required"),
-    password: z.string().min(1, "Password is required"),
-  });
+  const authSchema = z
+    .object({
+      email: z
+        .string()
+        .email("Invalid email address")
+        .min(1, "Email is required"),
+      password: z
+        .string()
+        .min(1, "Password is required")
+        .min(8, "Password must be at least 8 characters")
+        .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+        .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+        .regex(/[0-9]/, "Password must contain at least one number")
+        .regex(
+          /[@$!%*?&]/,
+          "Password must contain at least one special character",
+        ),
+      confirmPassword: z.string().min(1, "Password confirmation is required"),
+      phone: z.string().optional(),
+    })
+    .superRefine(({ confirmPassword, password }, ctx) => {
+      if (confirmPassword !== password) {
+        ctx.addIssue({
+          code: "custom",
+          message: "The passwords did not match",
+          path: ["confirmPassword"],
+        });
+      }
+    });
 
-  const handleEmailAuth = async (values: FormikValues) => {
-    console.log("VALUES", values);
+  const handleRegistration = async (values: FormikValues) => {
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signUp({
+        phone: values.phone,
         email: values.email,
         password: values.password,
+        options: {
+          emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/callback`,
+          data: {
+            phone: values.phone,
+            email: values.email,
+            password: values.password,
+          },
+        },
       });
 
       if (error) {
         throw error;
       }
 
-      window.location.href = "/";
+      router.push("/");
     } catch (error) {
       const err = error as Error;
       toaster.create({
@@ -69,15 +100,27 @@ export default function LoginForm() {
 
   return (
     <>
-      <Formik<{ email: string; password: string }>
-        initialValues={{ email: "", password: "" }}
+      <Formik<{
+        email: string;
+        password: string;
+        confirmPassword: string;
+        phone?: string;
+      }>
+        enableReinitialize={true}
+        initialValues={{
+          email: "",
+          password: "",
+          confirmPassword: "",
+          phone: "",
+        }}
         initialErrors={{
           email: "Email is required",
           password: "Password is required",
+          confirmPassword: "Password confirmation is required",
         }}
         validate={withZodSchema(authSchema)}
         onSubmit={(values, { setSubmitting }) => {
-          handleEmailAuth(values);
+          handleRegistration(values);
           setSubmitting(false);
         }}
       >
@@ -89,6 +132,8 @@ export default function LoginForm() {
           values,
           handleChange,
           handleBlur,
+          setFieldValue,
+          setFieldTouched,
         }) => (
           <Form
             style={{
@@ -125,6 +170,33 @@ export default function LoginForm() {
                 errors={errors.password}
               />
 
+              <InputControl
+                id="confirmPassword"
+                name="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                required={true}
+                placeholder="Confirm your password"
+                value={values.confirmPassword}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                touched={touched.confirmPassword}
+                errors={errors.confirmPassword}
+              />
+
+              <InputControl
+                id="phone"
+                name="phone"
+                label="Phone Number"
+                type="phone"
+                required={false}
+                value={values.phone}
+                setFieldValue={setFieldValue}
+                setFieldTouched={setFieldTouched}
+                touched={touched.phone}
+                errors={errors.phone}
+              />
+
               <Flex
                 marginTop={2}
                 gap={4}
@@ -137,12 +209,16 @@ export default function LoginForm() {
                   loading={isSubmitting}
                   disabled={!isValid}
                 >
-                  Login
+                  Register
                 </Button>
 
-                <Button asChild variant="ghost" size={"sm"}>
-                  <a href="/register">Register</a>
-                </Button>
+                <NavLink
+                  href="/auth/login"
+                  asButton
+                  buttonProps={{ variant: "ghost", size: "sm" }}
+                >
+                  Already have an account?
+                </NavLink>
               </Flex>
             </VStack>
           </Form>
@@ -150,7 +226,7 @@ export default function LoginForm() {
       </Formik>
 
       <Text fontSize="sm" marginTop={4} textAlign="center">
-        Or sign in with
+        Or sign up with
       </Text>
       <IconButton
         marginTop={4}

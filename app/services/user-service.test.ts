@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { UserService } from "./userService";
+import { UserService } from "./user-service";
 
 global.fetch = vi.fn();
 
@@ -47,7 +47,7 @@ describe("UserService", () => {
     });
   });
 
-  describe("getUserById", () => {
+  describe("getUser", () => {
     it("should fetch a user by ID and return user details", async () => {
       const mockResponse = {
         id: "1",
@@ -60,7 +60,7 @@ describe("UserService", () => {
         json: async () => mockResponse,
       } as Response);
 
-      const result = await userService.getUserById("1");
+      const result = await userService.getUser("1");
 
       expect(fetch).toHaveBeenCalledWith(`${userService.apiUrl}/users/1`);
       expect(result).toEqual(mockResponse);
@@ -72,7 +72,7 @@ describe("UserService", () => {
         status: 404,
       } as Response);
 
-      const result = await userService.getUserById("1");
+      const result = await userService.getUser("1");
 
       expect(result).toBeNull();
     });
@@ -80,7 +80,7 @@ describe("UserService", () => {
     it("should return null if the API call fails", async () => {
       vi.mocked(fetch).mockResolvedValueOnce({ ok: false } as Response);
 
-      const result = await userService.getUserById("1");
+      const result = await userService.getUser("1");
 
       expect(result).toBeNull();
     });

@@ -1,10 +1,8 @@
-"use client";
-
 import Wrapper from "@/components/wrapper";
 import { Box, Heading } from "@chakra-ui/react";
-import RegistrationForm from "./RegistrationForm";
+import ResetPasswordForm from "./reset-password-form";
 
-export default function RegisterPage() {
+export default function ResetPasswordPage() {
   return (
     <Wrapper>
       <Box
@@ -14,8 +12,8 @@ export default function RegisterPage() {
         justifyContent="center"
         p={4}
       >
-        <Heading marginBottom={4}>Register a new account</Heading>
-        <RegistrationForm />
+        <Heading marginBottom={4}>Enter your email to reset password</Heading>
+        <ResetPasswordForm />
       </Box>
     </Wrapper>
   );

@@ -1,13 +1,13 @@
 "use client";
 
+import logo from "@/../public/logo.png";
+import { useAuth } from "@/context/auth-context";
 import { createClient } from "@/lib/supabase/client";
-import logo from "../../public/logo.png";
 import { Box, Button, Flex, Spacer } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import type { FC, ReactNode } from "react";
 import * as React from "react";
-import { useAuth } from "../context/AuthContext";
 import AuthGuard from "./auth-guard";
 import { ColorModeButton } from "./color-mode";
 import { Toaster, toaster } from "./toaster";
@@ -31,8 +31,7 @@ const Wrapper: FC<LayoutProps> = ({ children }) => {
       });
       console.error("Error signing out:", error.message);
     } else {
-      console.log('oh?');
-      router.push("/login");
+      router.push("/auth/login");
       toaster.success({
         description: "Successfully signed out",
         duration: 2500,

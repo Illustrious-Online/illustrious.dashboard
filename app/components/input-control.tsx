@@ -1,5 +1,3 @@
-"use client";
-
 import { Field, Input } from "@chakra-ui/react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";

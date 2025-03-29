@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { UserService } from "@/services/userService";
+import { UserService } from "@/services/user-service";
 import type { Session } from "@/types/auth";
 
 export async function getSession(): Promise<Session | null> {
@@ -13,7 +13,7 @@ export async function getSession(): Promise<Session | null> {
   }
 
   const userService = new UserService();
-  const userDetails = await userService.getUserById(session.user.id);
+  const userDetails = await userService.getUser(session.user.id);
 
   if (!userDetails) {
     return null;
@@ -21,6 +21,6 @@ export async function getSession(): Promise<Session | null> {
 
   return {
     user: userDetails,
-    accessToken: session.access_token,
+    session,
   };
 }

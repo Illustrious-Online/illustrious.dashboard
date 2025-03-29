@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { UserService } from "@/services/userService";
+import { UserService } from "@/services/user-service";
 import { NextResponse } from "next/server";
 import { type Mock, describe, expect, it, vi } from "vitest";
 import { GET } from "./route";
@@ -10,7 +10,7 @@ vi.mock("@/lib/supabase/server", () => ({
 
 vi.mock("@/services/userService", () => ({
   UserService: vi.fn().mockImplementation(() => ({
-    getUserById: vi.fn(),
+    getUser: vi.fn(),
     createUser: vi.fn(),
   })),
 }));
@@ -42,7 +42,7 @@ describe("GET /api/auth/callback", () => {
       error: null,
     });
 
-    const mockGetUserById = vi.fn().mockResolvedValue(null);
+    const mockGetUser = vi.fn().mockResolvedValue(null);
     const mockCreateUser = vi.fn();
 
     (createClient as Mock).mockResolvedValue({
@@ -52,7 +52,7 @@ describe("GET /api/auth/callback", () => {
     });
 
     (UserService as unknown as Mock).mockImplementation(() => ({
-      getUserById: mockGetUserById,
+      getUser: mockGetUser,
       createUser: mockCreateUser,
     }));
 
@@ -62,7 +62,7 @@ describe("GET /api/auth/callback", () => {
     const response = await GET(request);
 
     expect(mockExchangeCodeForSession).toHaveBeenCalledWith("test-code");
-    expect(mockGetUserById).toHaveBeenCalledWith("user-id");
+    expect(mockGetUser).toHaveBeenCalledWith("user-id");
     expect(mockCreateUser).toHaveBeenCalledWith({
       id: "user-id",
       email: "user@example.com",
@@ -92,9 +92,7 @@ describe("GET /api/auth/callback", () => {
       error: null,
     });
 
-    const mockGetUserById = vi
-      .fn()
-      .mockResolvedValue({ id: "existing-user-id" });
+    const mockGetUser = vi.fn().mockResolvedValue({ id: "existing-user-id" });
     const mockCreateUser = vi.fn();
 
     (createClient as Mock).mockResolvedValue({
@@ -104,7 +102,7 @@ describe("GET /api/auth/callback", () => {
     });
 
     (UserService as unknown as Mock).mockImplementation(() => ({
-      getUserById: mockGetUserById,
+      getUser: mockGetUser,
       createUser: mockCreateUser,
     }));
 
@@ -114,7 +112,7 @@ describe("GET /api/auth/callback", () => {
     const response = await GET(request);
 
     expect(mockExchangeCodeForSession).toHaveBeenCalledWith("test-code");
-    expect(mockGetUserById).toHaveBeenCalledWith("existing-user-id");
+    expect(mockGetUser).toHaveBeenCalledWith("existing-user-id");
     expect(mockCreateUser).not.toHaveBeenCalled();
     expect(response).toBeInstanceOf(NextResponse);
     expect(response.headers.get("location")).toBe("http://localhost/");

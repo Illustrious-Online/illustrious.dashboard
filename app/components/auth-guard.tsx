@@ -1,7 +1,5 @@
-"use client";
-
+import { useAuth } from "@/context/auth-context";
 import { FullPageSkeletonLoader } from "@/loader";
-import { useAuth } from "@/context/AuthContext";
 
 const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const { loading } = useAuth();

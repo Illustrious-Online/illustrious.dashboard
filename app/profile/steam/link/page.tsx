@@ -1,10 +1,10 @@
-"use client";
-
 import Wrapper from "@/components/wrapper";
 import { Button } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function LinkSteam() {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
   const [authUrl, setAuthUrl] = useState("");
@@ -28,8 +28,8 @@ export default function LinkSteam() {
   };
 
   useEffect(() => {
-    window.location.href = authUrl;
-  }, [authUrl]);
+    router.push(authUrl);
+  }, [authUrl, router]);
 
   return (
     <Wrapper>

@@ -11,7 +11,7 @@ import {
   it,
   vi,
 } from "vitest";
-import LoginForm from "./LoginForm";
+import LoginForm from "./login-form";
 
 vi.mock("@/lib/supabase/client", () => ({
   createClient: vi.fn(),

@@ -34,9 +34,12 @@ export class UserService {
     }
   }
 
-  async getUserById(userId: string): Promise<UserDetails | null> {
+  async getUser(value: string, by?: string): Promise<UserDetails | null> {
     try {
-      const response = await fetch(`${this.apiUrl}/users/${userId}`);
+      const url = by
+        ? `${this.apiUrl}/user/${value}?by=${by}`
+        : `${this.apiUrl}/user/${value}`;
+      const response = await fetch(url);
 
       if (!response.ok) {
         if (response.status === 404) {
@@ -56,23 +59,18 @@ export class UserService {
     userId: string,
     userData: Partial<UserDetails>,
   ): Promise<UserDetails | null> {
-    try {
-      const response = await fetch(`${this.apiUrl}/users/${userId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
+    const response = await fetch(`${this.apiUrl}/users/${userId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
 
-      if (!response.ok) {
-        throw new Error("Failed to update user");
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error("Error updating user:", error);
-      return null;
+    if (!response.ok) {
+      throw new Error("Failed to update user");
     }
+
+    return await response.json();
   }
 }

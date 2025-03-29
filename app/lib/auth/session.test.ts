@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { UserService } from "@/services/userService";
+import { UserService } from "@/services/user-service";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { describe, expect, it, vi } from "vitest";
 import { getSession } from "./session";
@@ -10,7 +10,7 @@ vi.mock("@/lib/supabase/server", () => ({
 
 vi.mock("@/services/userService", () => ({
   UserService: vi.fn().mockImplementation(() => ({
-    getUserById: vi.fn(),
+    getUser: vi.fn(),
   })),
 }));
 
@@ -42,7 +42,7 @@ describe("getSession", () => {
     );
 
     const mockUserService = new UserService();
-    vi.mocked(mockUserService.getUserById).mockResolvedValue(null);
+    vi.mocked(mockUserService.getUser).mockResolvedValue(null);
 
     const result = await getSession();
     expect(result).toBeNull();
@@ -67,7 +67,7 @@ describe("getSession", () => {
       role: "user",
     };
     const mockUserService = new UserService();
-    vi.spyOn(mockUserService, "getUserById").mockResolvedValue(mockUserDetails); // Mock the user details
+    vi.spyOn(mockUserService, "getUser").mockResolvedValue(mockUserDetails); // Mock the user details
     vi.mocked(UserService).mockImplementation(() => mockUserService);
 
     const result = await getSession();

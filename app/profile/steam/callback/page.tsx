@@ -1,5 +1,3 @@
-"use client";
-
 import Wrapper from "@/components/wrapper";
 import { useEffect } from "react";
 

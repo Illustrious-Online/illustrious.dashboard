@@ -1,12 +1,14 @@
-import { render, screen } from "@testing-library/react";
-import Home from "./page";
-import { beforeEach, describe, expect, it, type Mock } from "vitest";
-import { vi } from "vitest";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/auth-context";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
+import { render, screen } from "@testing-library/react";
+import { type Mock, beforeEach, describe, expect, it } from "vitest";
+import { vi } from "vitest";
+import Home from "./page";
 
 vi.mock("@/components/wrapper", () => ({
-  default: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  default: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
 }));
 
 vi.mock("@/context/AuthContext", () => ({
@@ -19,7 +21,7 @@ const renderHome = () => {
       <Home />
     </ChakraProvider>,
   );
-}
+};
 
 describe("Home Page", () => {
   beforeEach(() => {
@@ -29,9 +31,21 @@ describe("Home Page", () => {
 
   it("renders the main headings", () => {
     renderHome();
-    expect(screen.getByRole("heading", { level: 1, name: /Illustrious Dashboard/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { level: 2, name: /Created by Illustrious Online/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { level: 3, name: /Future home for all things Illustrious/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 1, name: /Illustrious Dashboard/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        level: 2,
+        name: /Created by Illustrious Online/i,
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        level: 3,
+        name: /Future home for all things Illustrious/i,
+      }),
+    ).toBeInTheDocument();
   });
 
   it("renders feature list items", () => {

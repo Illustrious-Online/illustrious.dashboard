@@ -1,8 +1,8 @@
 import Wrapper from "@/components/wrapper";
 import { Box, Heading } from "@chakra-ui/react";
-import LoginForm from "./LoginForm";
+import RegistrationForm from "./registration-form";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <Wrapper>
       <Box
@@ -12,8 +12,8 @@ export default function LoginPage() {
         justifyContent="center"
         p={4}
       >
-        <Heading marginBottom={4}>Sign in to your account</Heading>
-        <LoginForm />
+        <Heading marginBottom={4}>Register a new account</Heading>
+        <RegistrationForm />
       </Box>
     </Wrapper>
   );

@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { UserService } from "@/services/userService";
+import { UserService } from "@/services/user-service";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -13,7 +13,7 @@ export async function GET(request: Request) {
     if (!error && data.session) {
       // Check if the user exists in your database
       const userService = new UserService();
-      const userExists = await userService.getUserById(data.session.user.id);
+      const userExists = await userService.getUser(data.session.user.id);
 
       if (!userExists) {
         // Create user in your database via Elysia API

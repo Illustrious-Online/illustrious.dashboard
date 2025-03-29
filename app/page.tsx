@@ -1,5 +1,3 @@
-"use client";
-
 import Wrapper from "@/components/wrapper";
 import { Box, Heading, Text } from "@chakra-ui/react";
 
