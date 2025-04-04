@@ -1,18 +1,19 @@
-import InputControl from "@/components/input-control";
-import NavLink from "@/components/nav-link";
-import { toaster } from "@/components/toaster";
-import { createClient } from "@/lib/supabase/client";
+"use client";
+
+import InputControl from "@/components/ui/input-control";
+import NavLink from "@/components/ui/nav-link";
+import { toaster } from "@/components/ui/toaster";
+import { useAuth } from "@/contexts/AuthContext";
 import { Flex, IconButton, VStack } from "@chakra-ui/react";
 import { Button, Text } from "@chakra-ui/react";
 import { Form, Formik, type FormikValues } from "formik";
 import { withZodSchema } from "formik-validator-zod";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { FaDiscord } from "react-icons/fa";
 import { z } from "zod";
 
 export default function RegistrationForm() {
-  const router = useRouter();
-  const supabase = createClient();
+  const { signUp, signInWithOAuth } = useAuth()
   const authSchema = z
     .object({
       email: z
@@ -45,25 +46,13 @@ export default function RegistrationForm() {
 
   const handleRegistration = async (values: FormikValues) => {
     try {
-      const { error } = await supabase.auth.signUp({
-        phone: values.phone,
-        email: values.email,
-        password: values.password,
-        options: {
-          emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/callback`,
-          data: {
-            phone: values.phone,
-            email: values.email,
-            password: values.password,
-          },
-        },
-      });
+      const { error } = await signUp(values.email, values.password, values.phone);
 
       if (error) {
         throw error;
       }
 
-      router.push("/");
+      redirect("/");
     } catch (error) {
       const err = error as Error;
       toaster.create({
@@ -76,16 +65,9 @@ export default function RegistrationForm() {
     }
   };
 
-  const handleOAuthSignIn = async (provider: "google" | "discord") => {
+  const handleOAuthSignIn = async (provider: 'google' | 'github' | 'facebook' | 'discord') => {
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/callback`,
-        },
-      });
-
-      if (error) throw error;
+      await signInWithOAuth(provider);
     } catch (error) {
       const err = error as Error;
       toaster.create({

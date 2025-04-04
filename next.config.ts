@@ -1,4 +1,3 @@
-import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -13,17 +12,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-const sentryWebpackPluginOptions = {
-    org: "illustrious-online",
-    project: "illustrious-dashboard",
-    silent: !process.env.CI,
-    widenClientFileUpload: true,
-    reactComponentAnnotation: {
-      enabled: true,
-    },
-    hideSourceMaps: true,
-    disableLogger: true,
-    automaticVercelMonitors: true,
-};
-
-module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions);
+export default nextConfig;

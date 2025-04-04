@@ -1,11 +1,11 @@
-import { createClient } from "@/lib/supabase/client";
+import { createClientSupabaseClient } from "@/lib/supabase/client";
 import type { Session, User } from "@supabase/supabase-js";
 import { render, screen, waitFor } from "@testing-library/react";
 import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
-import { AuthProvider, useAuth } from "./auth-context";
+import { AuthProvider, useAuth } from "./AuthContext";
 
 vi.mock("@/lib/supabase/client", () => ({
-  createClient: vi.fn(),
+  createClientSupabaseClient: vi.fn(),
 }));
 
 const mockSession: Session = {
@@ -36,13 +36,13 @@ describe("AuthProvider", () => {
         }),
       },
     };
-    (createClient as unknown as Mock).mockReturnValue(mockSupabase);
+    (createClientSupabaseClient as unknown as Mock).mockReturnValue(mockSupabase);
 
     const TestComponent = () => {
-      const { user, session, loading } = useAuth();
+      const { user, session, isLoading } = useAuth();
       return (
         <div>
-          <p>Loading: {loading.toString()}</p>
+          <p>Loading: {isLoading.toString()}</p>
           <p>User: {user?.email ?? "null"}</p>
           <p>Session: {session ? "active" : "null"}</p>
         </div>
@@ -71,13 +71,13 @@ describe("AuthProvider", () => {
         }),
       },
     };
-    (createClient as unknown as Mock).mockReturnValue(mockSupabase);
+    (createClientSupabaseClient as unknown as Mock).mockReturnValue(mockSupabase);
 
     const TestComponent = () => {
-      const { user, session, loading } = useAuth();
+      const { user, session, isLoading } = useAuth();
       return (
         <div>
-          <p>Loading: {loading.toString()}</p>
+          <p>Loading: {isLoading.toString()}</p>
           <p>User: {user?.email ?? "null"}</p>
           <p>Session: {session ? "active" : "null"}</p>
         </div>

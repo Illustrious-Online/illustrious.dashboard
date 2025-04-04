@@ -1,8 +1,7 @@
-import InputControl from "@/components/input-control";
-import NavLink from "@/components/nav-link";
-import { toaster } from "@/components/toaster";
-import { createClient } from "@/lib/supabase/client";
-import { UserService } from "@/services/user-service";
+import InputControl from "@/components/ui/input-control";
+import NavLink from "@/components/ui/nav-link";
+import { toaster } from "@/components/ui/toaster";
+import { useAuth } from "@/contexts/AuthContext";
 import { Flex, VStack } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 import { Form, Formik, type FormikValues } from "formik";
@@ -10,7 +9,7 @@ import { withZodSchema } from "formik-validator-zod";
 import { z } from "zod";
 
 export default function ResetPasswordForm() {
-  const supabase = createClient();
+  const { resetPassword } = useAuth();
   const authSchema = z.object({
     email: z
       .string()
@@ -20,12 +19,7 @@ export default function ResetPasswordForm() {
 
   const handleResetPassword = async (values: FormikValues) => {
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(
-        values.email,
-        {
-          redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/update-password`,
-        },
-      );
+      const { error } = await resetPassword(values.email);
 
       if (error) {
         throw error;

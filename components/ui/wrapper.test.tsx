@@ -1,13 +1,13 @@
-import Wrapper from "@/components/wrapper";
-import { useAuth } from "@/context/auth-context";
-import { createClient } from "@/lib/supabase/client";
+import Wrapper from "@/components/ui/wrapper";
+import { useAuth } from "@/contexts/AuthContext";
+import { createClientSupabaseClient } from "@/lib/supabase/client";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useRouter } from "next/navigation";
 import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/lib/supabase/client", () => ({
-  createClient: vi.fn(),
+  createClientSupabaseClient: vi.fn(),
 }));
 
 vi.mock("@/context/AuthContext", () => ({
@@ -39,7 +39,7 @@ describe("Wrapper Component", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    (createClient as unknown as Mock).mockReturnValue(mockSupabase);
+    (createClientSupabaseClient as unknown as Mock).mockReturnValue(mockSupabase);
     (useRouter as unknown as Mock).mockReturnValue({ push: mockPush });
   });
 

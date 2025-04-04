@@ -1,11 +1,11 @@
-import { createClient } from "@/lib/supabase/server";
+import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 import { type Mock, describe, expect, it } from "vitest";
 import { vi } from "vitest";
 import { POST } from "./route";
 
 vi.mock("@/lib/supabase/server", () => ({
-  createClient: vi.fn(),
+  createServerSupabaseClient: vi.fn(),
 }));
 
 vi.mock("next/server", () => ({
@@ -23,14 +23,14 @@ describe("POST /api/auth/logout", () => {
       },
     };
 
-    (createClient as Mock).mockResolvedValue(mockSupabase);
+    (createServerSupabaseClient as Mock).mockResolvedValue(mockSupabase);
 
     const mockRedirect = vi.fn();
     (NextResponse.redirect as Mock).mockImplementation(mockRedirect);
 
     await POST();
 
-    expect(createClient).toHaveBeenCalled();
+    expect(createServerSupabaseClient).toHaveBeenCalled();
     expect(mockSignOut).toHaveBeenCalled();
     expect(NextResponse.redirect).toHaveBeenCalledWith(
       new URL("/", process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),

@@ -1,6 +1,6 @@
-import Wrapper from "@/components/wrapper";
 import { Box, Heading } from "@chakra-ui/react";
 import RegistrationForm from "./registration-form";
+import Wrapper from "@/components/ui/wrapper";
 
 export default function RegisterPage() {
   return (

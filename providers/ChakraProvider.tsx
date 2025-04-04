@@ -1,4 +1,6 @@
-import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
+'use client'
+
+import { ChakraProvider as ChakraProviderBase, createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
 
 const customConfig = defineConfig({
   theme: {
@@ -21,4 +23,8 @@ const customConfig = defineConfig({
   },
 });
 
-export const system = createSystem(defaultConfig, customConfig);
+const system = createSystem(defaultConfig, customConfig);
+
+export function ChakraProvider({ children }: { children: React.ReactNode }) {
+  return <ChakraProviderBase value={system}>{children}</ChakraProviderBase>
+}

@@ -5,7 +5,6 @@ import React from "react";
 import { describe, expect, it } from "vitest";
 import {
   ColorModeButton,
-  ColorModeProvider,
   DarkMode,
   LightMode,
   useColorMode,
@@ -15,9 +14,9 @@ import {
 describe("ColorModeProvider", () => {
   it("renders without crashing", () => {
     render(
-      <ColorModeProvider>
+      <ThemeProvider attribute="class" enableSystem defaultTheme="system">
         <div>Test</div>
-      </ColorModeProvider>,
+      </ThemeProvider>,
     );
     expect(screen.getByText("Test")).toBeInTheDocument();
   });

@@ -1,26 +1,34 @@
-import { Providers } from "@/providers";
-import { ColorModeScript } from "@chakra-ui/color-mode"; // Correct import for ColorModeScript
-import type { Metadata } from "next";
-import React, { type ReactNode } from "react";
+// app/layout.tsx
+import type { Metadata } from 'next'
+import { ChakraProvider } from '@/providers/ChakraProvider'
+import { ColorModeScript } from '@chakra-ui/color-mode'
+import { AuthProvider } from '@/contexts/AuthContext'
+import { ThemeProvider } from 'next-themes'
 
 export const metadata: Metadata = {
-  title: "Illustrious Dashboard",
-  description: "Created by Illustrious Online",
-};
+  title: 'Supabase Auth App',
+  description: 'Next.js application with Supabase authentication',
+}
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
-}: Readonly<{
-  children: ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <ColorModeScript />
+        <ColorModeScript initialColorMode="system" />
       </head>
       <body>
-        <Providers>{children}</Providers>
+        <ChakraProvider>
+          <ThemeProvider attribute="class" enableSystem defaultTheme="system">
+            <AuthProvider>
+              {children}
+            </AuthProvider>
+          </ThemeProvider>
+        </ChakraProvider>
       </body>
     </html>
-  );
+  )
 }

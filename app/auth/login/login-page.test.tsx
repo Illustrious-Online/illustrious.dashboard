@@ -1,41 +1,44 @@
-import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
-import AuthPage from "./page";
+import LoginPage from "./page";
+import { vi, describe, it, expect } from "vitest";
 
-vi.mock("@/components/wrapper", () => ({
-  default: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="wrapper">{children}</div>
-  ),
+vi.mock("@/components/ui/wrapper", () => ({
+    default: ({ children }: { children: React.ReactNode }) => (
+        <div data-testid="wrapper">{children}</div>
+    ),
 }));
 
-vi.mock("./LoginForm", () => ({
-  default: () => <div data-testid="login-form" />,
+vi.mock("./login-form", () => ({
+    default: () => <div data-testid="login-form" />,
 }));
 
-const renderPage = () => {
-  render(
-    <ChakraProvider value={defaultSystem}>
-      <AuthPage />
-    </ChakraProvider>,
-  );
-};
+describe("LoginPage", () => {
+    it("renders the Wrapper component", () => {
+        render(<LoginPage />);
+        expect(screen.getByTestId("wrapper")).toBeInTheDocument();
+    });
 
-describe("AuthPage", () => {
-  it("renders the Wrapper component", () => {
-    renderPage();
-    expect(screen.getByTestId("wrapper")).toBeInTheDocument();
-  });
+    it("renders the heading with correct text", () => {
+        render(<LoginPage />);
+        expect(
+            screen.getByRole("heading", { name: /sign in to your account/i })
+        ).toBeInTheDocument();
+    });
 
-  it("renders the heading with correct text", () => {
-    renderPage();
-    expect(
-      screen.getByRole("heading", { name: /sign in to your account/i }),
-    ).toBeInTheDocument();
-  });
+    it("renders the LoginForm component", () => {
+        render(<LoginPage />);
+        expect(screen.getByTestId("login-form")).toBeInTheDocument();
+    });
 
-  it("renders the LoginForm component", () => {
-    renderPage();
-    expect(screen.getByTestId("login-form")).toBeInTheDocument();
-  });
+    it("renders the Box with correct styles", () => {
+        render(<LoginPage />);
+        const box = screen.getByTestId("wrapper").firstChild;
+        expect(box).toHaveStyle({
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "4",
+        });
+    });
 });

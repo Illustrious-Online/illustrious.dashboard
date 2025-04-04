@@ -1,4 +1,4 @@
-import { useAuth } from "@/context/auth-context";
+import { useAuth } from "@/contexts/AuthContext";
 import { render, screen } from "@testing-library/react";
 import { useRouter } from "next/navigation";
 import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";

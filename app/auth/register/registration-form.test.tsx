@@ -1,12 +1,12 @@
-import { toaster } from "@/components/toaster";
-import { createClient } from "@/lib/supabase/client";
-import RegistrationForm from "@/register/RegistrationForm";
+import { toaster } from "@/components/ui/toaster";
+import { createClientSupabaseClient } from "@/lib/supabase/client";
+import RegistrationForm from "./registration-form";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/lib/supabase/client", () => ({
-  createClient: vi.fn(),
+  createClientSupabaseClient: vi.fn(),
 }));
 
 vi.mock("@/components/toaster", () => ({
@@ -28,7 +28,7 @@ describe("RegistrationForm", () => {
   const mockSignInWithOAuth = vi.fn();
 
   beforeEach(() => {
-    (createClient as Mock).mockReturnValue({
+    (createClientSupabaseClient as Mock).mockReturnValue({
       auth: {
         signUp: mockSignUp,
         signInWithOAuth: mockSignInWithOAuth,

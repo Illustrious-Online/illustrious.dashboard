@@ -1,8 +1,10 @@
-import InputControl from "@/components/input-control";
-import NavLink from "@/components/nav-link";
-import { toaster } from "@/components/toaster";
-import { createClient } from "@/lib/supabase/client";
-import { Flex, IconButton, Link, VStack } from "@chakra-ui/react";
+"use client";
+
+import InputControl from "@/components/ui/input-control";
+import NavLink from "@/components/ui/nav-link";
+import { toaster } from "@/components/ui/toaster";
+import { useAuth } from "@/contexts/AuthContext";
+import { Flex, IconButton, VStack } from "@chakra-ui/react";
 import { Button, Text } from "@chakra-ui/react";
 import { Form, Formik, type FormikValues } from "formik";
 import { withZodSchema } from "formik-validator-zod";
@@ -11,8 +13,8 @@ import { FaDiscord } from "react-icons/fa";
 import { z } from "zod";
 
 export default function LoginForm() {
+  const { signIn, signInWithOAuth } = useAuth()
   const router = useRouter();
-  const supabase = createClient();
   const authSchema = z.object({
     email: z
       .string()
@@ -23,10 +25,7 @@ export default function LoginForm() {
 
   const handleEmailAuth = async (values: FormikValues) => {
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email: values.email,
-        password: values.password,
-      });
+      const { error } = await signIn(values.email, values.password);
 
       if (error) {
         throw error;
@@ -45,16 +44,9 @@ export default function LoginForm() {
     }
   };
 
-  const handleOAuthSignIn = async (provider: "google" | "discord") => {
+  const handleOAuthSignIn = async (provider: 'google' | 'github' | 'facebook' | 'discord') => {
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/callback`,
-        },
-      });
-
-      if (error) throw error;
+      await signInWithOAuth(provider);
     } catch (error) {
       const err = error as Error;
       toaster.create({

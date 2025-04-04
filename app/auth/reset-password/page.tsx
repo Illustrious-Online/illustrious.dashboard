@@ -1,4 +1,4 @@
-import Wrapper from "@/components/wrapper";
+import Wrapper from "@/components/ui/wrapper";
 import { Box, Heading } from "@chakra-ui/react";
 import ResetPasswordForm from "./reset-password-form";
 

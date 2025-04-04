@@ -1,21 +1,20 @@
-import InputControl from "@/components/input-control";
-import NavLink from "@/components/nav-link";
-import { toaster } from "@/components/toaster";
-import { useAuth } from "@/context/auth-context";
-import { createClient } from "@/lib/supabase/client";
+"use client";
+
+import InputControl from "@/components/ui/input-control";
+import NavLink from "@/components/ui/nav-link";
+import { toaster } from "@/components/ui/toaster";
+import { useAuth } from "@/contexts/AuthContext";
 import { UserService } from "@/services/user-service";
 import { Flex, VStack } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 import { Form, Formik, type FormikValues } from "formik";
 import { withZodSchema } from "formik-validator-zod";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { useEffect } from "react";
 import { set, z } from "zod";
 
 export default function ResetPasswordForm() {
-  const auth = useAuth();
-  const router = useRouter();
-  const supabase = createClient();
+  const { isLoading, user, session, updatePassword, signOut } = useAuth();
   const authSchema = z
     .object({
       password: z
@@ -43,21 +42,13 @@ export default function ResetPasswordForm() {
 
   const handleUpdatePassword = async (values: FormikValues) => {
     try {
-      const { error: updateError } = await supabase.auth.updateUser({
-        password: values.password,
-      });
+      const { error: updateError } = await updatePassword(values.password);
 
       if (updateError) {
         throw updateError;
       }
 
-      const { error: signOutError } = await supabase.auth.signOut({
-        scope: "global",
-      });
-
-      if (signOutError) {
-        throw signOutError;
-      }
+      await signOut();
 
       toaster.create({
         title: "Success",
@@ -67,7 +58,7 @@ export default function ResetPasswordForm() {
         duration: 2500,
       });
       setTimeout(() => {
-        router.push("/auth/login");
+        redirect("/auth/login");
       }, 2500);
     } catch (error) {
       const err = error as Error;
@@ -82,16 +73,15 @@ export default function ResetPasswordForm() {
   };
 
   useEffect(() => {
-    const { loading, session } = auth;
     const setPasswordReset = async () => {
-      if (auth.user) {
-        await new UserService().updateUser(auth.user?.id, {
+      if (user) {
+        await new UserService().updateUser(user?.id, {
           passwordReset: true,
         });
       }
     };
 
-    if (!loading && !session) {
+    if (!isLoading && !session) {
       toaster.create({
         title: "Error",
         description: "You are not authenticated.",
@@ -99,12 +89,12 @@ export default function ResetPasswordForm() {
         duration: 2500,
       });
       setTimeout(() => {
-        router.push("/auth/login");
+        redirect("/auth/login");
       }, 2500);
     } else {
       setPasswordReset();
     }
-  }, [auth, router]);
+  }, [isLoading, session, user]);
 
   return (
     <>
