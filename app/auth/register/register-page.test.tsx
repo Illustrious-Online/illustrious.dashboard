@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import RegisterPage from "./page";
 import "@testing-library/jest-dom";
-import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
+import { ChakraProvider } from "@/providers/ChakraProvider";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/components/wrapper", () => ({
@@ -16,7 +16,7 @@ vi.mock("./RegistrationForm", () => ({
 
 const renderRegisterPage = () => {
   return render(
-    <ChakraProvider value={defaultSystem}>
+    <ChakraProvider>
       <RegisterPage />
     </ChakraProvider>,
   );

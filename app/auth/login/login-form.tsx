@@ -13,7 +13,7 @@ import { FaDiscord } from "react-icons/fa";
 import { z } from "zod";
 
 export default function LoginForm() {
-  const { signIn, signInWithOAuth } = useAuth()
+  const { signIn, signInWithOAuth } = useAuth();
   const router = useRouter();
   const authSchema = z.object({
     email: z
@@ -44,7 +44,9 @@ export default function LoginForm() {
     }
   };
 
-  const handleOAuthSignIn = async (provider: 'google' | 'github' | 'facebook' | 'discord') => {
+  const handleOAuthSignIn = async (
+    provider: "google" | "github" | "facebook" | "discord",
+  ) => {
     try {
       await signInWithOAuth(provider);
     } catch (error) {

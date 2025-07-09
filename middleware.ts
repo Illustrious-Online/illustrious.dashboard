@@ -8,9 +8,16 @@ export async function middleware(request: NextRequest) {
     },
   })
 
+  if (
+    !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  ) {
+    throw new Error("Missing Supabase environment variables");
+  }
+
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
     {
       cookies: {
         get(name: string) {
@@ -46,10 +53,10 @@ export async function middleware(request: NextRequest) {
   const url = request.nextUrl.clone()
   const isAuthPage = url.pathname.startsWith('/auth')
   const isApiRoute = url.pathname.startsWith('/api')
-  const isRootPage = url.pathname === '/'
 
   // Handle auth redirects
-  if (!session && !isAuthPage && !isApiRoute && !isRootPage) {
+  if (!session && url.pathname.startsWith('/dashboard')) {
+    console.log('Middleware redirecting to login page');
     // Redirect unauthenticated users to login page except for root page and API routes
     url.pathname = '/auth/login'
     return NextResponse.redirect(url)

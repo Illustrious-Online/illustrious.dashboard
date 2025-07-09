@@ -1,22 +1,27 @@
 'use client'
 
-import { ChakraProvider as ChakraProviderBase, createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
+import {
+  ChakraProvider as ChakraProviderBase,
+  createSystem,
+  defaultConfig,
+  defineConfig,
+} from "@chakra-ui/react";
 
 const customConfig = defineConfig({
   theme: {
     tokens: {
       colors: {
         brand: {
-          50: { value: "#e3f9f4" },
-          100: { value: "#c1f0e4" },
-          200: { value: "#9ee6d4" },
-          300: { value: "#79dcc3" },
-          400: { value: "#54d2b3" },
-          500: { value: "#1ab197" }, // Primary brand color
-          600: { value: "#179f88" },
-          700: { value: "#12806e" },
-          800: { value: "#0d6254" },
-          900: { value: "#084539" },
+          50: { value: "#ffe8e0" },
+          100: { value: "#ffcbb3" },
+          200: { value: "#ffab80" },
+          300: { value: "#ff8a4d" },
+          400: { value: "#ff691a" },
+          500: { value: "#e23d00" }, // Primary brand color
+          600: { value: "#b43000" },
+          700: { value: "#852300" },
+          800: { value: "#561600" },
+          900: { value: "#290800" },
         },
       },
     },

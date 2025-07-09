@@ -57,6 +57,10 @@ export default function InputControl({
               ? setFieldTouched("phone", true)
               : console.log("No setFieldValue provided")
           }
+          inputProps={{
+            id: id,
+            name: name,
+          }}
           inputStyle={{
             width: "100%",
             background: "inherit",

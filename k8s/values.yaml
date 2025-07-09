@@ -1,11 +1,11 @@
 replicaCount: 2
 
 deployment:
-  namespace: ill-dash
+  namespace: mudjacker
 
 image:
-  repository: illustriousonline/ill-dashboard
-  tag: 0.2.0
+  repository: illustriousonline/mudjacker
+  tag: 0.0.1
   pullPolicy: Always
 
 service:
@@ -17,10 +17,10 @@ ingress:
   className: "nginx"
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-  host: dashboard.illustrious.online
+  host: mudjacker.illustrious.online
   path: /
   pathType: Prefix
-  tlsSecretName: dashboard-tls
+  tlsSecretName: mudjacker-tls
 
 resources:
   limits:

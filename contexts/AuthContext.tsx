@@ -27,13 +27,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const supabase = createClientSupabaseClient()
 
   useEffect(() => {
+    const { pathname } = window.location
+    const isAuthPage = pathname.startsWith('/auth')
+    const isApiRoute = pathname.startsWith('/api')
     const fetchSession = async () => {
       setIsLoading(true)
-      const { data: { session }, error } = await supabase.auth.getSession()
-      
-      if (error || !session) {
-        router.push('/auth/login');
-      }
+      const { data: { session } } = await supabase.auth.getSession()
 
       setSession(session)
       setUser(session?.user ?? null)

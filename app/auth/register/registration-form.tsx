@@ -13,7 +13,7 @@ import { FaDiscord } from "react-icons/fa";
 import { z } from "zod";
 
 export default function RegistrationForm() {
-  const { signUp, signInWithOAuth } = useAuth()
+  const { signUp, signInWithOAuth } = useAuth();
   const authSchema = z
     .object({
       email: z
@@ -22,15 +22,15 @@ export default function RegistrationForm() {
         .min(1, "Email is required"),
       password: z
         .string()
-        .min(1, "Password is required")
-        .min(8, "Password must be at least 8 characters")
-        .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-        .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
         .regex(/[0-9]/, "Password must contain at least one number")
+        .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+        .regex(/[a-z]/, "Password must contain at least one lowercase letter")
         .regex(
           /[@$!%*?&]/,
           "Password must contain at least one special character",
-        ),
+        )
+        .min(8, "Password must be at least 8 characters")
+        .min(1, "Password is required"),
       confirmPassword: z.string().min(1, "Password confirmation is required"),
       phone: z.string().optional(),
     })
@@ -46,7 +46,11 @@ export default function RegistrationForm() {
 
   const handleRegistration = async (values: FormikValues) => {
     try {
-      const { error } = await signUp(values.email, values.password, values.phone);
+      const { error } = await signUp(
+        values.email,
+        values.password,
+        values.phone,
+      );
 
       if (error) {
         throw error;
@@ -65,7 +69,9 @@ export default function RegistrationForm() {
     }
   };
 
-  const handleOAuthSignIn = async (provider: 'google' | 'github' | 'facebook' | 'discord') => {
+  const handleOAuthSignIn = async (
+    provider: "google" | "github" | "facebook" | "discord",
+  ) => {
     try {
       await signInWithOAuth(provider);
     } catch (error) {
