@@ -1,9 +1,9 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import RegistrationForm from "./registration-form";
-import { useAuth } from "@/contexts/AuthContext";
 import { toaster } from "@/components/ui/toaster";
-import { beforeEach, describe, expect, it, vi, type Mock } from "vitest";
+import { useAuth } from "@/contexts/AuthContext";
 import { ChakraProvider } from "@/providers/ChakraProvider";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
+import RegistrationForm from "./registration-form";
 
 vi.mock("@/contexts/AuthContext", () => ({
   useAuth: vi.fn(),
@@ -23,9 +23,9 @@ const renderRegistrationForm = () => {
   return render(
     <ChakraProvider>
       <RegistrationForm />
-    </ChakraProvider>
+    </ChakraProvider>,
   );
-}
+};
 
 describe("RegistrationForm", () => {
   const mockSignUp = vi.fn();
@@ -45,7 +45,9 @@ describe("RegistrationForm", () => {
     expect(screen.getByLabelText(/^password/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/confirm password/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/phone number/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /register/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /register/i }),
+    ).toBeInTheDocument();
   });
 
   it("validates form inputs and shows errors", async () => {
@@ -57,7 +59,7 @@ describe("RegistrationForm", () => {
     await waitFor(() => {
       expect(screen.getByText(/email is required/i)).toBeInTheDocument();
     });
-    
+
     expect(screen.getByLabelText(/^password/i)).toBeInTheDocument();
     fireEvent.click(screen.getByLabelText(/^password/i));
     fireEvent.blur(screen.getByLabelText(/^password/i));
@@ -65,13 +67,15 @@ describe("RegistrationForm", () => {
     await waitFor(() => {
       expect(screen.getByText(/password is required/i)).toBeInTheDocument();
     });
-    
+
     expect(screen.getByLabelText(/confirm password/i)).toBeInTheDocument();
     fireEvent.click(screen.getByLabelText(/confirm password/i));
     fireEvent.blur(screen.getByLabelText(/confirm password/i));
 
     await waitFor(() => {
-      expect(screen.getByText(/password confirmation is required/i)).toBeInTheDocument();
+      expect(
+        screen.getByText(/password confirmation is required/i),
+      ).toBeInTheDocument();
     });
   });
 
@@ -98,7 +102,7 @@ describe("RegistrationForm", () => {
       expect(mockSignUp).toHaveBeenCalledWith(
         "test@example.com",
         "Password1!",
-        "1234567890"
+        "1234567890",
       );
     });
   });

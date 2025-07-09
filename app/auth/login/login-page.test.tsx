@@ -1,6 +1,6 @@
+import { ChakraProvider } from "@/providers/ChakraProvider";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { ChakraProvider } from "@/providers/ChakraProvider";
 import LoginPage from "./page";
 
 vi.mock("@/components/ui/wrapper", () => ({
@@ -17,9 +17,9 @@ const renderLoginPage = () => {
   render(
     <ChakraProvider>
       <LoginPage />
-    </ChakraProvider>
+    </ChakraProvider>,
   );
-}
+};
 
 describe("LoginPage", () => {
   it("renders the Wrapper component", () => {

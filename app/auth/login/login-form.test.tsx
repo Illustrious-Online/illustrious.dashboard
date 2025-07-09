@@ -1,10 +1,10 @@
 import { toaster } from "@/components/ui/toaster";
 import { useAuth } from "@/contexts/AuthContext";
+import { ChakraProvider } from "@/providers/ChakraProvider";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useRouter } from "next/navigation";
 import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
 import LoginForm from "./login-form";
-import { ChakraProvider } from "@/providers/ChakraProvider";
 
 vi.mock("@/contexts/AuthContext", () => ({
   useAuth: vi.fn(),
@@ -62,7 +62,7 @@ describe("LoginForm", () => {
     await waitFor(() => {
       expect(screen.getByText(/email is required/i)).toBeInTheDocument();
     });
-    
+
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
     fireEvent.click(screen.getByLabelText(/password/i));
     fireEvent.blur(screen.getByLabelText(/password/i));
