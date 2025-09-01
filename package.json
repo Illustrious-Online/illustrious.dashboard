@@ -60,7 +60,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@next/env": "^15.2.1",
-    "@sentry/nextjs": "^9",
+    "@sentry/nextjs": "^10",
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.49.1",
     "@testing-library/jest-dom": "^6.6.3",
