@@ -1,5 +1,24 @@
-# This is a comment
-# Specify code owners for specific paths
+# Default owners for everything
+*                                   @b3kN @3ncinasv3
 
-# All files in the repository
-*       @b3kN
+# Dashboard app
+apps/dashboard/                     @b3kN @3ncinasv3
+
+# Games frontend
+apps/games/                         @b3kN @3ncinasv3
+
+# UI component library (@illustrious/ui)
+packages/ui/                        @b3kN @3ncinasv3
+
+# Auth client package (@illustrious/auth)
+packages/auth/                      @b3kN @3ncinasv3
+
+# API client package (@illustrious/api-client)
+packages/api-client/                @b3kN @3ncinasv3
+
+# Shared config (Biome, TS)
+packages/config/                    @b3kN @3ncinasv3
+
+# CI/CD
+.github/                            @b3kN @3ncinasv3
+
